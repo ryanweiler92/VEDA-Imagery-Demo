@@ -1,6 +1,8 @@
-import axios from './AxiosHelper';
+import {
+    postData,
+} from './AxiosHelper';
 
-let myAxios = new axios.postData();
+// let myAxios = new axios.postData();
 
 // define public methods
 export const authenticationService = {    
@@ -11,17 +13,18 @@ export const authenticationService = {
 };
 
 function login(o: object) {
-    return axios.postData(`/api/authentication/login`, o, false);
+    console.log(o)
+    return postData(`/api/authentication/login`, o, false);
 }
 
 function confirmEmail(o: object) {
-    return axios.postData(`/api/authentication/confirmemail`, o, false);
+    return postData(`/api/authentication/confirmemail`, o, false);
 }
 
 function confirmPassword(o: object) {
-    return axios.postData(`/api/authentication/confirmpassword`, o, false);
+    return postData(`/api/authentication/confirmpassword`, o, false);
 }
 
 function resetPassword(email: string) {
-    return axios.postData(`/api/authentication/resetpassword?email=${email}`, null, false);
+    return postData(`/api/authentication/resetpassword?email=${email}`, null, false);
 }

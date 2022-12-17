@@ -1,13 +1,20 @@
 import * as React from 'react'
-import { Container, Flex, FlexProps, Box } from '@chakra-ui/react'
+import { Container, Flex, FlexProps, Box, Button } from '@chakra-ui/react'
+import { useAppSelector, useAppDispatch } from '../store/hooks'
+import { getToken, getUser } from '../localStorage/localStorage';
 
 const Main = (props: FlexProps) => {
+  const user = useAppSelector((state) => state.user);
+
+  const reduxTester = () => {
+    console.log(user);
+    console.log(getUser())
+  }
+
   return (
     <Flex as="main" role="main" direction="column" flex="1" py="16" {...props}>
       <Container flex="1">
-        {/* <Placeholder minH="lg" bg="bg-accent">
-          Main
-        </Placeholder> */}
+          <Button variant="primary" onClick={reduxTester}> Redux Tester </Button>
         <Box minH="lg" bg="bg-accent" />
       </Container>
     </Flex>

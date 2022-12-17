@@ -1,14 +1,21 @@
 /* TODO: 
 1. Correctly define the 'data' & 'o' parameter as an object;
 */
-
-const { default: axios } = require('axios');
+// import * as axios from "axios";
+// const { axios } = require('axios');
+import axios from 'axios'
 
 // set default baseURL
-axios.defaults.baseURL = process.env.REACT_APP_WEBAPI_URL;
+// axios.defaults.baseURL = process.env.REACT_APP_WEBAPI_URL;
+
+// create a default instance of axios
+const instance = axios.create({
+    baseURL: process.env.REACT_APP_WEBAPI_URL,
+    responseType: "json"
+});
 
 // create a response interceptor to check for 401s
-axios.interceptors.response.use (
+instance.interceptors.response.use (
     (response: any) => response,
     (error: any) => {
         
@@ -25,18 +32,12 @@ axios.interceptors.response.use (
     }
 );
 
-// create a default instance of axios
-const instance = axios.create({
-    responseType: "json"
-});
-
-
 //#region generic crud methods
-instance.getData = (url: string, needsAuth: boolean) => {    
+export const getData = (url: string, needsAuth: boolean) => {    
     const requestOptions = needsAuth === true || needsAuth === undefined ? { headers: authHeader() } : {};
 
     return new Promise((resolve, reject) => {
-        axios.get(url, requestOptions)
+        instance.get(url, requestOptions)
             .then((res: any) => {
                 resolve(res.data);
             })
@@ -46,18 +47,18 @@ instance.getData = (url: string, needsAuth: boolean) => {
     });
 }
 
-instance.upsertData = (id: any, url: string, data: any, needsAuth: boolean) => {
+export const upsertData = (id: any, url: string, data: any, needsAuth: boolean) => {
     if(id === undefined || id === null || id === 0 || id === "")
-        return instance.postData(url, data, needsAuth);
+        return postData(url, data, needsAuth);
     else
-        return instance.putData(`${url}/${id}`, data, needsAuth);
+        return putData(`${url}/${id}`, data, needsAuth);
 }
 
-instance.postData = (url: string, data: any, needsAuth: boolean) => {
+export const postData = (url: string, data: any, needsAuth: boolean) => {
     const requestOptions = needsAuth === true || needsAuth === undefined ? { headers: authHeader() } : {};
 
     return new Promise((resolve, reject) => {
-        axios.post(url, data, requestOptions)
+        instance.post(url, data, requestOptions)
             .then((res: any) => {
                 resolve(res.data);
             })
@@ -67,11 +68,11 @@ instance.postData = (url: string, data: any, needsAuth: boolean) => {
     });
 }
 
-instance.putData = (url: string, data: any, needsAuth: boolean) => {
+export const putData = (url: string, data: any, needsAuth: boolean) => {
     const requestOptions = needsAuth === true || needsAuth === undefined ? { headers: authHeader() } : {};
 
     return new Promise((resolve, reject) => {
-        axios.put(url, data, requestOptions)
+        instance.put(url, data, requestOptions)
             .then((res: any) => {
                 resolve(res.data);
             })
@@ -81,11 +82,11 @@ instance.putData = (url: string, data: any, needsAuth: boolean) => {
     });
 }
 
-instance.deleteData = (url: string) => {
+export const deleteData = (url: string) => {
     const requestOptions = { headers: authHeader() }; // deletes always need security
 
     return new Promise((resolve, reject) => {
-        axios.delete(url, requestOptions)
+        instance.delete(url, requestOptions)
             .then((res: any) => {
                 resolve(res.data);
             })
@@ -95,14 +96,14 @@ instance.deleteData = (url: string) => {
     });
 }
 
-instance.deleteMultipleData = (url: string, ids: any[]) => {
+export const deleteMultipleData = (url: string, ids: any[]) => {
     const requestOptions = { 
         headers: authHeader(), // deletes always need security
         data: { ids } 
     };
 
     return new Promise((resolve, reject) => {
-        axios.delete(url, requestOptions)
+        instance.delete(url, requestOptions)
             .then((res: any) => {
                 resolve(res.data);
             })
@@ -138,6 +139,7 @@ function formatReject(res: any) {
 //#endregion
 
 export default instance;
+
 
 export function authHeader() {
     // return authorization header with jwt token

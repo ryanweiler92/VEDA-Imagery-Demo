@@ -23,9 +23,12 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+import { useAppSelector } from '../store/hooks';
+import { logout } from '../localStorage/localStorage';
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
+  const token = useAppSelector((state) => state.user.token);
 
   return (
     <Box>
@@ -61,36 +64,47 @@ const Navbar = () => {
             <DesktopNav />
           </Flex>
         </Flex>
-
         <Stack
           flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          <Button
-            as={'a'}
-            fontSize={'md'}
-            fontWeight={500}
-            variant={'link'}
-            href={'/login'}>
-            Sign In
-          </Button>
-          <Button
-            as={'a'}
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'md'}
-            fontWeight={600}
-            color={'white'}
-            bg={'teal.300'}
-            href={'#'}
-            _hover={{
-              bg: 'teal.600',
-            }}>
-            Sign Up
-          </Button>
+            {token ? (
+              <Button
+              as={'a'}
+              fontSize={'md'}
+              fontWeight={500}
+              variant={'link'}
+              onClick={logout}>
+              Sign Out
+            </Button>
+            ) : (
+            <>
+              <Button
+              as={'a'}
+              fontSize={'md'}
+              fontWeight={500}
+              variant={'link'}
+              href={'/login'}>
+              Sign In
+              </Button>
+              <Button
+              as={'a'}
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'md'}
+              fontWeight={600}
+              color={'white'}
+              bg={'teal.300'}
+              href={'/signup'}
+              _hover={{
+                bg: 'teal.600',
+              }}>
+              Sign Up
+              </Button>
+            </>
+            )}
         </Stack>
       </Flex>
-
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
