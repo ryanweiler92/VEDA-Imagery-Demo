@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Container, Flex, FlexProps } from '@chakra-ui/react'
+import { Container, Flex, FlexProps, Box } from '@chakra-ui/react'
 
 const Main = (props: FlexProps) => {
   return (
@@ -8,6 +8,7 @@ const Main = (props: FlexProps) => {
         {/* <Placeholder minH="lg" bg="bg-accent">
           Main
         </Placeholder> */}
+        <Box minH="lg" bg="bg-accent" />
       </Container>
     </Flex>
   )

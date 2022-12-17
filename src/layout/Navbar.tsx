@@ -1,3 +1,4 @@
+import logo from './logo.png';
 import {
   Box,
   Flex,
@@ -7,6 +8,7 @@ import {
   Stack,
   Collapse,
   Icon,
+  Image,
   Link,
   Popover,
   PopoverTrigger,
@@ -51,13 +53,10 @@ const Navbar = () => {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}>
-            Logo
-          </Text>
-
+          <Image 
+            src={logo}
+            htmlWidth={"200px"}
+          />
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -70,21 +69,22 @@ const Navbar = () => {
           spacing={6}>
           <Button
             as={'a'}
-            fontSize={'sm'}
-            fontWeight={400}
+            fontSize={'md'}
+            fontWeight={500}
             variant={'link'}
-            href={'#'}>
+            href={'/login'}>
             Sign In
           </Button>
           <Button
+            as={'a'}
             display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
+            fontSize={'md'}
             fontWeight={600}
             color={'white'}
-            bg={'pink.400'}
+            bg={'teal.300'}
             href={'#'}
             _hover={{
-              bg: 'pink.300',
+              bg: 'teal.600',
             }}>
             Sign Up
           </Button>
@@ -106,7 +106,7 @@ const DesktopNav = () => {
   const popoverContentBgColor = useColorModeValue('white', 'gray.800');
 
   return (
-    <Stack direction={'row'} spacing={4}>
+    <Stack direction={'row'} spacing={4} alignItems={"center"}>
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
           <Popover trigger={'hover'} placement={'bottom-start'}>
@@ -114,7 +114,7 @@ const DesktopNav = () => {
               <Link
                 p={2}
                 href={navItem.href ?? '#'}
-                fontSize={'sm'}
+                fontSize={'lg'}
                 fontWeight={500}
                 color={linkColor}
                 _hover={{
@@ -253,7 +253,7 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: 'Inspiration',
+    label: 'Mapping',
     children: [
       {
         label: 'Explore Design Work',
@@ -268,7 +268,7 @@ const NAV_ITEMS: Array<NavItem> = [
     ],
   },
   {
-    label: 'Find Work',
+    label: 'Charting',
     children: [
       {
         label: 'Job Board',
@@ -281,13 +281,5 @@ const NAV_ITEMS: Array<NavItem> = [
         href: '#',
       },
     ],
-  },
-  {
-    label: 'Learn Design',
-    href: '#',
-  },
-  {
-    label: 'Hire Designers',
-    href: '#',
   },
 ];
