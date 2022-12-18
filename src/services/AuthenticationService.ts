@@ -2,11 +2,10 @@ import {
     postData,
 } from './AxiosHelper';
 
-// let myAxios = new axios.postData();
-
 // define public methods
 export const authenticationService = {    
     login,
+    signUp,
     confirmEmail,
     confirmPassword,
     resetPassword
@@ -15,6 +14,11 @@ export const authenticationService = {
 function login(o: object) {
     console.log(o)
     return postData(`/api/authentication/login`, o, false);
+}
+
+function signUp(o: any) {
+    console.log(o);
+    return postData(`/api/authentication/signup`, o, false);
 }
 
 function confirmEmail(o: object) {

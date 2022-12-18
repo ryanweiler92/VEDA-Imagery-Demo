@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Container, Flex, FlexProps, Box, Button } from '@chakra-ui/react'
-import { useAppSelector, useAppDispatch } from '../store/hooks'
-import { getToken, getUser } from '../localStorage/localStorage';
+import { useAppSelector } from '../store/hooks'
+import { getUser } from '../localStorage/localStorage';
 
 const Main = (props: FlexProps) => {
   const user = useAppSelector((state) => state.user);

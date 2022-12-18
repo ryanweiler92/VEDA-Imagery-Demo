@@ -3,7 +3,7 @@ import {
   Button,
   Checkbox,
   Container,
-  Divider,
+  Link,
   Flex,
   Image,
   FormControl,
@@ -21,7 +21,6 @@ import { useForm } from 'react-hook-form';
 import Logo from '../../layout/logo.png';
 import { PasswordField } from './PasswordField';
 import { authenticationService } from '../../services/AuthenticationService';
-import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { setUserToLocalStorage } from '../../localStorage/localStorage';
 
 const Login = () => {
@@ -53,12 +52,7 @@ const Login = () => {
 
   const onSubmit = () => {
     // send the form data to the server
-    // once we update our DB we can remove this and login with email/pass
-    const azureFormData = {
-      username: formData.email,
-      password: formData.password,
-    }
-    authenticationService.login(azureFormData)
+    authenticationService.login(formData)
     .then((data: any) => {
         handleLogin(data);
     })
@@ -73,10 +67,12 @@ const Login = () => {
       <Stack spacing="8" >
         <Stack spacing="6">
         <Flex justify="center">
-          <Image 
-            src={Logo}
-            htmlWidth={"200px"}
-          />
+          <Link href="/">
+            <Image 
+              src={Logo}
+              htmlWidth={"200px"}
+            />
+          </Link>
         </Flex>
           <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
             <Heading size={useBreakpointValue({ base: 'xs', md: 'sm' })}>
