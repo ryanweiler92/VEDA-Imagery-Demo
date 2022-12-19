@@ -1,8 +1,11 @@
-import React,{ useEffect } from "react";
+import React,{ useEffect, useContext } from "react";
 import AddWMTSLayer from './AddWMTSLayer';
+import MapContext from '../mapLayout/MapContext';
 
 
-const AddLayer = ({layer, map}) => {
+const AddLayer = ({layer}) => {
+
+    const { map } = useContext(MapContext);
 
     useEffect(() => {
         if (!map) return;
@@ -10,7 +13,7 @@ const AddLayer = ({layer, map}) => {
 
     return (
         <>
-            <AddWMTSLayer layer={layer} map={map} />
+            <AddWMTSLayer layer={layer} />
         </>
     );
 }

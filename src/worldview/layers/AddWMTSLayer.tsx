@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect, useContext } from 'react'
 import OlTileGridWMTS from "ol/tilegrid/WMTS";
 import OlSourceWMTS from "ol/source/WMTS";
 import OlLayerTile from "ol/layer/Tile";
@@ -9,8 +9,10 @@ import {
   roundTimeOneMinute,
 } from '../selectors/selectors';
 import { useAppSelector } from '../../store/hooks';
+import MapContext from '../mapLayout/MapContext';
 
-const AddWMTSLayer = ({ layer, map }) => {
+const AddWMTSLayer = ({ layer }) => {
+  const { map } = useContext(MapContext);
 
   const date = useAppSelector((state) => state.worldview.date);
 

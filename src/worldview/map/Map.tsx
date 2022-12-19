@@ -1,19 +1,19 @@
-import React, { useRef, useState, useEffect } from "react"
+import React, { useRef, useState, useEffect, useContext } from "react"
 import OlMap from "ol/Map";
 import OlView from "ol/View";
 import * as olProj from "ol/proj";
 import "./Map.css";
 import config from '../config/config';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { setLayerData, setObama } from "../../slices/worldview/worldviewSlice";
 import AddLayer from '../layers/AddLayer';
+import MapContext from '../mapLayout/MapContext';
 
 const Map = () => {
   const mapRef = useRef();
   const dispatch = useAppDispatch();
   const availableLayers = useAppSelector((state) => state.worldview.availableLayers);
 
-  const [map, setMap] = useState(null);
+  const { map, setMap, setLayerData} = useContext(MapContext);
 
   const projection = config.projections.geographic;
 
@@ -51,15 +51,14 @@ const Map = () => {
     if (!map) return;
     const currentLayers = map.getLayers();
     const layersArray = currentLayers.array_
-    console.log(map)
-    dispatch(setLayerData(layersArray));
+    setLayerData(layersArray);
 }, [map]);
 
   return (
     <div ref={mapRef} className="ol-map">
       {availableLayers && availableLayers.map((layer) => {
         if (layer.active) return (
-          <AddLayer map={map} layer={layer.data} key={layer.name} />
+          <AddLayer layer={layer.data} key={layer.name} />
         )})}
     </div>
   );

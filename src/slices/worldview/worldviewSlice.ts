@@ -5,10 +5,8 @@ import { startingDate } from '../../worldview/selectors/selectors';
 
 const initialState = {
   availableLayers: startingLayers,
-  layerData: [] as string[],
-  orderedLayers: [] as string[],
+  orderedLayers: [],
   date: startingDate,
-  obama: "",
 }
 
 export const worldviewSlice = createSlice({
@@ -18,18 +16,15 @@ export const worldviewSlice = createSlice({
     setAvailableLayers: (state, action: PayloadAction<any>) => {
       state.availableLayers = action.payload
     },
-    setLayerData: (state, action: PayloadAction<string[]>) => {
-      state.layerData = action.payload
+    setOrderedLayers: (state, action: PayloadAction<any>) => {
+      state.orderedLayers = action.payload
     },
-    setObama: (state, action: PayloadAction<string>) => {
-      state.obama = action.payload
+    setDate: (state, action: PayloadAction<string>) => {
+      state.date = action.payload;
     },
-    setDate: (state, action: PayloadAction<Date>) => {
-      state.date = action.payload
-    }
   },
 });
 
-export const { setAvailableLayers, setLayerData, setObama, setDate } = worldviewSlice.actions;
+export const { setAvailableLayers, setOrderedLayers, setDate } = worldviewSlice.actions;
 export default worldviewSlice.reducer;
 

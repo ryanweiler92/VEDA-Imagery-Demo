@@ -101,7 +101,7 @@ const getStartingDate = () => {
   const dateOffset = (24 * 60 * 60 * 1000) * 21;
   const myDate = new Date();
   myDate.setTime(myDate.getTime() - dateOffset);
-  return myDate;
+  return myDate.toISOString();
 }
 
 export const startingDate = getStartingDate();
