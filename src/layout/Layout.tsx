@@ -9,7 +9,7 @@ const Layout = () => {
     <Flex direction="column" flex="1">
       <Navbar />
       <Main />
-      <Footer />
+      {/* <Footer /> */}
     </Flex>
   )
 }

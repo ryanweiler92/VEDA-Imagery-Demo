@@ -1,0 +1,68 @@
+import React, { useRef, useState, useEffect } from "react"
+import OlMap from "ol/Map";
+import OlView from "ol/View";
+import * as olProj from "ol/proj";
+import "./Map.css";
+import config from '../config/config';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { setLayerData, setObama } from "../../slices/worldview/worldviewSlice";
+import AddLayer from '../layers/AddLayer';
+
+const Map = () => {
+  const mapRef = useRef();
+  const dispatch = useAppDispatch();
+  const availableLayers = useAppSelector((state) => state.worldview.availableLayers);
+
+  const [map, setMap] = useState(null);
+
+  const projection = config.projections.geographic;
+
+  // componentDidMount
+  useEffect(() => {
+    const geoProjection = olProj.get(projection.crs)
+
+    const view = new OlView({
+        maxResolution: projection.resolutions[0],
+        projection: geoProjection,
+        center: projection.startCenter,
+        zoom: projection.startZoom,
+        maxZoom: projection.numZoomLevels,
+        extent: projection.maxExtent,
+        constrainOnlyCenter: true
+    })
+    let options = {
+        view: view,
+        layers: [],
+        controls: [],
+        overlays: [],
+        renderer: ["canvas"],
+    };
+
+    let mapObj = new OlMap(options);
+    mapObj.setTarget(mapRef.current);
+    setMap(mapObj);
+
+    //componentWillUnmount
+    return () => mapObj.setTarget(undefined);
+}, []);
+
+  // get all of the current layers from the openlayers map object and set to state
+  useEffect(() => {
+    if (!map) return;
+    const currentLayers = map.getLayers();
+    const layersArray = currentLayers.array_
+    console.log(map)
+    dispatch(setLayerData(layersArray));
+}, [map]);
+
+  return (
+    <div ref={mapRef} className="ol-map">
+      {availableLayers && availableLayers.map((layer) => {
+        if (layer.active) return (
+          <AddLayer map={map} layer={layer.data} key={layer.name} />
+        )})}
+    </div>
+  );
+}
+
+export default Map

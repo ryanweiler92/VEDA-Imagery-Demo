@@ -11,7 +11,7 @@ const myTheme = deepmerge(theme, {
   },
   fonts: {
     body: 'system-ui, sans-serif',
-    heading: '"Avenir Next", sans-serif',
+    heading: 'system-ui, sans-serif',
     mono: 'Menlo, monospace',
   },
   fontSizes: {
