@@ -1,4 +1,12 @@
-import React, { useContext, useState, useRef, useEffect } from "react"
+// To make a new static request (ie. you know the exact URL of your request) just add it to the apiConfig.tsx file as a new object with a title, description and url field
+// at the end of the array.
+// To make custom requests (ie. dynamically setting url parameters with a function) do the following:
+//  1. Create a new file in the customRequests directory 
+//  2. Define and export your logic from the new file. !!Make sure to pass setResponse as an arguement to your function.
+//  3. In apiConfig.ts, add a new object to the end of the array with properties of title, description, url and customReference. Make sure the customReference is unique.
+//  4. Import your custom request function.
+//  5. Add a new case to the switch statement that refers to the customReference value you created in apiConfig.ts 
+import React, { useState } from "react"
 import { Box, Button, Flex, IconButton, Heading, List, ListItem, Text, Icon, Spinner, Spacer, Select } from "@chakra-ui/react";
 import axios from "axios"
 import { PhoneIcon, InfoIcon } from '@chakra-ui/icons';
@@ -10,8 +18,11 @@ import {
     testResponseTwoData,
     testResponseThreeData
 } from './dataTestingFunctions';
+import findDatesWithinTimeframe from './customRequests/findDates';
+// Import any custom request files you make here
 
 const ApiTest = () => {
+    const [customReference, setCustomReference] = useState();
     const [responseOne, setResponseOne] = useState();
     const [responseTwo, setResponseTwo] = useState();
     const [responseThree, setResponseThree] = useState();
@@ -28,7 +39,23 @@ const ApiTest = () => {
     const [loadingTwo, setLoadingTwo] = useState(false);
     const [loadingThree, setLoadingThree] = useState(false);
 
+    const customRequestHandler = (setResponse) => {
+        // Make a new case that refers to the customReference value you created in apiConfig.tsx and make sure to pass it setResponse as an argument.
+        console.log(customReference)
+        switch (customReference){
+            case '1':
+                findDatesWithinTimeframe(setResponse);
+                break;
+            case 'default':
+                console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.')
+        }
+    }
+
     async function getResponseOne() {
+        if(callUrlOne === "customRequest"){
+            customRequestHandler(setResponseOne)
+            return;
+        }
         setLoadingOne(true)
         try {
           const response = await axios.get(callUrlOne);
@@ -80,18 +107,21 @@ const ApiTest = () => {
       const handleSelect = (e) => {
         if(!e.target.value) return
         const value = JSON.parse(e.target.value)
+            console.log(value)
+            setCustomReference(value.customReference)
+        
         if(e.target.id == "select1"){
-            setCallUrlOne(value.url)
             setCallTitleOne(value.title)
             setCallDescriptionOne(value.description)
+            setCallUrlOne(value.url)
         } else if (e.target.id == "select2"){
-            setCallUrlTwo(value.url)
             setCallTitleTwo(value.title)
             setCallDescriptionTwo(value.description)
+            setCallUrlTwo(value.url)
         } else if (e.target.id == "select3") {
-            setCallUrlThree(value.url)
             setCallTitleThree(value.title)
             setCallDescriptionThree(value.description)
+            setCallUrlThree(value.url)
         }
       }
 
@@ -127,9 +157,15 @@ const ApiTest = () => {
             testResponseThreeData(response);
         }
       }
+
+    //   const testFunction = () => {
+    //     console.log(callUrlOne)
+    //     console.log(responseOne)
+    //   }
         
     return (
         <>
+        {/* <Button onClick={testFunction}>Test</Button> */}
         <Flex justify="space-around" align="center" my="2">
             <Button 
             aria-label="fetch" 
@@ -168,11 +204,11 @@ const ApiTest = () => {
                     <option value="disabled" disabled>Select an API Request</option>
                     {apiCalls.map((call) => {
                         return (
-                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title})}>{call.title}</option>
+                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title, customReference: call.customReference})}>{call.title}</option>
                         )
                     })}
                 </Select>
-                <Heading size='md' my="2">{callTitleOne}</Heading>
+                <Heading textAlign="center" size='md' my="2">{callTitleOne}</Heading>
                 <Text align="center" my="2">{callDescriptionOne}</Text>
                 <Text align="center" my="2">{callUrlOne}</Text>
             </Flex>
@@ -181,11 +217,11 @@ const ApiTest = () => {
                     <option value="disabled" disabled>Select an API Request</option>
                     {apiCalls.map((call) => {
                         return (
-                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title})}>{call.title}</option>
+                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title, customReference: call.customReference})}>{call.title}</option>
                         )
                     })}
                 </Select>
-                <Heading size='md' my="2">{callTitleTwo}</Heading>
+                <Heading textAlign="center" size='md' my="2">{callTitleTwo}</Heading>
                 <Text align="center" my="2">{callDescriptionTwo}</Text>
                 <Text align="center" my="2">{callUrlTwo}</Text>
             </Flex>
@@ -194,44 +230,44 @@ const ApiTest = () => {
                     <option value="disabled" disabled>Select an API Request</option>
                     {apiCalls.map((call) => {
                         return (
-                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title})}>{call.title}</option>
+                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title, customReference: call.customReference})}>{call.title}</option>
                         )
                     })}
                 </Select>
-                <Heading size='md' my="2">{callTitleThree}</Heading>
+                <Heading textAlign="center" size='md' my="2">{callTitleThree}</Heading>
                 <Text align="center" my="2">{callDescriptionThree}</Text>
                 <Text align="center" my="2">{callUrlThree}</Text>
             </Flex>
         </Flex>
         <Flex justify="space-around" align="center" my="2">
-        <Flex>
-            <Flex direction="column">
-                <Button 
-                aria-label="fetch" 
-                colorScheme='teal'
-                size='lg'
-                onClick={(e) => consoleResponse(e)}
-                id="button1"
-                isLoading={loadingOne}
-                disabled={!responseOne}
-                mb="2"
-                >
-                    <InfoIcon mr="2"/> Console
-                </Button>
-                <Button
-                aria-label="save"
-                colorScheme='teal'
-                size='lg'
-                isDisabled={!responseOne}
-                id="save1"
-                onClick={(e) => saveToLocalStorage(e)}
-                isLoading={loadingOne}
-                >
-                    <GiSave /> Save
-                </Button>
-            </Flex>
-            <Flex direction="column" ml="1">
-                <Button 
+            <Flex>
+                <Flex direction="column">
+                    <Button 
+                    aria-label="fetch" 
+                    colorScheme='teal'
+                    size='lg'
+                    onClick={(e) => consoleResponse(e)}
+                    id="button1"
+                    isLoading={loadingOne}
+                    disabled={!responseOne}
+                    mb="2"
+                    >
+                        <InfoIcon mr="2"/> Console
+                    </Button>
+                    <Button
+                    aria-label="save"
+                    colorScheme='teal'
+                    size='lg'
+                    isDisabled={!responseOne}
+                    id="save1"
+                    onClick={(e) => saveToLocalStorage(e)}
+                    isLoading={loadingOne}
+                    >
+                        <GiSave /> Save
+                    </Button>
+                </Flex>
+                <Flex direction="column" ml="1">
+                    <Button 
                     aria-label="test data" 
                     colorScheme='teal'
                     size='lg'
@@ -241,9 +277,9 @@ const ApiTest = () => {
                     // disabled={!responseOne}
                     mb="2"
                     >
-                    <GiMaterialsScience /> Test Data
-                </Button>
-                <Button 
+                        <GiMaterialsScience /> Test Data
+                    </Button>
+                    <Button 
                     aria-label="apply to map" 
                     colorScheme='teal'
                     size='lg'
@@ -252,25 +288,25 @@ const ApiTest = () => {
                     disabled={true}
                     mb="2"
                     >
-                    <GoGlobe /> Apply To Map
-                </Button>
-            </Flex>
+                        <GoGlobe /> Apply To Map
+                    </Button>
+                </Flex>
             </Flex>
             <Flex>
             <Flex direction="column">
-            <Button 
-            aria-label="console" 
-            colorScheme='red'
-            size='lg'
-            onClick={(e) => consoleResponse(e)}
-            id="button2"
-            isLoading={loadingTwo}
-            disabled={!responseTwo}
-            mb="2"
-            >
-                <InfoIcon mr="2"/> Console
-            </Button>
-            <Button
+                <Button 
+                aria-label="console" 
+                colorScheme='red'
+                size='lg'
+                onClick={(e) => consoleResponse(e)}
+                id="button2"
+                isLoading={loadingTwo}
+                disabled={!responseTwo}
+                mb="2"
+                >
+                    <InfoIcon mr="2"/> Console
+                </Button>
+                <Button
                 aria-label="save"
                 colorScheme='red'
                 size='lg'
@@ -284,45 +320,45 @@ const ApiTest = () => {
             </Flex>
             <Flex direction="column" ml="1">
                 <Button 
-                    aria-label="test data" 
-                    colorScheme='red'
-                    size='lg'
-                    onClick={(e) => fetchLocalStorage(e)}
-                    id="test2"
-                    isLoading={loadingTwo}
-                    // disabled={!responseTwo}
-                    mb="2"
-                    >
+                aria-label="test data" 
+                colorScheme='red'
+                size='lg'
+                onClick={(e) => fetchLocalStorage(e)}
+                id="test2"
+                isLoading={loadingTwo}
+                // disabled={!responseTwo}
+                mb="2"
+                >
                     <GiMaterialsScience /> Test Data
                 </Button>
                 <Button 
-                    aria-label="apply to map" 
-                    colorScheme='red'
-                    size='lg'
-                    id="map2"
-                    isLoading={loadingTwo}
-                    disabled={true}
-                    mb="2"
-                    >
+                aria-label="apply to map" 
+                colorScheme='red'
+                size='lg'
+                id="map2"
+                isLoading={loadingTwo}
+                disabled={true}
+                mb="2"
+                >
                     <GoGlobe /> Apply To Map
                 </Button>
                 </Flex>
             </Flex>
             <Flex>
             <Flex direction="column">
-            <Button 
-            aria-label="fetch" 
-            colorScheme='blue'
-            size='lg'
-            onClick={(e) => consoleResponse(e)}
-            id="button3"
-            isLoading={loadingThree}
-            disabled={!responseThree}
-            mb="2"
-            >
-                <InfoIcon mr="2"/> Console
-            </Button>
-            <Button
+                <Button 
+                aria-label="fetch" 
+                colorScheme='blue'
+                size='lg'
+                onClick={(e) => consoleResponse(e)}
+                id="button3"
+                isLoading={loadingThree}
+                disabled={!responseThree}
+                mb="2"
+                >
+                    <InfoIcon mr="2"/> Console
+                </Button>
+                <Button
                 aria-label="save"
                 colorScheme='blue'
                 size='lg'
@@ -336,26 +372,26 @@ const ApiTest = () => {
             </Flex>
             <Flex direction="column" ml="1">
                 <Button 
-                    aria-label="test data" 
-                    colorScheme='blue'
-                    size='lg'
-                    onClick={(e) => fetchLocalStorage(e)}
-                    id="test3"
-                    isLoading={loadingThree}
-                    // disabled={!responseThree}
-                    mb="2"
-                    >
+                aria-label="test data" 
+                colorScheme='blue'
+                size='lg'
+                onClick={(e) => fetchLocalStorage(e)}
+                id="test3"
+                isLoading={loadingThree}
+                // disabled={!responseThree}
+                mb="2"
+                >
                     <GiMaterialsScience /> Test Data
                 </Button>
                 <Button 
-                    aria-label="apply to map" 
-                    colorScheme='blue'
-                    size='lg'
-                    id="map3"
-                    isLoading={loadingThree}
-                    mb="2"
-                    disabled={true}
-                    >
+                aria-label="apply to map" 
+                colorScheme='blue'
+                size='lg'
+                id="map3"
+                isLoading={loadingThree}
+                mb="2"
+                disabled={true}
+                >
                     <GoGlobe /> Apply To Map
                 </Button>
                 </Flex>
