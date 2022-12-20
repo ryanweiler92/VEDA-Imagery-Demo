@@ -25,6 +25,7 @@ import {
 } from '@chakra-ui/icons';
 import { useAppSelector } from '../store/hooks';
 import { logout } from '../localStorage/localStorage';
+import { FaGithub } from 'react-icons/fa';
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
@@ -69,7 +70,7 @@ const Navbar = () => {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-            {token ? (
+            {/* {token ? (
               <Button
               as={'a'}
               fontSize={'md'}
@@ -102,7 +103,22 @@ const Navbar = () => {
               Sign Up
               </Button>
             </>
-            )}
+            )} */}
+            <Button 
+            as={'a'}
+            display={{ base: 'none', md: 'inline-flex' }}
+            fontSize={'2xl'}
+            fontWeight={600}
+            color={'white'}
+            bg={'teal.300'}
+            href={'https://github.com/ryanweiler92/Worldview-VEDA-Typescript-Demo'}
+            target="_blank"
+            _hover={{
+              bg: 'teal.600',
+            }}>
+              <FaGithub />
+            </Button>
+
         </Stack>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
@@ -267,7 +283,8 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: 'Mapping',
+    label: 'GIBS Imagery',
+    href: '/'
     // children: [
     //   {
     //     label: 'Explore Design Work',
@@ -282,7 +299,8 @@ const NAV_ITEMS: Array<NavItem> = [
     // ],
   },
   {
-    label: 'Charting',
+    label: 'API Testing',
+    href: '/apitesting'
     // children: [
     //   {
     //     label: 'Job Board',

@@ -4,7 +4,6 @@ import { setAvailableLayers } from '../../../slices/worldview/worldviewSlice';
 import { Box, Button, Flex, Heading, List, ListItem, Text, Icon, Divider, IconButton } from "@chakra-ui/react";
 import { AddIcon }  from '@chakra-ui/icons';
 
-
 const AvailableLayerDisplay = () => {
   const dispatch = useAppDispatch();
   const availableLayers = useAppSelector((state) => state.worldview.availableLayers);
@@ -19,16 +18,15 @@ const AvailableLayerDisplay = () => {
     dispatch(setAvailableLayers(activeLayers));
   };
 
-
   return (
-    <Box bg="teal.500" borderRadius="md" w="33%">
+    <Box bg="teal.400" borderRadius="md" w="33%">
       <Flex align="center" justify="center">
         <Heading size="md" color="white" mb="2" fontWeight="normal">
           Available Layers
         </Heading>
       </Flex>
       <Divider borderWidth="1px" mb="2" />
-      <List bg="teal.500">
+      <List>
         {availableLayers &&
           availableLayers.map((layer) => {
             if (!layer.active)

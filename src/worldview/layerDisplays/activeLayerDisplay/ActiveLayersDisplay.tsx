@@ -6,7 +6,6 @@ import { setAvailableLayers, setOrderedLayers } from "../../../slices/worldview/
 import DragDropDisplay from "./DragDropDisplay";
 
 const ActiveLayerDisplay = () => {
-
     const { map, layerData } = useContext(MapContext);
     const dispatch = useAppDispatch();
     const availableLayers = useAppSelector((state) => state.worldview.availableLayers);
@@ -98,7 +97,7 @@ const ActiveLayerDisplay = () => {
     }, [orderedLayers]);
 
     return (
-        <Box bg="teal.500" borderRadius="md" w="33%">
+        <Box bg="teal.400" borderRadius="md" w="33%">
             <DragDropDisplay 
             toggleVisibility={toggleVisibility}
             removeLayer={removeLayer}
@@ -109,3 +108,4 @@ const ActiveLayerDisplay = () => {
 }
 
 export default ActiveLayerDisplay;
+

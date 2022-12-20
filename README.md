@@ -1,14 +1,22 @@
+# Worldview React Testing Demo
 
-# Worldview Map State Variables
+## About
+This is a very simplified demo that mimics some of the functionality of the [NASA GIBS Worldview application](https://github.com/nasa-gibs/worldview). This can be used for testing the ability to add new features to Worldview. It has very basic functionality including adding & removing layers, toggling visibility of layers, changing layer dates and reordering layers. It is preconfigured with 7 layers but includes a config file where you can add more. This currently only works with Raster layers. There is a seperate route `/apitesting` where you can configure and test API calls.
 
-## Context
-### The following are non-serializable values that we cannot store in the Redux store. We create them with local state and pass through context
+## Technologies
+* Typescript
+* React
+* Redux
+* Chakra UI
 
-* map: Represents the OpenLayers map object 
-* layerData: Represents the layers in the OpenLayers map object. We get these using the `getLayers()` OL method.
+## Instructions
+* `npm install`
+* `npm start`
+* To add additional layers go to `/src/worldview/config` to find the layer you want to add. Add the required data to `/src/worldview/availableLayers` as a object to the end of the array. 
+* To test additional API routes go to `/src/worldview/apiConfig` and add the required information to a new object at the end of the `apiCalls` array.
+* This project was written with Typescript but is set to the least strict type checking setting so you should be able to add js/jsx files and write Javascript.  
 
-## Redux
-### The following are values that we store in the Redux store. We could probably have created all of these with local state and passed through context but I wanted to simulate a Redux environment like we do in the WV project. 
+### Created By:
+![Ryan Weiler](https://github.com/ryanweiler92)
 
-* availableLayers: This is an array of layers that I have pre-configured to be used in this project. Found in `/worldview/config/availableLayers.ts`. 
-* date: The layer date currently being represented on the OL map.
+![screenshot](./public/screenshot.png)

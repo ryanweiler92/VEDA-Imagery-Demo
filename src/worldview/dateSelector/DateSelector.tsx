@@ -9,7 +9,6 @@ import "./DateSelector.css"
 const DateSelector = () => {
     const dispatch = useAppDispatch();
     const date = useAppSelector((state) => state.worldview.date);
-
     const myDate = new Date(Date.parse(date));
 
     return (
