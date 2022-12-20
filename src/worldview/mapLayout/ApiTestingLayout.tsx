@@ -28,7 +28,7 @@ const ApiTestingLayout = () => {
       <Flex justify="center">
         <Text fontSize="3xl">NASA GIBS Imagery</Text>
       </Flex>
-      <Map />
+        <Map />
       <Flex >
         <AvailableLayerDisplay/>
         <DateSelector />

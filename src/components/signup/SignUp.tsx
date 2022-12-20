@@ -79,7 +79,7 @@ export default function SignUp() {
             />
           </Link>
           <Text fontSize={'lg'} color={'gray.600'}>
-            Sign up for an account on MapDB
+            Sign up for an account
           </Text>
         </Stack>
         <Box

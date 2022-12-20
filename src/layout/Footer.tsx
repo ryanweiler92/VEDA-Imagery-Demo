@@ -85,7 +85,7 @@ export default function Footer() {
         htmlWidth={"200px"}
         htmlHeight={"200px"}
         />
-        <Text>© 2022 MapDB. All rights reserved</Text>
+        <Text>© 2022. All rights reserved</Text>
         <Stack direction={'row'} spacing={6}>
           <SocialButton label={'Twitter'} href={'#'}>
             <FaTwitter />

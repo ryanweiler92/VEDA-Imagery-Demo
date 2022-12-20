@@ -24,7 +24,7 @@ const ApiTest = () => {
     async function getResponseOne() {
         setLoadingOne(true)
         try {
-          const response = await axios.get('https://staging-raster.delta-backend.com/mosaic/7743bcb31bff7151aff7e5508785fce1/info');
+          const response = await axios.get(callUrlOne);
           const data = response.data;
           setResponseOne(data);
         } catch (error) {
@@ -37,7 +37,7 @@ const ApiTest = () => {
       async function getResponseTwo() {
         setLoadingTwo(true)
         try {
-          const response = await axios.get('https://staging-raster.delta-backend.com/mosaic/7743bcb31bff7151aff7e5508785fce1/info');
+          const response = await axios.get(callUrlTwo);
           const data = response.data;
           setResponseTwo(data);
         } catch (error) {
@@ -50,7 +50,7 @@ const ApiTest = () => {
       async function getResponseThree() {
         setLoadingThree(true)
         try {
-          const response = await axios.get('https://staging-raster.delta-backend.com/mosaic/7743bcb31bff7151aff7e5508785fce1/info');
+          const response = await axios.get(callUrlThree);
           const data = response.data;
           setResponseThree(data);
         } catch (error) {
@@ -149,7 +149,7 @@ const ApiTest = () => {
                 <Text align="center" my="2">{callDescriptionTwo}</Text>
                 <Text align="center" my="2">{callUrlTwo}</Text>
             </Flex>
-            <Flex align="center" direction="column" h="100%" w="33%" border="2px solid black">
+            <Flex align="center" direction="column" h="100%" w="34%" border="2px solid black">
                 <Select defaultValue="disabled" id="select3" bg="teal.300" borderRadius="0" textAlign="center" onChange={(e) => handleSelect(e)}>
                     <option value="disabled" disabled>Select an API Request</option>
                     {apiCalls.map((call) => {
