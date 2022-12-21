@@ -1,7 +1,5 @@
 import axios from 'axios';
 // search the STAC API to find the specific dates available within timeframe of interest (Hurricane Ida)
-// see example tutorial (python) https://nasa-impact.github.io/veda-documentation/hls-visualization.html
-
 export default async (setResponse) => {
 
 const STAC_API_URL = "https://staging-stac.delta-backend.com";
@@ -72,62 +70,42 @@ const collectionsFilter = {
       ],
     },
   };
-
-  let stacItems;
-
-  async function getSTACItems() {
-    try {
-      const response = await axios.post(`${STAC_API_URL}/search`, {
-        method: 'POST',
-        data: searchBody,
-      });
-      // returns a featureCollection
-      stacItems = response.data;
-      setResponse(stacItems);
-      // do something with the stacItems
-      console.log(stacItems)
-    } catch (error) {
-      console.error(error);
-    }
+  
+//   Note this search body can also be used for a stac item search 
+  const stacItemsResponse = await fetch(
+    `${STAC_API_URL}/search`,
+    {
+      method: "POST",
+      body: JSON.stringify(searchBody),
+    },
+  ).then((res) => res.json());
+  
+  // Check how many items were matched in search
+  console.log("search context:", stacItemsResponse.context);
+  
+  // Iterate over search results to get an array of unique item datetimes
+  let datetimes = [];
+  let features = stacItemsResponse.features;
+  datetimes = datetimes.concat(
+    features.map((item) => item.properties.datetime),
+  );
+  let nextLink = stacItemsResponse.links.find((link) => link.rel === "next");
+  while (nextLink) {
+    const stacItemsResponse2 = await fetch(
+      `${STAC_API_URL}/search`,
+      {
+        method: "POST",
+        body: JSON.stringify(nextLink.body),
+      },
+    ).then((res) => res.json());
+    features = stacItemsResponse2.features;
+    datetimes = datetimes.concat(
+      features.map((item) => item.properties.datetime),
+    );
+    nextLink = stacItemsResponse2.links.find((link) => link.rel === "next");
   }
-
-  getSTACItems()
   
-  // Note this search body can also be used for a stac item search 
-  // const stacItemsResponse = await fetch(
-  //   `${STAC_API_URL}/search`,
-  //   {
-  //     method: "POST",
-  //     body: JSON.stringify(searchBody),
-  //   },
-  // ).then((res) => res.json());
-  
-  // // Check how many items were matched in search
-  // console.log("search context:", stacItemsResponse.context);
-  
-  // // Iterate over search results to get an array of unique item datetimes
-  // let datetimes = [];
-  // let features = stacItemsResponse.features;
-  // datetimes = datetimes.concat(
-  //   features.map((item) => item.properties.datetime),
-  // );
-  // let nextLink = stacItemsResponse.links.find((link) => link.rel === "next");
-  // while (nextLink) {
-  //   const stacItemsResponse2 = await fetch(
-  //     `${STAC_API_URL}/search`,
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify(nextLink.body),
-  //     },
-  //   ).then((res) => res.json());
-  //   features = stacItemsResponse2.features;
-  //   datetimes = datetimes.concat(
-  //     features.map((item) => item.properties.datetime),
-  //   );
-  //   nextLink = stacItemsResponse2.links.find((link) => link.rel === "next");
-  // }
-  
-  // const outcome = datetimes.sort();
-  // setResponse(outcome)
+  const outcome = datetimes.sort();
+  setResponse(outcome)
   
 }

@@ -19,6 +19,7 @@ import {
     testResponseThreeData
 } from './dataTestingFunctions';
 import findDatesWithinTimeframe from './customRequests/findDates';
+import "../map/Map.css"
 // Import any custom request files you make here
 
 const ApiTest = () => {
@@ -41,22 +42,22 @@ const ApiTest = () => {
 
     const customRequestHandler = (setResponse) => {
         // Make a new case that refers to the customReference value you created in apiConfig.tsx and make sure to pass it setResponse as an argument.
-        console.log(customReference)
         switch (customReference){
             case '1':
                 findDatesWithinTimeframe(setResponse);
                 break;
             case 'default':
-                console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.')
+                console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');
         }
     }
 
     async function getResponseOne() {
+        setLoadingOne(true)
         if(callUrlOne === "customRequest"){
-            customRequestHandler(setResponseOne)
+            customRequestHandler(setResponseOne);
+            setLoadingOne(false);
             return;
         }
-        setLoadingOne(true)
         try {
           const response = await axios.get(callUrlOne);
           const data = response.data;
@@ -69,7 +70,12 @@ const ApiTest = () => {
       }
 
       async function getResponseTwo() {
-        setLoadingTwo(true)
+        setLoadingTwo(true);
+        if(callUrlTwo === "customRequest"){
+            customRequestHandler(setResponseTwo);
+            setLoadingTwo(false);
+            return;
+        }
         try {
           const response = await axios.get(callUrlTwo);
           const data = response.data;
@@ -83,6 +89,11 @@ const ApiTest = () => {
 
       async function getResponseThree() {
         setLoadingThree(true)
+        if(callUrlThree === "customRequest"){
+            customRequestHandler(setResponseThree);
+            setLoadingThree(false);
+            return;
+        }
         try {
           const response = await axios.get(callUrlThree);
           const data = response.data;
@@ -96,7 +107,6 @@ const ApiTest = () => {
 
       const consoleResponse = (e) => {
         if(e.target.id == "button1"){
-            console.log(responseOne)
         } else if(e.target.id == "button2"){
             console.log(responseTwo)
         } else if(e.target.id == "button3"){
@@ -107,9 +117,7 @@ const ApiTest = () => {
       const handleSelect = (e) => {
         if(!e.target.value) return
         const value = JSON.parse(e.target.value)
-            console.log(value)
-            setCustomReference(value.customReference)
-        
+        setCustomReference(value.customReference)
         if(e.target.id == "select1"){
             setCallTitleOne(value.title)
             setCallDescriptionOne(value.description)
@@ -126,7 +134,6 @@ const ApiTest = () => {
       }
 
       const saveToLocalStorage = (e) => {
-        console.log(e.target)
         if(e.target.id == "save1"){
             localStorage.setItem('response1', JSON.stringify(responseOne));
             console.log("Response 1 saved to local storage.")
@@ -158,14 +165,14 @@ const ApiTest = () => {
         }
       }
 
-    //   const testFunction = () => {
-    //     console.log(callUrlOne)
-    //     console.log(responseOne)
-    //   }
+      const testFunction = () => {
+        console.log(callUrlOne)
+        console.log(responseOne)
+      }
         
     return (
         <>
-        {/* <Button onClick={testFunction}>Test</Button> */}
+        <Button onClick={testFunction}>Test</Button>
         <Flex justify="space-around" align="center" my="2">
             <Button 
             aria-label="fetch" 
@@ -252,7 +259,7 @@ const ApiTest = () => {
                     disabled={!responseOne}
                     mb="2"
                     >
-                        <InfoIcon mr="2"/> Console
+                        <InfoIcon className="iconButton" /> Console
                     </Button>
                     <Button
                     aria-label="save"
@@ -263,7 +270,7 @@ const ApiTest = () => {
                     onClick={(e) => saveToLocalStorage(e)}
                     isLoading={loadingOne}
                     >
-                        <GiSave /> Save
+                        <GiSave className="iconButton" /> Save
                     </Button>
                 </Flex>
                 <Flex direction="column" ml="1">
@@ -277,7 +284,7 @@ const ApiTest = () => {
                     // disabled={!responseOne}
                     mb="2"
                     >
-                        <GiMaterialsScience /> Test Data
+                        <GiMaterialsScience className="iconButton" /> Test Data
                     </Button>
                     <Button 
                     aria-label="apply to map" 
@@ -288,7 +295,7 @@ const ApiTest = () => {
                     disabled={true}
                     mb="2"
                     >
-                        <GoGlobe /> Apply To Map
+                        <GoGlobe className="iconButton" /> Apply To Map
                     </Button>
                 </Flex>
             </Flex>
@@ -304,7 +311,7 @@ const ApiTest = () => {
                 disabled={!responseTwo}
                 mb="2"
                 >
-                    <InfoIcon mr="2"/> Console
+                    <InfoIcon className="iconButton"/> Console
                 </Button>
                 <Button
                 aria-label="save"
@@ -315,7 +322,7 @@ const ApiTest = () => {
                 onClick={(e) => saveToLocalStorage(e)}
                 isLoading={loadingTwo}
                 >
-                    <GiSave /> Save 
+                    <GiSave className="iconButton" /> Save 
                 </Button>
             </Flex>
             <Flex direction="column" ml="1">
@@ -329,7 +336,7 @@ const ApiTest = () => {
                 // disabled={!responseTwo}
                 mb="2"
                 >
-                    <GiMaterialsScience /> Test Data
+                    <GiMaterialsScience className="iconButton" /> Test Data
                 </Button>
                 <Button 
                 aria-label="apply to map" 
@@ -340,7 +347,7 @@ const ApiTest = () => {
                 disabled={true}
                 mb="2"
                 >
-                    <GoGlobe /> Apply To Map
+                    <GoGlobe className="iconButton" /> Apply To Map
                 </Button>
                 </Flex>
             </Flex>
@@ -356,7 +363,7 @@ const ApiTest = () => {
                 disabled={!responseThree}
                 mb="2"
                 >
-                    <InfoIcon mr="2"/> Console
+                    <InfoIcon className="iconButton"/> Console
                 </Button>
                 <Button
                 aria-label="save"
@@ -367,7 +374,7 @@ const ApiTest = () => {
                 onClick={(e) => saveToLocalStorage(e)}
                 isLoading={loadingThree}
                 >
-                    <GiSave /> Save
+                    <GiSave className="iconButton" /> Save
                 </Button>
             </Flex>
             <Flex direction="column" ml="1">
@@ -381,7 +388,7 @@ const ApiTest = () => {
                 // disabled={!responseThree}
                 mb="2"
                 >
-                    <GiMaterialsScience /> Test Data
+                    <GiMaterialsScience className="iconButton" /> Test Data
                 </Button>
                 <Button 
                 aria-label="apply to map" 
@@ -392,7 +399,7 @@ const ApiTest = () => {
                 mb="2"
                 disabled={true}
                 >
-                    <GoGlobe /> Apply To Map
+                    <GoGlobe className="iconButton" /> Apply To Map
                 </Button>
                 </Flex>
             </Flex>
