@@ -1,7 +1,10 @@
 import axios from 'axios';
-// search the STAC API to find the specific dates available within timeframe of interest (Hurricane Ida)
-export default async (setResponse) => {
+// Update the temporal range in search body and register that search with the Raster API. The registered search id can be reused for alternate map layer visualizations
+// see example tutorial (python) https://nasa-impact.github.io/veda-documentation/hls-visualization.html
 
+export default async (setResponse, setLoading, responseId) => {
+
+// ---- REGION 1. argument definitions ------
 const STAC_API_URL = "https://staging-stac.delta-backend.com";
 const RASTER_API_URL = "https://staging-raster.delta-backend.com";
 
@@ -56,56 +59,33 @@ const collectionsFilter = {
     ],
   };
   
-  // Specify cql2-json filter language in search body and add context for a summary of matched results
-  const searchBody = {
-    "filter-lang": "cql2-json",
-    context: "on",
-    filter: {
-      op: "and",
-      args: [
-        collectionsFilter,
-        spatialFilter,
-        temporalFilter,
-        cloudFilter,
-      ],
-    },
+  const restrictedTemporalFilter = {
+    op: "t_intersects",
+    args: [
+      { property: "datetime" },
+      { interval: ["2021-10-16T00:00:00Z", "2021-10-18T00:00:00Z"] },
+    ],
   };
   
-//   Note this search body can also be used for a stac item search 
-  const stacItemsResponse = await fetch(
-    `${STAC_API_URL}/search`,
-    {
-      method: "POST",
-      body: JSON.stringify(searchBody),
+  const searchBody = {
+    "filter-lang": "cql2-json",
+    filter: {
+      op: "and",
+      args: [collectionsFilter, spatialFilter, restrictedTemporalFilter],
     },
-  ).then((res) => res.json());
+  };
+  // ---- END 1. argument definitions ------
+
+  // ----- REGION 2. fetch registered id -------
   
-  // Check how many items were matched in search
-  console.log("search context:", stacItemsResponse.context);
-  
-  // Iterate over search results to get an array of unique item datetimes
-  let datetimes = [];
-  let features = stacItemsResponse.features;
-  datetimes = datetimes.concat(
-    features.map((item) => item.properties.datetime),
-  );
-  let nextLink = stacItemsResponse.links.find((link) => link.rel === "next");
-  while (nextLink) {
-    const stacItemsResponse2 = await fetch(
-      `${STAC_API_URL}/search`,
-      {
-        method: "POST",
-        body: JSON.stringify(nextLink.body),
-      },
-    ).then((res) => res.json());
-    features = stacItemsResponse2.features;
-    datetimes = datetimes.concat(
-      features.map((item) => item.properties.datetime),
-    );
-    nextLink = stacItemsResponse2.links.find((link) => link.rel === "next");
-  }
-  
-  const outcome = datetimes.sort();
-  setResponse(outcome)
-  
+  const mosaicResponse = await axios.post(
+    `${RASTER_API_URL}/mosaic/register`,
+    searchBody
+  ).then((res) => res.data);
+
+  setResponse(mosaicResponse);
+  setLoading(false);
+  console.log(`${responseId} fetch complete. Use console to see results.`)
+
+  // ----- END 2. fetch registered id -------
 }

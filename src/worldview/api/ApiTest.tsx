@@ -12,15 +12,19 @@ import axios from "axios"
 import { PhoneIcon, InfoIcon } from '@chakra-ui/icons';
 import { GiSave, GiMaterialsScience } from 'react-icons/gi'
 import { GoGlobe } from 'react-icons/go'
+import "../map/Map.css"
 import { apiCalls } from "./apiConfig";
 import { 
     testResponseOneData, 
     testResponseTwoData,
     testResponseThreeData
 } from './dataTestingFunctions';
-import findDatesWithinTimeframe from './customRequests/findDates';
-import "../map/Map.css"
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { setOpenStreetLayerResponse } from '../../slices/worldview/worldviewSlice';
 // Import any custom request files you make here
+import findDatesWithinTimeframe from './customRequests/findDates';
+import registerSearch from "./customRequests/registerSearch";
+import postProcessingAlgorithm from './customRequests/postProcessingAlgorithm';
 
 const ApiTest = () => {
     const [customReference, setCustomReference] = useState();
@@ -40,11 +44,23 @@ const ApiTest = () => {
     const [loadingTwo, setLoadingTwo] = useState(false);
     const [loadingThree, setLoadingThree] = useState(false);
 
-    const customRequestHandler = (setResponse) => {
+    const dispatch = useAppDispatch();
+
+
+    const customRequestHandler = (setResponse, setLoading, responseId) => {
         // Make a new case that refers to the customReference value you created in apiConfig.tsx and make sure to pass it setResponse as an argument.
         switch (customReference){
             case '1':
-                findDatesWithinTimeframe(setResponse);
+                setLoading(true);
+                findDatesWithinTimeframe(setResponse, setLoading, responseId);
+                break;
+            case '2':
+                setLoading(true);
+                registerSearch(setResponse, setLoading, responseId);
+                break;
+            case '3':
+                setLoading(true);
+                postProcessingAlgorithm(setResponse, setLoading, responseId);
                 break;
             case 'default':
                 console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');
@@ -52,12 +68,11 @@ const ApiTest = () => {
     }
 
     async function getResponseOne() {
-        setLoadingOne(true)
         if(callUrlOne === "customRequest"){
-            customRequestHandler(setResponseOne);
-            setLoadingOne(false);
+            customRequestHandler(setResponseOne, setLoadingOne, "Response one");
             return;
         }
+        setLoadingOne(true)
         try {
           const response = await axios.get(callUrlOne);
           const data = response.data;
@@ -66,16 +81,16 @@ const ApiTest = () => {
           console.error(error);
         } finally {
             setLoadingOne(false);
+            console.log(`Response one fetch complete. Use console to see results.`)
         }
       }
 
       async function getResponseTwo() {
-        setLoadingTwo(true);
         if(callUrlTwo === "customRequest"){
-            customRequestHandler(setResponseTwo);
-            setLoadingTwo(false);
+            customRequestHandler(setResponseTwo, setLoadingTwo, "Response two");
             return;
         }
+        setLoadingTwo(true);
         try {
           const response = await axios.get(callUrlTwo);
           const data = response.data;
@@ -83,17 +98,17 @@ const ApiTest = () => {
         } catch (error) {
           console.error(error);
         } finally {
-            setLoadingTwo(false)
+            setLoadingTwo(false);
+            console.log(`Response two fetch complete. Use console to see results.`)
         }
       }
 
-      async function getResponseThree() {
-        setLoadingThree(true)
+      async function getResponseThree() {     
         if(callUrlThree === "customRequest"){
-            customRequestHandler(setResponseThree);
-            setLoadingThree(false);
+            customRequestHandler(setResponseThree, setLoadingThree, "Response three");
             return;
         }
+        setLoadingThree(true)
         try {
           const response = await axios.get(callUrlThree);
           const data = response.data;
@@ -101,16 +116,18 @@ const ApiTest = () => {
         } catch (error) {
           console.error(error);
         } finally {
-            setLoadingThree(false)
+            setLoadingThree(false);
+            console.log(`Response three fetch complete. Use console to see results.`)
         }
       }
 
       const consoleResponse = (e) => {
         if(e.target.id == "button1"){
+            console.log(responseOne);
         } else if(e.target.id == "button2"){
-            console.log(responseTwo)
+            console.log(responseTwo);
         } else if(e.target.id == "button3"){
-            console.log(responseThree)
+            console.log(responseThree);
         }
       }
 
@@ -165,6 +182,16 @@ const ApiTest = () => {
         }
       }
 
+      const handleAddToOpenStreetMap = (e) => {
+        if(e.target.id == "map1"){
+            dispatch(setOpenStreetLayerResponse(responseOne))
+        } else if (e.target.id == "map2"){
+            dispatch(setOpenStreetLayerResponse(responseTwo))
+        } else if (e.target.id == "map3"){
+            dispatch(setOpenStreetLayerResponse(responseThree))
+        }
+      }
+
       const testFunction = () => {
         console.log(callUrlOne)
         console.log(responseOne)
@@ -206,7 +233,7 @@ const ApiTest = () => {
             </Button>
         </Flex>
         <Flex w="100%" bg="gray.100" h="300px"> 
-            <Flex align="center" direction="column" h="100%" w="33%" border="2px solid black">
+            <Flex align="center" direction="column" h="100%" w="33%" border="2px solid black" className="text-container">
                 <Select defaultValue="disabled" id="select1" bg="teal.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
                     <option value="disabled" disabled>Select an API Request</option>
                     {apiCalls.map((call) => {
@@ -215,9 +242,9 @@ const ApiTest = () => {
                         )
                     })}
                 </Select>
-                <Heading textAlign="center" size='md' my="2">{callTitleOne}</Heading>
-                <Text align="center" my="2">{callDescriptionOne}</Text>
-                <Text align="center" my="2">{callUrlOne}</Text>
+                <Heading textAlign="center" size='md' my="2" maxWidth="320px">{callTitleOne}</Heading>
+                <Text align="center" fontSize="sm" my="2" maxWidth="320px">{callDescriptionOne}</Text>
+                <Text align="center" fontSize="sm" my="2" maxWidth="320px">{callUrlOne}</Text>
             </Flex>
             <Flex align="center" direction="column" h="100%" w="33%" border="2px solid black">
                 <Select defaultValue="disabled" id="select2" bg="teal.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
@@ -228,9 +255,9 @@ const ApiTest = () => {
                         )
                     })}
                 </Select>
-                <Heading textAlign="center" size='md' my="2">{callTitleTwo}</Heading>
-                <Text align="center" my="2">{callDescriptionTwo}</Text>
-                <Text align="center" my="2">{callUrlTwo}</Text>
+                <Heading textAlign="center" size='md' my="2" maxWidth="320px">{callTitleTwo}</Heading>
+                <Text align="center" my="2" maxWidth="320px">{callDescriptionTwo}</Text>
+                <Text align="center" my="2" maxWidth="320px">{callUrlTwo}</Text>
             </Flex>
             <Flex align="center" direction="column" h="100%" w="34%" border="2px solid black">
                 <Select defaultValue="disabled" id="select3" bg="teal.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
@@ -241,9 +268,9 @@ const ApiTest = () => {
                         )
                     })}
                 </Select>
-                <Heading textAlign="center" size='md' my="2">{callTitleThree}</Heading>
-                <Text align="center" my="2">{callDescriptionThree}</Text>
-                <Text align="center" my="2">{callUrlThree}</Text>
+                <Heading textAlign="center" size='md' my="2" maxWidth="320px">{callTitleThree}</Heading>
+                <Text align="center" my="2" maxWidth="320px">{callDescriptionThree}</Text>
+                <Text align="center" my="2" maxWidth="320px">{callUrlThree}</Text>
             </Flex>
         </Flex>
         <Flex justify="space-around" align="center" my="2">
@@ -273,7 +300,7 @@ const ApiTest = () => {
                         <GiSave className="iconButton" /> Save
                     </Button>
                 </Flex>
-                <Flex direction="column" ml="1">
+                <Flex direction="column" ml="1" mr="1">
                     <Button 
                     aria-label="test data" 
                     colorScheme='teal'
@@ -281,7 +308,6 @@ const ApiTest = () => {
                     onClick={(e) => fetchLocalStorage(e)}
                     id="test1"
                     isLoading={loadingOne}
-                    // disabled={!responseOne}
                     mb="2"
                     >
                         <GiMaterialsScience className="iconButton" /> Test Data
@@ -292,7 +318,8 @@ const ApiTest = () => {
                     size='lg'
                     id="map1"
                     isLoading={loadingOne}
-                    disabled={true}
+                    onClick={(e) => handleAddToOpenStreetMap(e)}
+                    isDisabled={!responseOne}
                     mb="2"
                     >
                         <GoGlobe className="iconButton" /> Apply To Map
@@ -325,7 +352,7 @@ const ApiTest = () => {
                     <GiSave className="iconButton" /> Save 
                 </Button>
             </Flex>
-            <Flex direction="column" ml="1">
+            <Flex direction="column" ml="1" mr="1">
                 <Button 
                 aria-label="test data" 
                 colorScheme='red'
@@ -333,7 +360,6 @@ const ApiTest = () => {
                 onClick={(e) => fetchLocalStorage(e)}
                 id="test2"
                 isLoading={loadingTwo}
-                // disabled={!responseTwo}
                 mb="2"
                 >
                     <GiMaterialsScience className="iconButton" /> Test Data
@@ -344,7 +370,8 @@ const ApiTest = () => {
                 size='lg'
                 id="map2"
                 isLoading={loadingTwo}
-                disabled={true}
+                onClick={(e) => handleAddToOpenStreetMap(e)}
+                isDisabled={!responseTwo}
                 mb="2"
                 >
                     <GoGlobe className="iconButton" /> Apply To Map
@@ -385,7 +412,6 @@ const ApiTest = () => {
                 onClick={(e) => fetchLocalStorage(e)}
                 id="test3"
                 isLoading={loadingThree}
-                // disabled={!responseThree}
                 mb="2"
                 >
                     <GiMaterialsScience className="iconButton" /> Test Data
@@ -397,7 +423,8 @@ const ApiTest = () => {
                 id="map3"
                 isLoading={loadingThree}
                 mb="2"
-                disabled={true}
+                onClick={(e) => handleAddToOpenStreetMap(e)}
+                isDisabled={!responseThree}
                 >
                     <GoGlobe className="iconButton" /> Apply To Map
                 </Button>

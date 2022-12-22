@@ -1,5 +1,6 @@
 import axios from 'axios';
-// search the STAC API to find the specific dates available within timeframe of interest (Hurricane Ida)
+import qs from 'qs';
+// Update the temporal range in search body and register that search with the Raster API. The registered search id can be reused for alternate map layer visualizations
 // see example tutorial (python) https://nasa-impact.github.io/veda-documentation/hls-visualization.html
 
 export default async (setResponse, setLoading, responseId) => {
@@ -59,66 +60,48 @@ const collectionsFilter = {
     ],
   };
   
-  // Specify cql2-json filter language in search body and add context for a summary of matched results
+  const restrictedTemporalFilter = {
+    op: "t_intersects",
+    args: [
+      { property: "datetime" },
+      { interval: ["2021-10-16T00:00:00Z", "2021-10-18T00:00:00Z"] },
+    ],
+  };
+  
   const searchBody = {
     "filter-lang": "cql2-json",
-    context: "on",
     filter: {
       op: "and",
-      args: [
-        collectionsFilter,
-        spatialFilter,
-        temporalFilter,
-        cloudFilter,
-      ],
+      args: [collectionsFilter, spatialFilter, restrictedTemporalFilter],
     },
   };
   // ---- END 1. argument definitions ------
 
-  // ---- REGION 2. fetch feature collection of matching features ------
-  let stacItemsResponse;
-
-  async function getSTACItems() {
-    try {
-      const response = await axios.post(`${STAC_API_URL}/search`, searchBody);
-      // returns a featureCollection
-      stacItemsResponse = response.data;
-      setResponse(stacItemsResponse);
-
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
- await getSTACItems()
+  // ----- REGION 2. fetch tiles -------
   
-  // Check how many items were matched in search
-  // console.log("search context:", stacItemsResponse.context);
-  // ----- END 2. fetch feature collection of matching features ------
+  const mosaicResponse = await axios.post(
+    `${RASTER_API_URL}/mosaic/register`,
+    searchBody
+  ).then((res) => res.data);
 
-  // ----- REGION 3. fetch unique item datetimes ------
+  // Set up format for Map API url
+  // Get base url for tiler from the register mosaic request
+  const tilesHref = mosaicResponse.links.find(
+    (link) => link.rel === "tilejson"
+  ).href;
   
-  // Iterate over search results to get an array of unique item datetimes
-  let datetimes = [];
-  let features = stacItemsResponse.features;
-  datetimes = datetimes.concat(
-    features.map((item) => item.properties.datetime),
-  );
-  let nextLink = stacItemsResponse.links.find((link) => link.rel === "next");
-  while (nextLink) {
-    const stacItemsResponse2 = await axios.post(`${STAC_API_URL}/search`, nextLink.body)
-      .then((res) => res.data);
+  const tilejsonResponse = await axios.get(tilesHref, {
+    params: {
+      minzoom: 6,
+      maxzoom: 12,
+      post_process: "swir",
+      assets: JSON.stringify(s30_swir_assets),
+    },
+  }).then((res) => res.data);
 
-    features = stacItemsResponse2.features;
-    datetimes = datetimes.concat(
-      features.map((item) => item.properties.datetime),
-    );
-    nextLink = stacItemsResponse2.links.find((link) => link.rel === "next");
-  }
-  
-  const outcome = datetimes.sort();
-  setResponse(outcome);
+  setResponse(tilejsonResponse);
   setLoading(false);
-  console.log(`${responseId} fetch complete. Use console to see results.`)
-  // ----- END 3. fetch unique item datetimes ------
+  console.log(`${responseId} fetch complete. Use console to see results.`);
+
+  // ----- END 2. fetch tiles -------
 }

@@ -7,6 +7,7 @@ import ApiTestingPage from '../src/layout/ApiTestingPage';
 import ImageryPage from "./layout/ImageryPage";
 import Login from './components/login/Login';
 import SignUp from './components/signup/SignUp';
+import OpenStreetPage from './layout/OpenStreetPage';
 
 
 export const App = () => (
@@ -15,6 +16,7 @@ export const App = () => (
       <Routes>
         <Route path="/" element={<ImageryPage />} />
         <Route path="/apitesting" element={<ApiTestingPage />} />
+        <Route path="/openstreet" element={<OpenStreetPage/>}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<SignUp />}/>
       </Routes>

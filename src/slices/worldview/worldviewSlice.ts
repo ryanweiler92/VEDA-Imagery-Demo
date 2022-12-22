@@ -3,10 +3,35 @@ import { RootState } from '../../store/store';
 import startingLayers from '../../worldview/config/availableLayers';
 import { startingDate } from '../../worldview/selectors/selectors';
 
+interface OpenStreetLayerResponse {
+  bounds: Array<number>,
+  center: Array<number>,
+  maxzoom: number,
+  minzoom: number,
+  name: string,
+  scheme: string,
+  tilejson: string,
+  tiles: Array<string>
+  version: string
+}
+
+const openStreetLayerResponse: OpenStreetLayerResponse = {
+  bounds: [],
+  center: [],
+  maxzoom: 0,
+  minzoom: 0,
+  name: '',
+  scheme: '',
+  tilejson: '',
+  tiles: [],
+  version: '',
+}
+
 const initialState = {
   availableLayers: startingLayers,
   orderedLayers: [],
   date: startingDate,
+  openStreetLayerResponse: openStreetLayerResponse,
 }
 
 export const worldviewSlice = createSlice({
@@ -20,11 +45,14 @@ export const worldviewSlice = createSlice({
       state.orderedLayers = action.payload
     },
     setDate: (state, action: PayloadAction<string>) => {
-      state.date = action.payload;
+      state.date = action.payload
     },
+    setOpenStreetLayerResponse: (state, action: PayloadAction<any>) => {
+      state.openStreetLayerResponse = action.payload
+    }
   },
 });
 
-export const { setAvailableLayers, setOrderedLayers, setDate } = worldviewSlice.actions;
+export const { setAvailableLayers, setOrderedLayers, setDate, setOpenStreetLayerResponse } = worldviewSlice.actions;
 export default worldviewSlice.reducer;
 
