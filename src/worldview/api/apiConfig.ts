@@ -32,12 +32,19 @@ export const apiCalls = [
         applyToMap: false
     },
     {
-        title: "Hurricane Ida",
+        title: "Hurricane Ida SWIR (MAP)",
         url: "customRequest",
-        description: "Returns tiles from a tile request. Use the built-in SWIR post processing algorithm.",
+        description: "Imagery from 2021 Hurricane Ida using the built-in SWIR post processing algorithm. post_process=swir, assets=[B12, B8A, B04]",
         customReference: "3",
         applyToMap: true
-    }
+    },
+    {
+        title: "Hurricane Ida Color Map (MAP)",
+        url: "customRequest",
+        description: "Imagery from 2021 Hurricane Ida using color map, rescaling & expression. assets=[B08, B04], expression=(B08-B04)/(B08+B04) rescale=0,1, colormap_name=rdylgn",
+        customReference: "4",
+        applyToMap: true
+    },
   ];
 
   

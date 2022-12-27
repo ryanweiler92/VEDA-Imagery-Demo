@@ -46,18 +46,6 @@ const reducer = (state: State, action: Action): State => {
   }
 }
 
-interface ExampleConfig {
-  ida_bbox: Array<number>
-  zoom_start: number,
-  attr: string,
-}
-
-const exampleConfig: ExampleConfig = {
-  ida_bbox : [-90.932637, 29.705366, -89.766437, 30.71627],
-  zoom_start: 9,
-  attr: "Mosaic",
-}
-
 const OpenStreetMap = () => {
   const mapRef = useRef();
 

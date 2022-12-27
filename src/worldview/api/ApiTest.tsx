@@ -24,7 +24,8 @@ import { setOpenStreetLayerResponse, setOpenStreetRequestLocation } from '../../
 // Import any custom request files you make here
 import findDatesWithinTimeframe from './customRequests/findDates';
 import registerSearch from "./customRequests/registerSearch";
-import postProcessingAlgorithm from './customRequests/postProcessingAlgorithm';
+import hurricaneIdaSWIR from './customRequests/hurricaneIdaSWIR';
+import hurricaneIdaColor from './customRequests/hurricaneIdaColor';
 
 const ApiTest = () => {
     const [customReference, setCustomReference] = useState();
@@ -70,7 +71,11 @@ const ApiTest = () => {
                 break;
             case '3':
                 setLoading(true);
-                postProcessingAlgorithm(setResponse, setLoading, responseId, setLocationRequest);
+                hurricaneIdaSWIR(setResponse, setLoading, responseId, setLocationRequest);
+                break;
+            case '4':
+                setLoading(true);
+                hurricaneIdaColor(setResponse, setLoading, responseId, setLocationRequest);
                 break;
             case 'default':
                 console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');
@@ -384,7 +389,7 @@ const ApiTest = () => {
                 id="map2"
                 isLoading={loadingTwo}
                 onClick={(e) => handleAddToOpenStreetMap(e)}
-                isDisabled={!callTwoApplyToMap}
+                isDisabled={!callTwoApplyToMap || !responseTwo}
                 mb="2"
                 >
                     <GoGlobe className="iconButton" /> Apply To Map
@@ -437,7 +442,7 @@ const ApiTest = () => {
                 isLoading={loadingThree}
                 mb="2"
                 onClick={(e) => handleAddToOpenStreetMap(e)}
-                isDisabled={!callThreeApplyToMap}
+                isDisabled={!callThreeApplyToMap || !responseThree}
                 >
                     <GoGlobe className="iconButton" /> Apply To Map
                 </Button>
