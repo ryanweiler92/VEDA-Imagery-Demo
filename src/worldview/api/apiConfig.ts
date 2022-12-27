@@ -45,6 +45,13 @@ export const apiCalls = [
         customReference: "4",
         applyToMap: true
     },
+    {
+        title: "Hurricane Maria L30 (MAP)",
+        url: "customRequest",
+        description: "Imagery from 2017 Hurricane Maria using color map, rescaling & expression. assets=[B03, B05] expression=(B03-B05)/(B03+B05) rescale=0,1 colorMap=viridis",
+        customReference: "5",
+        applyToMap: true
+    }
   ];
 
   

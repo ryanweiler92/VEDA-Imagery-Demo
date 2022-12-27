@@ -26,6 +26,7 @@ import findDatesWithinTimeframe from './customRequests/findDates';
 import registerSearch from "./customRequests/registerSearch";
 import hurricaneIdaSWIR from './customRequests/hurricaneIdaSWIR';
 import hurricaneIdaColor from './customRequests/hurricaneIdaColor';
+import hurricaneMariaL30 from './customRequests/hurricaneMariaL30';
 
 const ApiTest = () => {
     const [customReference, setCustomReference] = useState();
@@ -76,6 +77,10 @@ const ApiTest = () => {
             case '4':
                 setLoading(true);
                 hurricaneIdaColor(setResponse, setLoading, responseId, setLocationRequest);
+                break;
+            case '5':
+                setLoading(true);
+                hurricaneMariaL30(setResponse, setLoading, responseId, setLocationRequest);
                 break;
             case 'default':
                 console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');
@@ -217,7 +222,7 @@ const ApiTest = () => {
         
     return (
         <>
-        <Button onClick={testFunction}>Test</Button>
+        {/* <Button onClick={testFunction}>Test</Button> */}
         <Flex justify="space-around" align="center" my="2">
             <Button 
             aria-label="fetch" 

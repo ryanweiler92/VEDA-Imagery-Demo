@@ -22,7 +22,7 @@ const ApiTestingLayout = () => {
       setMap
     }}>
       <Flex justify="center">
-        <Text fontSize="3xl">NASA GIBS Imagery</Text>
+        <Text fontSize="3xl">NASA GIBS Imagery Open Layers</Text>
       </Flex>
       <Map />
       <Flex >

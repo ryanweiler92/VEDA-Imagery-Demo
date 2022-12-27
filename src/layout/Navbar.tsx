@@ -299,11 +299,11 @@ const NAV_ITEMS: Array<NavItem> = [
     // ],
   },
   {
-    label: 'API Testing',
+    label: 'API VEDA Testing',
     href: '/apitesting'
   },
-  {
-    label: 'ArcGIS',
-    href: '/arcgis',
-  }
+  // {
+  //   label: 'ArcGIS',
+  //   href: '/arcgis',
+  // }
 ];
