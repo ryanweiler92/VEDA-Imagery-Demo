@@ -87,7 +87,6 @@ const OpenStreetMap = () => {
   const openStreetResponseLayer = useAppSelector((state) => state.worldview.openStreetLayerResponse);
 
   useEffect(() => {
-      console.log(openStreetResponseLayer)
       const {
         bounds,
         tiles,
@@ -104,7 +103,6 @@ const OpenStreetMap = () => {
   }, [openStreetResponseLayer])
 
   useEffect(() => {
-    console.log('testing ida_box');
     const {
       ida_bbox,
       zoom_start,
@@ -112,8 +110,6 @@ const OpenStreetMap = () => {
     } = exampleConfig
 
     const location = [(ida_bbox[1] + ida_bbox[3]) / 2,(ida_bbox[0] + ida_bbox[2]) / 2];
-
-    console.log(location)
 
   })
 

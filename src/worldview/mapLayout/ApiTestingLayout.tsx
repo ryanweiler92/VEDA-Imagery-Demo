@@ -27,13 +27,13 @@ const ApiTestingLayout = () => {
         <ApiTest />
       </Box>
       <Flex justify="center">
-        <Text fontSize="3xl">Open Street Map</Text>
+        <Text fontSize="3xl">Leaflet OpenStreetMap</Text>
       </Flex>
       <Flex id="OSMAP-container" justify="center">
         <OpenStreetMap />
       </Flex>
       <Flex justify="center">
-        <Text fontSize="3xl">NASA GIBS Imagery</Text>
+        <Text fontSize="3xl">OpenLayers Map</Text>
       </Flex>
         <GibsMap />
       <Flex >
