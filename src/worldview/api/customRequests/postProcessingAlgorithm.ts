@@ -3,7 +3,7 @@ import qs from 'qs';
 // Update the temporal range in search body and register that search with the Raster API. The registered search id can be reused for alternate map layer visualizations
 // see example tutorial (python) https://nasa-impact.github.io/veda-documentation/hls-visualization.html
 
-export default async (setResponse, setLoading, responseId) => {
+export default async (setResponse, setLoading, responseId, setLocationRequest) => {
 
 // ---- REGION 1. argument definitions ------
 const STAC_API_URL = "https://staging-stac.delta-backend.com";
@@ -89,16 +89,21 @@ const collectionsFilter = {
   const tilesHref = mosaicResponse.links.find(
     (link) => link.rel === "tilejson"
   ).href;
+
+  const params = {
+    minzoom: 6,
+    maxzoom: 12,
+    post_process: "swir",
+    assets: s30_swir_assets,
+  };
+
+  const queryString = qs.stringify(params, { arrayFormat: 'repeat' });
   
   const tilejsonResponse = await axios.get(tilesHref, {
-    params: {
-      minzoom: 6,
-      maxzoom: 12,
-      post_process: "swir",
-      assets: JSON.stringify(s30_swir_assets),
-    },
+    params: new URLSearchParams(queryString),
   }).then((res) => res.data);
 
+  setLocationRequest(idaBbox)
   setResponse(tilejsonResponse);
   setLoading(false);
   console.log(`${responseId} fetch complete. Use console to see results.`);

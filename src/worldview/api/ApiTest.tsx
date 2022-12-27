@@ -6,7 +6,7 @@
 //  3. In apiConfig.ts, add a new object to the end of the array with properties of title, description, url and customReference. Make sure the customReference is unique.
 //  4. Import your custom request function.
 //  5. Add a new case to the switch statement that refers to the customReference value you created in apiConfig.ts 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Box, Button, Flex, IconButton, Heading, List, ListItem, Text, Icon, Spinner, Spacer, Select } from "@chakra-ui/react";
 import axios from "axios"
 import { PhoneIcon, InfoIcon } from '@chakra-ui/icons';
@@ -20,7 +20,7 @@ import {
     testResponseThreeData
 } from './dataTestingFunctions';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { setOpenStreetLayerResponse } from '../../slices/worldview/worldviewSlice';
+import { setOpenStreetLayerResponse, setOpenStreetRequestLocation } from '../../slices/worldview/worldviewSlice';
 // Import any custom request files you make here
 import findDatesWithinTimeframe from './customRequests/findDates';
 import registerSearch from "./customRequests/registerSearch";
@@ -34,17 +34,27 @@ const ApiTest = () => {
     const [callUrlOne, setCallUrlOne] = useState();
     const [callTitleOne, setCallTitleOne] = useState();
     const [callDescriptionOne, setCallDescriptionOne] = useState();
+    const [callOneApplyToMap, setCallOneApplyToMap] = useState(false);
     const [callUrlTwo, setCallUrlTwo] = useState();
     const [callTitleTwo, setCallTitleTwo] = useState();
     const [callDescriptionTwo, setCallDescriptionTwo] = useState();
+    const [callTwoApplyToMap, setCallTwoApplyToMap] = useState(false);
     const [callUrlThree, setCallUrlThree] = useState();
     const [callTitleThree, setCallTitleThree] = useState();
     const [callDescriptionThree, setCallDescriptionThree] = useState();
+    const [callThreeApplyToMap, setCallThreeApplyToMap] = useState(false);
     const [loadingOne, setLoadingOne] = useState(false);
     const [loadingTwo, setLoadingTwo] = useState(false);
     const [loadingThree, setLoadingThree] = useState(false);
+    const [locationRequest, setLocationRequest] = useState()
 
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if(!locationRequest) return;
+
+        dispatch(setOpenStreetRequestLocation(locationRequest));
+    }, [locationRequest])
 
 
     const customRequestHandler = (setResponse, setLoading, responseId) => {
@@ -60,7 +70,7 @@ const ApiTest = () => {
                 break;
             case '3':
                 setLoading(true);
-                postProcessingAlgorithm(setResponse, setLoading, responseId);
+                postProcessingAlgorithm(setResponse, setLoading, responseId, setLocationRequest);
                 break;
             case 'default':
                 console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');
@@ -139,14 +149,17 @@ const ApiTest = () => {
             setCallTitleOne(value.title)
             setCallDescriptionOne(value.description)
             setCallUrlOne(value.url)
+            setCallOneApplyToMap(value.applyToMap)
         } else if (e.target.id == "select2"){
             setCallTitleTwo(value.title)
             setCallDescriptionTwo(value.description)
             setCallUrlTwo(value.url)
+            setCallTwoApplyToMap(value.applyToMap)
         } else if (e.target.id == "select3") {
             setCallTitleThree(value.title)
             setCallDescriptionThree(value.description)
             setCallUrlThree(value.url)
+            setCallThreeApplyToMap(value.applyToMap)
         }
       }
 
@@ -238,7 +251,7 @@ const ApiTest = () => {
                     <option value="disabled" disabled>Select an API Request</option>
                     {apiCalls.map((call) => {
                         return (
-                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title, customReference: call.customReference})}>{call.title}</option>
+                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title, customReference: call.customReference, applyToMap: call.applyToMap})}>{call.title}</option>
                         )
                     })}
                 </Select>
@@ -251,7 +264,7 @@ const ApiTest = () => {
                     <option value="disabled" disabled>Select an API Request</option>
                     {apiCalls.map((call) => {
                         return (
-                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title, customReference: call.customReference})}>{call.title}</option>
+                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title, customReference: call.customReference, applyToMap: call.applyToMap})}>{call.title}</option>
                         )
                     })}
                 </Select>
@@ -264,7 +277,7 @@ const ApiTest = () => {
                     <option value="disabled" disabled>Select an API Request</option>
                     {apiCalls.map((call) => {
                         return (
-                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title, customReference: call.customReference})}>{call.title}</option>
+                        <option key={call.title} value={ JSON.stringify({url: call.url, description: call.description, title: call.title, customReference: call.customReference, applyToMap: call.applyToMap})}>{call.title}</option>
                         )
                     })}
                 </Select>
@@ -319,7 +332,7 @@ const ApiTest = () => {
                     id="map1"
                     isLoading={loadingOne}
                     onClick={(e) => handleAddToOpenStreetMap(e)}
-                    isDisabled={!responseOne}
+                    isDisabled={!callOneApplyToMap || !responseOne}
                     mb="2"
                     >
                         <GoGlobe className="iconButton" /> Apply To Map
@@ -371,7 +384,7 @@ const ApiTest = () => {
                 id="map2"
                 isLoading={loadingTwo}
                 onClick={(e) => handleAddToOpenStreetMap(e)}
-                isDisabled={!responseTwo}
+                isDisabled={!callTwoApplyToMap}
                 mb="2"
                 >
                     <GoGlobe className="iconButton" /> Apply To Map
@@ -424,7 +437,7 @@ const ApiTest = () => {
                 isLoading={loadingThree}
                 mb="2"
                 onClick={(e) => handleAddToOpenStreetMap(e)}
-                isDisabled={!responseThree}
+                isDisabled={!callThreeApplyToMap}
                 >
                     <GoGlobe className="iconButton" /> Apply To Map
                 </Button>

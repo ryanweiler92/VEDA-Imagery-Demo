@@ -8,6 +8,7 @@ import ImageryPage from "./layout/ImageryPage";
 import Login from './components/login/Login';
 import SignUp from './components/signup/SignUp';
 import OpenStreetPage from './layout/OpenStreetPage';
+import ArcGISPage from './layout/ArcGISPage';
 
 
 export const App = () => (
@@ -17,6 +18,7 @@ export const App = () => (
         <Route path="/" element={<ImageryPage />} />
         <Route path="/apitesting" element={<ApiTestingPage />} />
         <Route path="/openstreet" element={<OpenStreetPage/>}/>
+        <Route path="/arcgis" element={<ArcGISPage />} />
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<SignUp />}/>
       </Routes>

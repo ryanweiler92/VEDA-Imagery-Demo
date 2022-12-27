@@ -32,6 +32,7 @@ const initialState = {
   orderedLayers: [],
   date: startingDate,
   openStreetLayerResponse: openStreetLayerResponse,
+  openStreetRequestLocation: []
 }
 
 export const worldviewSlice = createSlice({
@@ -49,10 +50,13 @@ export const worldviewSlice = createSlice({
     },
     setOpenStreetLayerResponse: (state, action: PayloadAction<any>) => {
       state.openStreetLayerResponse = action.payload
-    }
+    },
+    setOpenStreetRequestLocation: (state, action: PayloadAction<any>) => {
+      state.openStreetRequestLocation = action.payload
+    },
   },
 });
 
-export const { setAvailableLayers, setOrderedLayers, setDate, setOpenStreetLayerResponse } = worldviewSlice.actions;
+export const { setAvailableLayers, setOrderedLayers, setDate, setOpenStreetLayerResponse, setOpenStreetRequestLocation } = worldviewSlice.actions;
 export default worldviewSlice.reducer;
 
