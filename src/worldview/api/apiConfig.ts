@@ -2,13 +2,13 @@ export const apiCalls = [
     {
         title: "List All Collections (GET)",
         url: "https://staging-stac.delta-backend.com/",
-        description: "Returns a catelog. Get a list of all the available collections. This includes HLSL30.002. This is the STAC_API_URL in the HLS example in the VEDA Docs. links[19] == `HSL30.002 Environmental Justice Events`",
+        description: "Returns a catalog. Get a list of all the available collections. This includes HLSL30.002. This is the STAC_API_URL in the HLS example in the VEDA Docs. links[19] == `HSL30.002 Environmental Justice Events`",
         applyToMap: false
     },
     {
         title: "STAC API /search (GET)",
         url: "https://staging-stac.delta-backend.com/search",
-        description: "STAC search. Returns a feature collections.",
+        description: "STAC search. Returns a feature collection.",
         applyToMap: false
     },
     {
@@ -34,7 +34,7 @@ export const apiCalls = [
     {
         title: "Hurricane Ida SWIR (MAP)",
         url: "customRequest",
-        description: "Imagery from 2021 Hurricane Ida using the built-in SWIR post processing algorithm. post_process=swir, assets=[B12, B8A, B04]",
+        description: "Imagery from 2021 Hurricane Ida using the built-in SWIR post processing algorithm. post_process=swir, assets=[B07, B05, B04]",
         customReference: "3",
         applyToMap: true
     },

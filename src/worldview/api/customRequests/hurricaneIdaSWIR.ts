@@ -94,7 +94,7 @@ const collectionsFilter = {
     minzoom: 6,
     maxzoom: 12,
     post_process: "swir",
-    assets: s30_swir_assets,
+    assets: l30_swir_assets,
   };
 
   const queryString = qs.stringify(params, { arrayFormat: 'repeat' });
