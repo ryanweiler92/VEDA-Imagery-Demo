@@ -32,8 +32,10 @@ const OpenStreetLayers = ({ layerToAdd, addLayer, lat, lon, zoom, flyTrigger, se
     //   map.flyTo(newLocation, 6);
     //   setFlyTrigger(false);
     // }
-    console.log(map)
-    setFlyTrigger(false);
+    if(flyTrigger){
+      console.log(map)
+      setFlyTrigger(false);
+    }
   }, [flyTrigger])
 
   return null;

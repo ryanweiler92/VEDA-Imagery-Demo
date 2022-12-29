@@ -33,6 +33,7 @@ import hurricaneIdaColor from './customRequests/hurricaneIdaColor';
 import hurricaneMariaL30 from './customRequests/hurricaneMariaL30';
 import SWIR from './customRequests/SWIR';
 import FirmsHLSS30CT from './customRequests/FIRMSHLSS30CT';
+import FirmsHLSL30OR from './customRequests/FIRMSHLSL30OR';
 
 const ApiTest = () => {
     const [customReference, setCustomReference] = useState();
@@ -89,6 +90,10 @@ const ApiTest = () => {
             case '7':
                 setLoading(true);
                 FirmsHLSS30CT(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
+                break;
+            case '8':
+                setLoading(true);
+                FirmsHLSL30OR(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
                 break;
             case 'default':
                 console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');

@@ -60,10 +60,17 @@ export const apiCalls = [
     //     applyToMap: true
     // },
     {
-        title: "FIRMS API HLSS30 (MAP)",
+        title: "FIRMS API HLSS30 Connecticut (MAP)",
         url: "customRequest",
         description: "FIRMS. collection=HLSS30 bbox=Connecticut, temporalRange=7/1/18-10/28/21 bandCombo=B07,B05,B04 post_process=swir minzoom=9 maxzoom=14",
         customReference: "7",
+        applyToMap: true
+    },
+    {
+        title: "FIRMS API HLSL30 Oregon (MAP)",
+        url: "customRequest",
+        description: "FIRMS. collection=HLSS30 bbox=Oregon, temporalRange=7/1/18-10/28/21 bandCombo=B07,B05,B04 post_process=swir minzoom=9 maxzoom=14",
+        customReference: "8",
         applyToMap: true
     },
   ];
