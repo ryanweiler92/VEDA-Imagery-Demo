@@ -96,13 +96,15 @@ const OpenStreetMap = () => {
 
   }, [openStreetResponseLayer]);
 
+  const [flyTrigger, setFlyTrigger] = useState(false)
+
   const testFunction = () => {
-    console.log(mapRef)
+    setFlyTrigger(true);
   }
   
   return (
     <>
-    {/* <Button onClick={testFunction} colorScheme='green'>Console</Button> */}
+    <Button onClick={testFunction} colorScheme='green'>Fly Trigger</Button>
     <MapContainer ref={mapRef} center={[lat, lon]} zoom={zoom} scrollWheelZoom={true}  id="leaflet-container">
       <TileLayer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -113,6 +115,8 @@ const OpenStreetMap = () => {
       lat={lat} 
       lon={lon}
       zoom={zoom}
+      flyTrigger={flyTrigger}
+      setFlyTrigger={setFlyTrigger}
       />
     </MapContainer>
     </>

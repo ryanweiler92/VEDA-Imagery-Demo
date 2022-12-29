@@ -20,13 +20,19 @@ import {
     testResponseThreeData
 } from './dataTestingFunctions';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { setOpenStreetLayerResponse, setOpenStreetRequestLocation } from '../../slices/worldview/worldviewSlice';
+import { 
+    setOpenStreetLayerResponse, 
+    setOpenStreetRequestLocation,
+    setLeafletZoom as setLeafletZoomRedux, 
+} from '../../slices/worldview/worldviewSlice';
 // Import any custom request files you make here
 import findDatesWithinTimeframe from './customRequests/findDates';
 import registerSearch from "./customRequests/registerSearch";
 import hurricaneIdaSWIR from './customRequests/hurricaneIdaSWIR';
 import hurricaneIdaColor from './customRequests/hurricaneIdaColor';
 import hurricaneMariaL30 from './customRequests/hurricaneMariaL30';
+import SWIR from './customRequests/SWIR';
+import FirmsHLSS30CT from './customRequests/FIRMSHLSS30CT';
 
 const ApiTest = () => {
     const [customReference, setCustomReference] = useState();
@@ -48,16 +54,10 @@ const ApiTest = () => {
     const [loadingOne, setLoadingOne] = useState(false);
     const [loadingTwo, setLoadingTwo] = useState(false);
     const [loadingThree, setLoadingThree] = useState(false);
-    const [locationRequest, setLocationRequest] = useState()
+    const [locationRequest, setLocationRequest] = useState();
+    const [leafletZoom, setLeafletZoom] = useState(9);
 
     const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        if(!locationRequest) return;
-
-        dispatch(setOpenStreetRequestLocation(locationRequest));
-    }, [locationRequest])
-
 
     const customRequestHandler = (setResponse, setLoading, responseId) => {
         // Make a new case that refers to the customReference value you created in apiConfig.tsx and make sure to pass it setResponse as an argument.
@@ -82,10 +82,25 @@ const ApiTest = () => {
                 setLoading(true);
                 hurricaneMariaL30(setResponse, setLoading, responseId, setLocationRequest);
                 break;
+            case '6':
+                setLoading(true);
+                SWIR(setResponse, setLoading, responseId, setLocationRequest);
+                break;
+            case '7':
+                setLoading(true);
+                FirmsHLSS30CT(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
+                break;
             case 'default':
                 console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');
         }
     }
+
+    useEffect(() => {
+        if(!locationRequest) return;
+
+        dispatch(setOpenStreetRequestLocation(locationRequest));
+        dispatch(setLeafletZoomRedux(leafletZoom));
+    }, [locationRequest]);
 
     async function getResponseOne() {
         if(callUrlOne === "customRequest"){

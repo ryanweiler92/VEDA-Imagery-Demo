@@ -91,6 +91,7 @@ const collectionsFilter = {
   }
 
  await getSTACItems()
+ console.log(stacItemsResponse);
   
   // Check how many items were matched in search
   // console.log("search context:", stacItemsResponse.context);

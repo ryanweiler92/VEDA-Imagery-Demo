@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef, useReducer } from 'react';
 import { MapContainer, TileLayer, useMap, Popup, Marker } from 'react-leaflet'
 import * as L from 'leaflet';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
 
-const OpenStreetLayers = ({ layerToAdd, addLayer, lat, lon, zoom }) => {
+const OpenStreetLayers = ({ layerToAdd, addLayer, lat, lon, zoom, flyTrigger, setFlyTrigger }) => {
   // custom react-leaflet hook to access map object
   const map = useMap();
+
+  const leafletZoom = useAppSelector((state) => state.worldview.leafletZoom);
 
   // adds layer to map 
   useEffect(() => {
@@ -16,8 +19,22 @@ const OpenStreetLayers = ({ layerToAdd, addLayer, lat, lon, zoom }) => {
 
     const newLocation = {lat: lat, lng: lon};
     
-    map.flyTo(newLocation, zoom)
-  }, [layerToAdd])
+    map.flyTo(newLocation, leafletZoom);
+  }, [layerToAdd]);
+
+  // for testing bbox location coords
+  // noreast bbox
+  const testCoords = [-80.8715, 39.3752, -66.0202, 47.1953];
+  useEffect(() => {
+    // if(flyTrigger){
+    //   const location = [(testCoords[1] + testCoords[3]) / 2,(testCoords[0] + testCoords[2]) / 2];
+    //   const newLocation = {lat: location[0], lng: location[1]}
+    //   map.flyTo(newLocation, 6);
+    //   setFlyTrigger(false);
+    // }
+    console.log(map)
+    setFlyTrigger(false);
+  }, [flyTrigger])
 
   return null;
 }

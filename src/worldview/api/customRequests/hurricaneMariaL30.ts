@@ -77,7 +77,6 @@ const collectionsFilter = {
       const response = await axios.post(`${STAC_API_URL}/search`, searchBodyTimeRanges);
       // returns a featureCollection
       stacItemsResponse = response.data;
-      setResponse(stacItemsResponse);
 
     } catch (error) {
       console.error(error);
