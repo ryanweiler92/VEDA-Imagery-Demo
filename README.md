@@ -1,6 +1,6 @@
 # Worldview React Testing Demo
 
-* [Live Link](http://worldimagery.net/)
+* [Live Link](https://uat.gibs.earthdata.nasa.gov/worldview-dev/VEDA/)
 
 ## About
 This is a very simplified demo that mimics some of the functionality of the [NASA GIBS Worldview application](https://github.com/nasa-gibs/worldview). This can be used for testing the ability to add new features to Worldview. It has very basic functionality including adding & removing layers, toggling visibility of layers, changing layer dates and reordering layers. It is preconfigured with 7 layers but includes a config file where you can add more. This currently only works with Raster layers. There is a seperate route `/apitesting` where you can configure and test API calls.

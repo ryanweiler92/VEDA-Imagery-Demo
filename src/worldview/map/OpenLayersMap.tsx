@@ -7,6 +7,7 @@ import config from '../config/config';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import AddLayer from '../layers/AddLayer';
 import MapContext from '../mapLayout/MapContext';
+import OpenLayersHLSLayers from './OpenLayersHLSLayers';
 
 const Map = () => {
   const mapRef = useRef();
@@ -16,10 +17,6 @@ const Map = () => {
   const { map, setMap, setLayerData} = useContext(MapContext);
 
   const projection = config.projections.geographic;
-
-  const layerResponse = useAppSelector((state) => state.worldview.HLSL30LayerResponse);
-
-  const location = useAppSelector((state) => state.worldview.requestLocation);
 
   // componentDidMount
   useEffect(() => {
@@ -64,6 +61,7 @@ const Map = () => {
         if (layer.active) return (
           <AddLayer layer={layer.data} key={layer.name} />
         )})}
+        <OpenLayersHLSLayers />
     </div>
   );
 }

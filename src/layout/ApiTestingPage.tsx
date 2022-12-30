@@ -8,7 +8,7 @@ const ApiTestingPage = (props: FlexProps) => {
   return (
     <Flex direction="column" flex="1">
       <Navbar />
-      <Flex as="main" role="main" direction="column" flex="1" px="16" py="1" {...props}>
+      <Flex as="main" role="main" direction="column" flex="1" px="16" py="1" minHeight="100vh" mb="8" {...props}>
         <ApiTestingLayout />
       </Flex>
     </Flex>

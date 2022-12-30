@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react"
-import { Box, Button, Flex, Heading, List, ListItem, Text, Icon, Spacer } from "@chakra-ui/react";
+import { Box, Badge, Switch, Button, Flex, Heading, List, ListItem, Text, Icon, Spacer } from "@chakra-ui/react";
 import OpenLayersMap from '../map/OpenLayersMap';
 import LeafletMap from '../map/LeafletMap';
 import AvailableLayerDisplay from '../layerDisplays/availableLayersDisplay/AvailableLayersDisplay';
@@ -14,7 +14,10 @@ const ApiTestingLayout = () => {
   // openlayers map obj is a non-serializable value so we cannot store in Redux. Creating local state and passing through context.
   const [map, setMap] = useState(null);
   // layer data is a non-serializable value so we cannot store in Redux. Creating local state and passing through context.
-  const [layerData, setLayerData] = useState([])
+  const [layerData, setLayerData] = useState([]);
+
+  const [leafletDisplay, setLeafletDisplay] = useState(false);
+  const [openLayersDisplay, setOpenLayersDisplay] = useState(false);
 
   return (
     <MapContext.Provider value={{
@@ -26,12 +29,28 @@ const ApiTestingLayout = () => {
       <Box>
         <ApiTest />
       </Box>
-      <Flex justify="center">
-        <Text fontSize="3xl" fontWeight="bold">Leaflet Map</Text>
+      <Flex justify="center" my="2">
+        <Flex justify="center" align="center">
+          <Text fontWeight="bold">Toggle Map Displays</Text>
+          <Box mx="3">
+            <Badge variant="outline" colorScheme="green" mx="1">Leaflet Map</Badge>
+            <Switch colorScheme="green" isChecked={!leafletDisplay} onChange={() => setLeafletDisplay(!leafletDisplay)}/>
+          </Box>
+          <Box mx="3">
+            <Badge variant="outline" colorScheme="blue" mx="1">OpenLayers Map</Badge>
+            <Switch colorScheme="blue" isChecked={!openLayersDisplay} onChange={() => setOpenLayersDisplay(!openLayersDisplay)}/>
+          </Box>
+        </Flex>
       </Flex>
-      <Flex id="OSMAP-container" justify="center">
-        <LeafletMap />
-      </Flex>
+      <Box hidden={leafletDisplay}>
+        <Flex justify="center">
+          <Text fontSize="3xl" fontWeight="bold">Leaflet Map</Text>
+        </Flex>
+        <Flex id="OSMAP-container" justify="center">
+          <LeafletMap />
+        </Flex>
+      </Box>
+      <Box hidden={openLayersDisplay}>
       <Flex justify="center">
         <Text fontSize="3xl" fontWeight="bold">OpenLayers Map</Text>
       </Flex>
@@ -43,6 +62,7 @@ const ApiTestingLayout = () => {
           <ActiveLayerDisplay />
         </DndProvider>
       </Flex>
+      </Box>
     </MapContext.Provider>
   );
 }
