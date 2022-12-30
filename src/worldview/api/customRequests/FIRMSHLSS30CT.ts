@@ -5,7 +5,7 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
   // base URL for registering search and requesting tiles
   const BASE_URL = "https://d1nzvsko7rbono.cloudfront.net";
   // ID of the collection
-  const collectionID = "HLSL30";
+  const collectionID = "HLSS30";
   // Custom band combination to match WV-2409.
   const bandCombo = ["B07","B05","B04"];
   // bounding box coordinates for Connecticut

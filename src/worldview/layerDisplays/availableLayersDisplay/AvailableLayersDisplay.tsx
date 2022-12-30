@@ -34,6 +34,7 @@ const AvailableLayerDisplay = () => {
                 <ListItem
                   key={layer.name}
                   w="100%"
+                  bg="blue.400"
                 >
                   <Flex align="center" justify="space-between" w="100%" p="2">
                   <Text color="white">{layer.title}</Text>

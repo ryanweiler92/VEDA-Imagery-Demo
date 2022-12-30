@@ -25,6 +25,7 @@ import {
     setRequestLocation,
     setLeafletZoom as setLeafletZoomRedux, 
 } from '../../slices/worldview/worldviewSlice';
+import InstructionModal from './instructionModal'
 // Import any custom request files you make here
 import findDatesWithinTimeframe from './customRequests/findDates';
 import registerSearch from "./customRequests/registerSearch";
@@ -37,6 +38,7 @@ import FirmsHLSL30OR from './customRequests/FIRMSHLSL30OR';
 import FirmsHLSL30US from './customRequests/FIRMSHLSL30US';
 
 const ApiTest = () => {
+    const [modalOpen, setModalOpen] = useState(false);
     const [customReference, setCustomReference] = useState();
     const [responseOne, setResponseOne] = useState();
     const [responseTwo, setResponseTwo] = useState();
@@ -248,6 +250,10 @@ const ApiTest = () => {
     return (
         <>
         {/* <Button onClick={testFunction}>Test</Button> */}
+        <Flex justify="center" align="center" my="4">
+            <Button onClick={() => setModalOpen(true)} colorScheme='blue'>Instructions</Button>
+            <InstructionModal isOpen={modalOpen} onClose={() => setModalOpen(false)}/>
+        </Flex>
         <Flex justify="space-around" align="center" my="2">
             <Button 
             aria-label="fetch" 
