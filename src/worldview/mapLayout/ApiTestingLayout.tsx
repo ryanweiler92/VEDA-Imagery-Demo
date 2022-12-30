@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react"
 import { Box, Button, Flex, Heading, List, ListItem, Text, Icon, Spacer } from "@chakra-ui/react";
-import GibsMap from '../map/GibsMap';
-import OpenStreetMap from '../map/OpenStreetMap';
+import OpenLayersMap from '../map/OpenLayersMap';
+import LeafletMap from '../map/LeafletMap';
 import AvailableLayerDisplay from '../layerDisplays/availableLayersDisplay/AvailableLayersDisplay';
 import ActiveLayerDisplay from "../layerDisplays/activeLayerDisplay/ActiveLayersDisplay";
 import MapContext from './MapContext';
@@ -27,15 +27,15 @@ const ApiTestingLayout = () => {
         <ApiTest />
       </Box>
       <Flex justify="center">
-        <Text fontSize="3xl">Leaflet OpenStreetMap</Text>
+        <Text fontSize="3xl" fontWeight="bold">Leaflet Map</Text>
       </Flex>
       <Flex id="OSMAP-container" justify="center">
-        <OpenStreetMap />
+        <LeafletMap />
       </Flex>
       <Flex justify="center">
-        <Text fontSize="3xl">OpenLayers Map</Text>
+        <Text fontSize="3xl" fontWeight="bold">OpenLayers Map</Text>
       </Flex>
-        <GibsMap />
+        <OpenLayersMap />
       <Flex >
         <AvailableLayerDisplay/>
         <DateSelector />

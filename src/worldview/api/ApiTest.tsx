@@ -21,8 +21,8 @@ import {
 } from './dataTestingFunctions';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { 
-    setOpenStreetLayerResponse, 
-    setOpenStreetRequestLocation,
+    setHLSL30LayerResponse, 
+    setRequestLocation,
     setLeafletZoom as setLeafletZoomRedux, 
 } from '../../slices/worldview/worldviewSlice';
 // Import any custom request files you make here
@@ -34,6 +34,7 @@ import hurricaneMariaL30 from './customRequests/hurricaneMariaL30';
 import SWIR from './customRequests/SWIR';
 import FirmsHLSS30CT from './customRequests/FIRMSHLSS30CT';
 import FirmsHLSL30OR from './customRequests/FIRMSHLSL30OR';
+import FirmsHLSL30US from './customRequests/FIRMSHLSL30US';
 
 const ApiTest = () => {
     const [customReference, setCustomReference] = useState();
@@ -95,6 +96,10 @@ const ApiTest = () => {
                 setLoading(true);
                 FirmsHLSL30OR(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
                 break;
+            case '9':
+                setLoading(true);
+                FirmsHLSL30US(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
+                break;
             case 'default':
                 console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');
         }
@@ -103,7 +108,7 @@ const ApiTest = () => {
     useEffect(() => {
         if(!locationRequest) return;
 
-        dispatch(setOpenStreetRequestLocation(locationRequest));
+        dispatch(setRequestLocation(locationRequest));
         dispatch(setLeafletZoomRedux(leafletZoom));
     }, [locationRequest]);
 
@@ -225,13 +230,13 @@ const ApiTest = () => {
         }
       }
 
-      const handleAddToOpenStreetMap = (e) => {
+      const handleAddToMap = (e) => {
         if(e.target.id == "map1"){
-            dispatch(setOpenStreetLayerResponse(responseOne))
+            dispatch(setHLSL30LayerResponse(responseOne))
         } else if (e.target.id == "map2"){
-            dispatch(setOpenStreetLayerResponse(responseTwo))
+            dispatch(setHLSL30LayerResponse(responseTwo))
         } else if (e.target.id == "map3"){
-            dispatch(setOpenStreetLayerResponse(responseThree))
+            dispatch(setHLSL30LayerResponse(responseThree))
         }
       }
 
@@ -246,7 +251,7 @@ const ApiTest = () => {
         <Flex justify="space-around" align="center" my="2">
             <Button 
             aria-label="fetch" 
-            colorScheme='teal'
+            colorScheme='blue'
             size='lg'
             onClick={getResponseOne}
             isLoading={loadingOne}
@@ -266,7 +271,7 @@ const ApiTest = () => {
             </Button>
             <Button 
             aria-label="fetch" 
-            colorScheme='blue'
+            colorScheme='green'
             size='lg'
             onClick={getResponseThree}
             isLoading={loadingThree}
@@ -277,7 +282,7 @@ const ApiTest = () => {
         </Flex>
         <Flex w="100%" bg="gray.100" h="300px"> 
             <Flex align="center" direction="column" h="100%" w="33%" border="2px solid black" className="text-container">
-                <Select defaultValue="disabled" id="select1" bg="teal.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
+                <Select defaultValue="disabled" id="select1" bg="blue.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
                     <option value="disabled" disabled>Select an API Request</option>
                     {apiCalls.map((call) => {
                         return (
@@ -290,7 +295,7 @@ const ApiTest = () => {
                 <Text align="center" fontSize="sm" my="2" maxWidth="320px">{callUrlOne}</Text>
             </Flex>
             <Flex align="center" direction="column" h="100%" w="33%" border="2px solid black">
-                <Select defaultValue="disabled" id="select2" bg="teal.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
+                <Select defaultValue="disabled" id="select2" bg="blue.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
                     <option value="disabled" disabled>Select an API Request</option>
                     {apiCalls.map((call) => {
                         return (
@@ -303,7 +308,7 @@ const ApiTest = () => {
                 <Text align="center" my="2" maxWidth="320px">{callUrlTwo}</Text>
             </Flex>
             <Flex align="center" direction="column" h="100%" w="34%" border="2px solid black">
-                <Select defaultValue="disabled" id="select3" bg="teal.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
+                <Select defaultValue="disabled" id="select3" bg="blue.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
                     <option value="disabled" disabled>Select an API Request</option>
                     {apiCalls.map((call) => {
                         return (
@@ -321,7 +326,7 @@ const ApiTest = () => {
                 <Flex direction="column">
                     <Button 
                     aria-label="fetch" 
-                    colorScheme='teal'
+                    colorScheme='blue'
                     size='lg'
                     onClick={(e) => consoleResponse(e)}
                     id="button1"
@@ -333,7 +338,7 @@ const ApiTest = () => {
                     </Button>
                     <Button
                     aria-label="save"
-                    colorScheme='teal'
+                    colorScheme='blue'
                     size='lg'
                     isDisabled={!responseOne}
                     id="save1"
@@ -346,7 +351,7 @@ const ApiTest = () => {
                 <Flex direction="column" ml="1" mr="1">
                     <Button 
                     aria-label="test data" 
-                    colorScheme='teal'
+                    colorScheme='blue'
                     size='lg'
                     onClick={(e) => fetchLocalStorage(e)}
                     id="test1"
@@ -357,11 +362,11 @@ const ApiTest = () => {
                     </Button>
                     <Button 
                     aria-label="apply to map" 
-                    colorScheme='teal'
+                    colorScheme='blue'
                     size='lg'
                     id="map1"
                     isLoading={loadingOne}
-                    onClick={(e) => handleAddToOpenStreetMap(e)}
+                    onClick={(e) => handleAddToMap(e)}
                     isDisabled={!callOneApplyToMap || !responseOne}
                     mb="2"
                     >
@@ -413,7 +418,7 @@ const ApiTest = () => {
                 size='lg'
                 id="map2"
                 isLoading={loadingTwo}
-                onClick={(e) => handleAddToOpenStreetMap(e)}
+                onClick={(e) => handleAddToMap(e)}
                 isDisabled={!callTwoApplyToMap || !responseTwo}
                 mb="2"
                 >
@@ -425,7 +430,7 @@ const ApiTest = () => {
             <Flex direction="column">
                 <Button 
                 aria-label="fetch" 
-                colorScheme='blue'
+                colorScheme='green'
                 size='lg'
                 onClick={(e) => consoleResponse(e)}
                 id="button3"
@@ -437,7 +442,7 @@ const ApiTest = () => {
                 </Button>
                 <Button
                 aria-label="save"
-                colorScheme='blue'
+                colorScheme='green'
                 size='lg'
                 isDisabled={!responseThree}
                 id="save3"
@@ -450,7 +455,7 @@ const ApiTest = () => {
             <Flex direction="column" ml="1">
                 <Button 
                 aria-label="test data" 
-                colorScheme='blue'
+                colorScheme='green'
                 size='lg'
                 onClick={(e) => fetchLocalStorage(e)}
                 id="test3"
@@ -461,12 +466,12 @@ const ApiTest = () => {
                 </Button>
                 <Button 
                 aria-label="apply to map" 
-                colorScheme='blue'
+                colorScheme='green'
                 size='lg'
                 id="map3"
                 isLoading={loadingThree}
                 mb="2"
-                onClick={(e) => handleAddToOpenStreetMap(e)}
+                onClick={(e) => handleAddToMap(e)}
                 isDisabled={!callThreeApplyToMap || !responseThree}
                 >
                     <GoGlobe className="iconButton" /> Apply To Map

@@ -4,7 +4,7 @@ import { Icon } from "leaflet";
 import { Box, Button, Flex, IconButton, Heading, List, ListItem, Text, Spinner, Spacer, Select } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import "./Map.css";
-import OpenStreetLayers from './OpenStreetLayers';
+import OpenStreetLayers from './LeafletLayers';
 
 // setting initial values for state
 const initialState = {
@@ -46,7 +46,7 @@ const reducer = (state: State, action: Action): State => {
   }
 }
 
-const OpenStreetMap = () => {
+const LeafletMap = () => {
   const mapRef = useRef();
 
   // define state and dispatch variables
@@ -73,9 +73,9 @@ const OpenStreetMap = () => {
   }
 
   // get API response from redux
-  const openStreetResponseLayer = useAppSelector((state) => state.worldview.openStreetLayerResponse);
+  const HLSL30LayerResponse = useAppSelector((state) => state.worldview.HLSL30LayerResponse);
 
-  const locationRequest = useAppSelector((state) => state.worldview.openStreetRequestLocation);
+  const locationRequest = useAppSelector((state) => state.worldview.requestLocation);
 
   // hook that listens for layer adding event and adds layer to map
   useEffect(() => {
@@ -83,7 +83,7 @@ const OpenStreetMap = () => {
         bounds,
         tiles,
         name
-      } = openStreetResponseLayer;
+      } = HLSL30LayerResponse;
 
       if(!name) return;
 
@@ -94,7 +94,7 @@ const OpenStreetMap = () => {
       setLon(location[1]);
       addLayer(tiles[0]);
 
-  }, [openStreetResponseLayer]);
+  }, [HLSL30LayerResponse]);
 
   const [flyTrigger, setFlyTrigger] = useState(false)
 
@@ -123,4 +123,4 @@ const OpenStreetMap = () => {
   );
 };
 
-export default OpenStreetMap;
+export default LeafletMap;

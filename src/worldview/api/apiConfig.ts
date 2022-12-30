@@ -12,6 +12,12 @@ export const apiCalls = [
     //     applyToMap: false
     // },
     // {
+    //     title: "FIRMS STAC API /search (GET)",
+    //     url: "https://kv9drwgv6l.execute-api.us-west-2.amazonaws.com/search/",
+    //     description: "STAC search. Returns a feature collection.",
+    //     applyToMap: false
+    // },
+    // {
     //     title: "Tile Request (GET)",
     //     url: "https://staging-raster.delta-backend.com/mosaic/7743bcb31bff7151aff7e5508785fce1/tilejson.json?minzoom=6&maxzoom=12&post_process=swir&assets=%5B%27B12%27%2C+%27B8A%27%2C+%27B04%27%5D",
     //     description: "Tile request for band assets for HLS S30. See specific details in postProcessingAlgorithm.ts",
@@ -73,6 +79,29 @@ export const apiCalls = [
         customReference: "8",
         applyToMap: true
     },
+    {
+        title: "FIRMS API HLSL30 US (MAP)",
+        url: "customRequest",
+        description: "FIRMS. collection=HLSS30 bbox=UnitedStates, temporalRange=10/27/21-10/28/21 bandCombo=B07,B05,B04 post_process=swir minzoom=9 maxzoom=14",
+        customReference: "9",
+        applyToMap: true
+    },
+    // {
+    //     title: "FIRMS Asset List (Doesn't work yet)",
+    //     // url: "https://d1nzvsko7rbono.cloudfront.net/mosaic/e327118c2abc8ae6389b91b804df6913/{z}/{x}/{y}/assets",
+    //     url: "https://kv9drwgv6l.execute-api.us-west-2.amazonaws.com/mosaic/list",
+    //     description: "Florida. Return a list of assets which overlap a given tile",
+    //     customReference: "9",
+    //     applyToMap: false
+    // },
+    // {
+    //     title: "FIRMS Single Collection HLSL30 Oregon",
+    //     url: "https://kv9drwgv6l.execute-api.us-west-2.amazonaws.com/search?collections=HLSL30&bbox=-124.56,41.92,-116.40,46.39&limit=100&datetime=2022-01-01T00:00:00Z/2022-01-01T23:59:59Z",
+    //     description: "request Item objects from a single collection from the search endpoint, without having to using OGC API - Features",
+    //     customReference: "9",
+    //     applyToMap: false
+    // },
+
   ];
 
   

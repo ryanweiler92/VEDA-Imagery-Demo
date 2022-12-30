@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, useMap, Popup, Marker } from 'react-leaflet'
 import * as L from 'leaflet';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 
-const OpenStreetLayers = ({ layerToAdd, addLayer, lat, lon, zoom, flyTrigger, setFlyTrigger }) => {
+const LeafletLayers = ({ layerToAdd, addLayer, lat, lon, zoom, flyTrigger, setFlyTrigger }) => {
   // custom react-leaflet hook to access map object
   const map = useMap();
 
@@ -41,4 +41,4 @@ const OpenStreetLayers = ({ layerToAdd, addLayer, lat, lon, zoom, flyTrigger, se
   return null;
 }
 
-export default OpenStreetLayers
+export default LeafletLayers

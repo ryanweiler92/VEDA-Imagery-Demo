@@ -127,10 +127,10 @@ export default function SignUp() {
                 type="submit"
                 loadingText="Submitting"
                 variant="primary" 
-                bg={'teal.300'} 
+                bg={'blue.300'} 
                 color={'white'}
                 _hover={{
-                  bg: 'teal.400',
+                  bg: 'blue.400',
                 }}
                 >
                 Sign up

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react"
 import { Box, Button, Flex, Heading, List, ListItem, Text, Icon, Spacer } from "@chakra-ui/react";
-import Map from '../map/GibsMap'
+import Map from '../map/OpenLayersMap'
 import AvailableLayerDisplay from '../layerDisplays/availableLayersDisplay/AvailableLayersDisplay';
 import ActiveLayerDisplay from "../layerDisplays/activeLayerDisplay/ActiveLayersDisplay";
 import MapContext from './MapContext';

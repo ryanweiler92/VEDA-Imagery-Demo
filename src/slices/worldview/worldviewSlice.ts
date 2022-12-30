@@ -3,7 +3,7 @@ import { RootState } from '../../store/store';
 import startingLayers from '../../worldview/config/availableLayers';
 import { startingDate } from '../../worldview/selectors/selectors';
 
-interface OpenStreetLayerResponse {
+interface HLSL30LayerResponse {
   bounds: Array<number>,
   center: Array<number>,
   maxzoom: number,
@@ -15,7 +15,7 @@ interface OpenStreetLayerResponse {
   version: string
 }
 
-const openStreetLayerResponse: OpenStreetLayerResponse = {
+const HLSL30LayerResponse: HLSL30LayerResponse = {
   bounds: [],
   center: [],
   maxzoom: 0,
@@ -31,8 +31,8 @@ const initialState = {
   availableLayers: startingLayers,
   orderedLayers: [],
   date: startingDate,
-  openStreetLayerResponse: openStreetLayerResponse,
-  openStreetRequestLocation: [],
+  HLSL30LayerResponse: HLSL30LayerResponse,
+  requestLocation: [],
   leafletZoom: 9,
 }
 
@@ -49,11 +49,11 @@ export const worldviewSlice = createSlice({
     setDate: (state, action: PayloadAction<string>) => {
       state.date = action.payload
     },
-    setOpenStreetLayerResponse: (state, action: PayloadAction<any>) => {
-      state.openStreetLayerResponse = action.payload
+    setHLSL30LayerResponse: (state, action: PayloadAction<any>) => {
+      state.HLSL30LayerResponse = action.payload
     },
-    setOpenStreetRequestLocation: (state, action: PayloadAction<any>) => {
-      state.openStreetRequestLocation = action.payload
+    setRequestLocation: (state, action: PayloadAction<any>) => {
+      state.requestLocation = action.payload
     },
     setLeafletZoom: (state, action: PayloadAction<number>) => {
       state.leafletZoom = action.payload
@@ -61,6 +61,6 @@ export const worldviewSlice = createSlice({
   },
 });
 
-export const { setAvailableLayers, setOrderedLayers, setDate, setOpenStreetLayerResponse, setOpenStreetRequestLocation, setLeafletZoom } = worldviewSlice.actions;
+export const { setAvailableLayers, setOrderedLayers, setDate, setHLSL30LayerResponse, setRequestLocation, setLeafletZoom } = worldviewSlice.actions;
 export default worldviewSlice.reducer;
 

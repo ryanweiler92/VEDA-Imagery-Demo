@@ -97,7 +97,7 @@ const ActiveLayerDisplay = () => {
     }, [orderedLayers]);
 
     return (
-        <Box bg="teal.400" borderRadius="md" w="33%">
+        <Box bg="blue.400" borderRadius="md" w="33%">
             <DragDropDisplay 
             toggleVisibility={toggleVisibility}
             removeLayer={removeLayer}

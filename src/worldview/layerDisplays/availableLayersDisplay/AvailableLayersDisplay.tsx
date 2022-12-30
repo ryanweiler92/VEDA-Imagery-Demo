@@ -19,7 +19,7 @@ const AvailableLayerDisplay = () => {
   };
 
   return (
-    <Box bg="teal.400" borderRadius="md" w="33%">
+    <Box bg="blue.400" borderRadius="md" w="33%">
       <Flex align="center" justify="center">
         <Heading size="md" color="white" mb="2" fontWeight="normal">
           Available Layers

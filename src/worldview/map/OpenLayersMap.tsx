@@ -17,6 +17,10 @@ const Map = () => {
 
   const projection = config.projections.geographic;
 
+  const layerResponse = useAppSelector((state) => state.worldview.HLSL30LayerResponse);
+
+  const location = useAppSelector((state) => state.worldview.requestLocation);
+
   // componentDidMount
   useEffect(() => {
     const geoProjection = olProj.get(projection.crs)

@@ -95,10 +95,10 @@ const Navbar = () => {
               fontSize={'md'}
               fontWeight={600}
               color={'white'}
-              bg={'teal.300'}
+              bg={'blue.300'}
               href={'/signup'}
               _hover={{
-                bg: 'teal.600',
+                bg: 'blue.600',
               }}>
               Sign Up
               </Button>
@@ -110,11 +110,11 @@ const Navbar = () => {
             fontSize={'2xl'}
             fontWeight={600}
             color={'white'}
-            bg={'teal.300'}
+            bg={'blue.300'}
             href={'https://github.com/ryanweiler92/Worldview-VEDA-Typescript-Demo'}
             target="_blank"
             _hover={{
-              bg: 'teal.600',
+              bg: 'blue.600',
             }}>
               <FaGithub />
             </Button>
@@ -282,22 +282,22 @@ interface NavItem {
 }
 
 const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: 'GIBS Imagery',
-    href: '/'
-    // children: [
-    //   {
-    //     label: 'Explore Design Work',
-    //     subLabel: 'Trending Design to inspire you',
-    //     href: '#',
-    //   },
-    //   {
-    //     label: 'New & Noteworthy',
-    //     subLabel: 'Up-and-coming Designers',
-    //     href: '#',
-    //   },
-    // ],
-  },
+  // {
+  //   label: 'GIBS Imagery',
+  //   href: '/'
+  //   // children: [
+  //   //   {
+  //   //     label: 'Explore Design Work',
+  //   //     subLabel: 'Trending Design to inspire you',
+  //   //     href: '#',
+  //   //   },
+  //   //   {
+  //   //     label: 'New & Noteworthy',
+  //   //     subLabel: 'Up-and-coming Designers',
+  //   //     href: '#',
+  //   //   },
+  //   // ],
+  // },
   {
     label: 'API VEDA Testing',
     href: '/apitesting'
