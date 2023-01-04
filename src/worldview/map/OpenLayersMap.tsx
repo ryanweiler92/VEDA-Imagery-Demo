@@ -62,7 +62,7 @@ const Map = () => {
 
   return (
     <>
-    {/* <Button colorScheme="red" onClick={testFunction}>Console Map</Button> */}
+    <Button colorScheme="red" onClick={testFunction}>Console Map</Button>
     <div ref={mapRef} className="ol-map">
       {availableLayers && availableLayers.map((layer) => {
         if (layer.active) return (

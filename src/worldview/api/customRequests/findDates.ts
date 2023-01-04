@@ -91,7 +91,6 @@ const collectionsFilter = {
   }
 
  await getSTACItems()
- console.log(stacItemsResponse);
   
   // Check how many items were matched in search
   // ----- END 2. fetch feature collection of matching features ------

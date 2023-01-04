@@ -109,7 +109,7 @@ const LeafletMap = () => {
   
   return (
     <>
-    {/* <Button onClick={testFunction} colorScheme='green'>Fly Trigger</Button> */}
+    <Button onClick={testFunction} colorScheme='green'>Fly Trigger</Button>
     <MapContainer ref={mapRef} center={[lat, lon]} zoom={zoom} scrollWheelZoom={true} crs={CRS.EPSG3857} id="leaflet-container">
       <TileLayer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

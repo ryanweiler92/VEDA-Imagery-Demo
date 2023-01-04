@@ -70,8 +70,6 @@ const AddWMTSLayer = ({ layer }) => {
       className: id,
     });
 
-    console.log(layerTile)
-
     map.addLayer(layerTile);
 
     // componentWillUnmount

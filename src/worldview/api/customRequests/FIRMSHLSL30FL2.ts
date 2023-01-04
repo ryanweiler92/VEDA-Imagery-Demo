@@ -9,7 +9,9 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
   // Custom band combination to match WV-2409.
   const bandCombo = ["B07","B05","B04"];
   // bounding box coordinates for South Florida 
-  const bboxCoords = [-82.0559, 25.1696, -79.9884, 27.2371];
+  // const bboxCoords = [-82.0559, 25.1696, -79.9884, 27.2371];
+  // chicago bbox coords
+  const bboxCoords = [-88.2509, 40.7425, -86.4031, 42.5903]
   const location = [(bboxCoords[1] + bboxCoords[3]) / 2,(bboxCoords[0] + bboxCoords[2]) / 2];
   // arbitrary date range
   const temporalRange = ["2018-07-01T00:00:00Z", "2021-10-28T00:00:00Z"];

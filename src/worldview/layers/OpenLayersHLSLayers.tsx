@@ -85,7 +85,7 @@ const OpenLayersHLSLayers = () => {
     };
 
     const sourceOptions = {
-      url: sourceURL + urlParameters,
+      url: sourceURL,
       layer: id,
       cacheSize: 4096,
       crossOrigin: 'anonymous',
@@ -128,22 +128,24 @@ const OpenLayersHLSLayers = () => {
     const configMatrixSet = configSource.matrixSets[matrixSet];
 
     const tileGridOptions = {
-      // origin: [-180, 90],
-      origin: [-120.48605, 44.1567],
-      // extent: [-180, -90, 180, 90],
-      extent: [-82.0559, 25.1696, -79.9884, 27.2371],
+      origin: [-180, 90],
+      // origin: [-120.48605, 44.1567],
+      extent: [-180, -90, 180, 90],
+      // extent: [-82.0559, 25.1696, -79.9884, 27.2371],
       tileSize: 256,
       resolutions,
       matrixIds: matrixIds || resolutions.map((set, index) => index),
-      
     }
 
     const presetFIRMSExample = "https://d1nzvsko7rbono.cloudfront.net/mosaic/tiles/4c640d25fd8dd78aef47721a71ee8e96/WGS1984Quad/9/561/132@1x?assets=B07&assets=B05&assets=B04&post_process=swir"
+    const customLayerResponse = tiles[0]
+    const chicagoURL = "https://d1nzvsko7rbono.cloudfront.net/mosaic/tiles/6a4836cf022708ca29819eb2a6fbc75f/WGS1984Quad/9/131/190@1x?assets=B07&assets=B05&assets=B04&post_process=swir"
+    console.log(tiles[0])
 
     const sourceOptions = {
       // url: "https://kv9drwgv6l.execute-api.us-west-2.amazonaws.com/mosaic/6112e654f98f9be580cb586832569457/tilejson.json",
       // url: tiles[0],
-      url: presetFIRMSExample,
+      url: chicagoURL,
       layer: "HLSL30.002",
       crossOrigin: 'anonymous',
       tileGrid: new OlTileGridWMTS(tileGridOptions),
