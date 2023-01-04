@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useReducer } from 'react';
 import { MapContainer, TileLayer, useMap, Popup, Marker } from 'react-leaflet'
-import { Icon } from "leaflet";
+import { Icon, CRS } from "leaflet";
 import { Box, Button, Flex, IconButton, Heading, List, ListItem, Text, Spinner, Spacer, Select } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import "./Map.css";
@@ -92,6 +92,7 @@ const LeafletMap = () => {
 
       setLat(location[0]);
       setLon(location[1]);
+      
       addLayer(tiles[0]);
 
   }, [HLSL30LayerResponse]);
@@ -99,13 +100,17 @@ const LeafletMap = () => {
   const [flyTrigger, setFlyTrigger] = useState(false)
 
   const testFunction = () => {
-    setFlyTrigger(true);
+    if(mapRef.current){
+      const projection = (mapRef.current)
+      console.log(projection)
+    }
+    
   }
   
   return (
     <>
     {/* <Button onClick={testFunction} colorScheme='green'>Fly Trigger</Button> */}
-    <MapContainer ref={mapRef} center={[lat, lon]} zoom={zoom} scrollWheelZoom={true}  id="leaflet-container">
+    <MapContainer ref={mapRef} center={[lat, lon]} zoom={zoom} scrollWheelZoom={true} crs={CRS.EPSG3857} id="leaflet-container">
       <TileLayer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />

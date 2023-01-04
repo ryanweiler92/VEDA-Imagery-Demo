@@ -13,6 +13,8 @@ const LeafletLayers = ({ layerToAdd, addLayer, lat, lon, zoom, flyTrigger, setFl
   useEffect(() => {
     if(!layerToAdd) return;
     const layer = new L.TileLayer(layerToAdd);
+    // console.log('layerToAdd', layerToAdd)
+    // console.log('layer', layer)
     layer.addTo(map);
     // setting state in parent component
     addLayer("");
@@ -25,6 +27,8 @@ const LeafletLayers = ({ layerToAdd, addLayer, lat, lon, zoom, flyTrigger, setFl
   // for testing bbox location coords
   // noreast bbox
   const testCoords = [-80.8715, 39.3752, -66.0202, 47.1953];
+  const leafletMapPls = useMap()
+
   useEffect(() => {
     // if(flyTrigger){
     //   const location = [(testCoords[1] + testCoords[3]) / 2,(testCoords[0] + testCoords[2]) / 2];
@@ -33,7 +37,7 @@ const LeafletLayers = ({ layerToAdd, addLayer, lat, lon, zoom, flyTrigger, setFl
     //   setFlyTrigger(false);
     // }
     if(flyTrigger){
-      console.log(map)
+      
       setFlyTrigger(false);
     }
   }, [flyTrigger])

@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from "react"
+import { Box, Badge, Switch, Button, Flex, Heading, List, ListItem, Text, Icon, Spacer } from "@chakra-ui/react";
 import OlMap from "ol/Map";
 import OlView from "ol/View";
 import * as olProj from "ol/proj";
@@ -7,7 +8,7 @@ import config from '../config/config';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import AddLayer from '../layers/AddLayer';
 import MapContext from '../mapLayout/MapContext';
-import OpenLayersHLSLayers from './OpenLayersHLSLayers';
+import OpenLayersHLSLayers from '../layers/OpenLayersHLSLayers';
 
 const Map = () => {
   const mapRef = useRef();
@@ -55,7 +56,13 @@ const Map = () => {
     setLayerData(layersArray);
 }, [map]);
 
+  const testFunction = () => {
+    console.log(map.getLayers())
+  }
+
   return (
+    <>
+    {/* <Button colorScheme="red" onClick={testFunction}>Console Map</Button> */}
     <div ref={mapRef} className="ol-map">
       {availableLayers && availableLayers.map((layer) => {
         if (layer.active) return (
@@ -63,6 +70,7 @@ const Map = () => {
         )})}
         <OpenLayersHLSLayers />
     </div>
+    </>
   );
 }
 

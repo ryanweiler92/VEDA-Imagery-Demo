@@ -36,6 +36,8 @@ import SWIR from './customRequests/SWIR';
 import FirmsHLSS30CT from './customRequests/FIRMSHLSS30CT';
 import FirmsHLSL30OR from './customRequests/FIRMSHLSL30OR';
 import FirmsHLSL30US from './customRequests/FIRMSHLSL30US';
+import FirmsHLSL30FL from './customRequests/FIRMSHLSL30FL';
+import FirmsHLSL30FL2 from './customRequests/FIRMSHLSL30FL2'
 
 const ApiTest = () => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -101,6 +103,14 @@ const ApiTest = () => {
             case '9':
                 setLoading(true);
                 FirmsHLSL30US(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
+                break;
+            case '10': 
+                setLoading(true);
+                FirmsHLSL30FL(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
+                break;
+            case '11': 
+                setLoading(true);
+                FirmsHLSL30FL2(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
                 break;
             case 'default':
                 console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');

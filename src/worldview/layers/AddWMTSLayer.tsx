@@ -20,9 +20,14 @@ const AddWMTSLayer = ({ layer }) => {
     if(!map) return;
   
   const {
-    id, format, matrixIds, matrixSet = layer.projections.geographic.matrixSet, matrixSetLimits, style, 
+    id, 
+    format, 
+    matrixIds, 
+    matrixSet = layer.projections.geographic.matrixSet, 
+    matrixSetLimits, 
+    style, 
   } = layer;
-  
+
   const configSource = config.sources['GIBS:geographic'];
   const configMatrixSet = configSource.matrixSets[matrixSet];
   const layerDate = date;
@@ -31,6 +36,8 @@ const AddWMTSLayer = ({ layer }) => {
   const selected = config.projections.geographic;
   const { origin, extent } = calcExtentsFromLimits(configMatrixSet, matrixSetLimits, day, selected);
   const sizes = !tileMatrices ? [] : tileMatrices.map(({ matrixWidth, matrixHeight }) => [matrixWidth, matrixHeight]);
+  const urlParameters = `?TIME=${toISOStringSeconds(roundTimeOneMinute(layerDate))}`;
+  const sourceURL = layer.sourceOverride || configSource.url;
 
   const tileGridOptions = {
       origin: origin,
@@ -41,8 +48,6 @@ const AddWMTSLayer = ({ layer }) => {
       tileSize: tileSize[0],
     };
 
-    const urlParameters = `?TIME=${toISOStringSeconds(roundTimeOneMinute(layerDate))}`;
-    const sourceURL = layer.sourceOverride || configSource.url;
     const sourceOptions = {
       url: sourceURL + urlParameters,
       layer: id,
@@ -64,6 +69,8 @@ const AddWMTSLayer = ({ layer }) => {
       source: tileSource,
       className: id,
     });
+
+    console.log(layerTile)
 
     map.addLayer(layerTile);
 

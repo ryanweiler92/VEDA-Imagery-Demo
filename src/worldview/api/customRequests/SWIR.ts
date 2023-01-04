@@ -75,7 +75,6 @@ export default async (setResponse, setLoading, responseId, setLocationRequest) =
   }
   // This should return an array of dates
   await getSTACItems();
-  console.log(stacItemsResponse);
 
 
 

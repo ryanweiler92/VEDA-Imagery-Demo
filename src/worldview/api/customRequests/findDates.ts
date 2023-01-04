@@ -94,7 +94,6 @@ const collectionsFilter = {
  console.log(stacItemsResponse);
   
   // Check how many items were matched in search
-  // console.log("search context:", stacItemsResponse.context);
   // ----- END 2. fetch feature collection of matching features ------
 
   // ----- REGION 3. fetch unique item datetimes ------

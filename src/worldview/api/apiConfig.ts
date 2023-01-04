@@ -101,6 +101,20 @@ export const apiCalls = [
     //     customReference: "9",
     //     applyToMap: false
     // },
+    {
+        title: "FIRMS API HLSL30 FL (MAP)",
+        url: "customRequest",
+        description: "FIRMS. collection=HLSS30 bbox=SouthFlorida, temporalRange=7/1/18-10/28/21 bandCombo=B07,B05,B04 post_process=swir minzoom=9 maxzoom=14",
+        customReference: "10",
+        applyToMap: true
+    },
+    {
+        title: "FIRMS API HLSL30 FL 2(MAP)",
+        url: "customRequest",
+        description: "FIRMS. collection=HLSS30 bbox=SouthFlorida, temporalRange=7/1/18-10/28/21 bandCombo=B07,B05,B04 post_process=swir minzoom=9 maxzoom=14",
+        customReference: "11",
+        applyToMap: true
+    },
 
   ];
 

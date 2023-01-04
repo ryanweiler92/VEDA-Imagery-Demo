@@ -28,7 +28,6 @@ const maria_temporal_range = ["2017-06-06T00:00:00Z", "2017-11-30T00:00:00Z"];
 
 const idaBbox = [-90.932637, 29.705366, -89.766437, 30.71627];
 const idaTemporalRange = ["2021-07-01T00:00:00Z", "2021-10-28T00:00:00Z"];
-    
 
 const collectionsFilter = {
     op: "=",
