@@ -117,8 +117,10 @@ const OpenLayersHLSLayers = () => {
     
   }, [layerResponse])
 
+  const dontRunThis2 = true
+
   useEffect(() => {
-    if (!map) return;
+    if (!map || dontRunThis2) return;
     const { tiles } = layerResponse;
     const resolutions = [0.5625, 0.28125, 0.140625, 0.0703125, 0.03515625, 0.017578125, 0.0087890625, 0.00439453125, 0.002197265625, 0.0010986328125, 0.00054931640625, 0.000274658203125, 0.0001373291015625]
     const matrixIds = undefined
@@ -161,6 +163,8 @@ const OpenLayersHLSLayers = () => {
       className: "HLSL30.002",
       preload: 0,
     })
+
+    console.log(layerTile)
 
     map.addLayer(layerTile)
 

@@ -8,7 +8,7 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
   const collectionID = "HLSL30";
   // Custom band combination to match WV-2409.
   const bandCombo = ["B07","B05","B04"];
-  // bounding box coordinates for Connecticut
+  // bounding box coordinates
   const bboxCoords = [-125.5437, 24.8353, -66.3585, 49.5737];
   // arbitrary date range
   // const temporalRange = ["2022-04-28T00:00:00Z", "2022-04-29T00:00:00Z"];
@@ -72,7 +72,7 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
     // set the location in state (& then redux) to fly to coordinates on leaflet map
     setLocationRequest(bboxCoords);
     // set new zoom level for leaflet map
-    setLeafletZoom(9);
+    setLeafletZoom(4);
     // set in the response in state;
     setResponse(tilejsonResponse);
     setLoading(false);
