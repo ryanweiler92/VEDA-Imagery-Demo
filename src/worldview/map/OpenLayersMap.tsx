@@ -26,10 +26,13 @@ const Map = () => {
     const view = new OlView({
         maxResolution: projection.resolutions[0],
         projection: geoProjection,
-        center: projection.startCenter,
-        zoom: projection.startZoom,
+        // center: projection.startCenter,
+        center: [-72.7, 42.05],
+        // zoom: projection.startZoom,
+        zoom: 7,
         maxZoom: projection.numZoomLevels,
-        extent: projection.maxExtent,
+        // extent: projection.maxExtent,
+        extent: [-73.7, 41.6, -71.8, 42.05],
         constrainOnlyCenter: true
     })
     let options = {

@@ -115,6 +115,12 @@ export const apiCalls = [
         customReference: "11",
         applyToMap: true
     },
+    {
+        title: "Get Capabilities",
+        url: "https://d1nzvsko7rbono.cloudfront.net/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
+        description: "Get Capabilities",
+        applyToMap: false
+    },
 
   ];
 

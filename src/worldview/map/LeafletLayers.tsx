@@ -12,6 +12,7 @@ const LeafletLayers = ({ layerToAdd, addLayer, lat, lon, zoom, flyTrigger, setFl
   // adds layer to map 
   useEffect(() => {
     if(!layerToAdd) return;
+    // console.log(layerToAdd)
     const layer = new L.TileLayer(layerToAdd);
     // console.log('layerToAdd', layerToAdd)
     // console.log('layer', layer)

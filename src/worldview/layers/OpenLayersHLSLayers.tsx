@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useReducer, useContext } from 'reac
 import OlTileGridWMTS from "ol/tilegrid/WMTS";
 import OlSourceWMTS from "ol/source/WMTS";
 import TileJSON from 'ol/source/TileJSON.js';
+import TileGrid from 'ol/tilegrid/TileGrid.js';
+import XYZ from 'ol/source/XYZ.js';
 import OlLayerTile from "ol/layer/Tile";
 import config from '../config/config';
 import {
@@ -99,6 +101,8 @@ const OpenLayersHLSLayers = () => {
 
     const tileSource = new OlSourceWMTS(sourceOptions);
 
+    
+
     const layerTile = new OlLayerTile({
       extent: extent,
       preload: 0,
@@ -117,12 +121,12 @@ const OpenLayersHLSLayers = () => {
     
   }, [layerResponse])
 
-  const dontRunThis2 = true
+  const dontRunThis2 = false
 
   useEffect(() => {
     if (!map || dontRunThis2) return;
     const { tiles } = layerResponse;
-    const resolutions = [0.5625, 0.28125, 0.140625, 0.0703125, 0.03515625, 0.017578125, 0.0087890625, 0.00439453125, 0.002197265625, 0.0010986328125, 0.00054931640625, 0.000274658203125, 0.0001373291015625]
+    const resolutions = [0.5625, 0.28125, 0.140625, 0.0703125, 0.03515625, 0.017578125, 0.0087890625, 0.00439453125, 0.002197265625]
     const matrixIds = undefined
     const style = undefined
     const matrixSet = "2km" 
@@ -130,33 +134,65 @@ const OpenLayersHLSLayers = () => {
     const configMatrixSet = configSource.matrixSets[matrixSet];
 
     const tileGridOptions = {
-      origin: [-180, 90],
-      // origin: [-120.48605, 44.1567],
-      extent: [-180, -90, 180, 90],
-      // extent: [-82.0559, 25.1696, -79.9884, 27.2371],
+      // origin: [-180, 90],
+      origin: [-72.08, 41.60],
+      extent: [-73.7, 41.6, -71.8, 42.05],
+      // extent: [-180, -90, 180, 90],
       tileSize: 256,
       resolutions,
       matrixIds: matrixIds || resolutions.map((set, index) => index),
+      // matrixIds: ['EPSG:4326:0', 'EPSG:4326:1', 'EPSG:4326:2', 'EPSG:4326:3', 'EPSG:4326:4', 'EPSG:4326:5', 'EPSG:4326:6', 'EPSG:4326:7', 'EPSG:4326:8'],
+    }
+
+    const xyzTileGridOptions = {
+      origin: [-72.08, 41.60],
+      extent: [-73.7, 41.6, -71.8, 42.05],
+      resolutions,
+      tileSize: 256,
     }
 
     const presetFIRMSExample = "https://d1nzvsko7rbono.cloudfront.net/mosaic/tiles/4c640d25fd8dd78aef47721a71ee8e96/WGS1984Quad/9/561/132@1x?assets=B07&assets=B05&assets=B04&post_process=swir"
     const customLayerResponse = tiles[0]
     const chicagoURL = "https://d1nzvsko7rbono.cloudfront.net/mosaic/tiles/6a4836cf022708ca29819eb2a6fbc75f/WGS1984Quad/9/131/190@1x?assets=B07&assets=B05&assets=B04&post_process=swir"
-    console.log(tiles[0])
+
+    const ctURL = "https://kv9drwgv6l.execute-api.us-west-2.amazonaws.com/mosaic/tiles/287c7ac3d034019c51ec96dff14e4c6a/WGS1984Quad/{z}/{x}/{y}@1x?post_process=swir&assets=B07&assets=B05&assets=B04"
+    const ctURL2 = "https://d1nzvsko7rbono.cloudfront.net/mosaic/tiles/287c7ac3d034019c51ec96dff14e4c6a/WGS1984Quad/{z}/{x}/{y}@1x?post_process=swir&assets=B07&assets=B05&assets=B04"
 
     const sourceOptions = {
       // url: "https://kv9drwgv6l.execute-api.us-west-2.amazonaws.com/mosaic/6112e654f98f9be580cb586832569457/tilejson.json",
-      // url: tiles[0],
-      url: chicagoURL,
+      url: ctURL,
+      // url: presetFIRMSExample,
       layer: "HLSL30.002",
       crossOrigin: 'anonymous',
       tileGrid: new OlTileGridWMTS(tileGridOptions),
       wrapX: false,
       style: typeof style === 'undefined' ? 'default' : style,
-      matrixSet: configMatrixSet.id,
+      matrixSet: 'EPSG:4326',
+      format: 'image/png',
+      tileLoadFunction: (imageTile, src) => {
+        console.log('Tile loaded: ', src);
+        console.log('Tile coordinates: ', imageTile.getTileCoord());
+        console.log('Tile resolution: ', imageTile.getTileCoord()[0]);
+      }
+    }
+
+    const xyzSourceOptions = {
+      url: ctURL,
+      crossOrigin: 'anonymous',
+      tileGrid: new TileGrid(xyzTileGridOptions),
+      projection: "EPSG:4326",
+      tileLoadFunction: (imageTile, src) => {
+        console.log('Tile loaded: ', src);
+        console.log('Tile coordinates: ', imageTile.getTileCoord());
+        console.log('Tile resolution: ', imageTile.getTileCoord()[0]);
+      }
     }
 
     const tileSource = new OlSourceWMTS(sourceOptions);
+
+
+
+    const xyzSource = new XYZ(xyzSourceOptions)
 
     const layerTile = new OlLayerTile({
       source: tileSource,
@@ -164,9 +200,12 @@ const OpenLayersHLSLayers = () => {
       preload: 0,
     })
 
-    console.log(layerTile)
+    const xyzLayerTile = new OlLayerTile({
+      source: xyzSource,
+      className: "HLSL30.002",
+    })
 
-    map.addLayer(layerTile)
+    map.addLayer(xyzLayerTile)
 
   }, [layerResponse])
 
