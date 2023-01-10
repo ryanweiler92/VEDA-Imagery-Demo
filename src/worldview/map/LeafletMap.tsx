@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useReducer } from 'react';
 import { MapContainer, TileLayer, useMap, Popup, Marker } from 'react-leaflet'
 import { Icon, CRS } from "leaflet";
-import { Box, Button, Flex, IconButton, Heading, List, ListItem, Text, Spinner, Spacer, Select } from "@chakra-ui/react";
+import { Box, Button, Flex, IconButton, Heading, List, ListItem, Text, Spinner, Spacer, Select, Switch, FormControl, FormLabel } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import "./Map.css";
 import OpenStreetLayers from './LeafletLayers';
@@ -104,12 +104,21 @@ const LeafletMap = () => {
       const projection = (mapRef.current)
       console.log(projection)
     }
-    
   }
+
+  const [requestLeafletImagery, setRequestLeafletImagery] = useState(true)
   
   return (
     <>
-    <Button onClick={testFunction} colorScheme='green'>Fly Trigger</Button>
+    <Flex flexDirection="column" alignItems="center" width="20%">
+      <Button onClick={testFunction} colorScheme='green'>Fly Trigger</Button>
+      <FormControl display='flex' alignItems='center' mt={"4"}>
+        <FormLabel htmlFor='email-alerts' mb='0' textAlign={"center"}>
+          Request Imagery on Leaflet Map?
+        </FormLabel>
+        <Switch id='leaflet-img-switch'  isChecked={requestLeafletImagery} onChange={() => setRequestLeafletImagery(!requestLeafletImagery)}/>
+      </FormControl>
+    </Flex>
     <MapContainer ref={mapRef} center={[lat, lon]} zoom={zoom} scrollWheelZoom={true} crs={CRS.EPSG3857} id="leaflet-container">
       <TileLayer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -122,6 +131,7 @@ const LeafletMap = () => {
       zoom={zoom}
       flyTrigger={flyTrigger}
       setFlyTrigger={setFlyTrigger}
+      requestLeafletImagery={requestLeafletImagery}
       />
     </MapContainer>
     </>

@@ -31,8 +31,8 @@ const Map = () => {
         // zoom: projection.startZoom,
         zoom: 7,
         maxZoom: projection.numZoomLevels,
-        // extent: projection.maxExtent,
-        extent: [-73.7, 41.6, -71.8, 42.05],
+        extent: projection.maxExtent,
+        // extent: [-73.7, 41.6, -71.8, 42.05],
         constrainOnlyCenter: true
     })
     let options = {
