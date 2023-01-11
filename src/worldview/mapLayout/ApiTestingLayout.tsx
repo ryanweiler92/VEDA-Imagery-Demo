@@ -19,12 +19,22 @@ const ApiTestingLayout = () => {
   const [leafletDisplay, setLeafletDisplay] = useState(false);
   const [openLayersDisplay, setOpenLayersDisplay] = useState(false);
 
+  const [viewProperties, setViewProperties] = useState({
+    centerCoords: [-72.7, 42.05],
+    latlonCoords: "0, 0",
+    resolution: 38496,
+    rotation: 0,
+    zoom: 7,
+  })
+
   return (
     <MapContext.Provider value={{
       layerData,
       setLayerData,
       map,
-      setMap
+      setMap,
+      setViewProperties,
+      viewProperties
     }}>
       <Box>
         <ApiTest />

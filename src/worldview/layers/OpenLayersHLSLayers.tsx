@@ -34,7 +34,6 @@ const OpenLayersHLSLayers = () => {
 
   useEffect(() => {
     if (!map) return;
-    console.log("GOGOGO")
     const { tiles } = layerResponse;
     const customResponse = tiles[0]
     // custom response looks like 

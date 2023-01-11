@@ -1,25 +1,38 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Box, Button, Flex, Heading, List, ListItem, Text, Icon, Divider, IconButton } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, List, ListItem, Text, Icon, Divider, IconButton, Badge } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setDate } from "../../slices/worldview/worldviewSlice";
 import "./DateSelector.css"
+import MapContext from "../mapLayout/MapContext"
 
 const DateSelector = () => {
+    const { viewProperties } = useContext(MapContext)
     const dispatch = useAppDispatch();
     const date = useAppSelector((state) => state.worldview.date);
     const myDate = new Date(Date.parse(date));
 
+    const centerCoords = viewProperties.centerCoords
+    const lat = centerCoords[1].toFixed(2)
+    const lon = centerCoords[0].toFixed(2)
+
     return (
-        <Flex w="33%" justify="center">
+        <Flex w="33%" flexDirection={"column"} align="center">
             <div>
-            <DatePicker 
-            selected={myDate} 
-            onChange={(myDate) => dispatch(setDate(myDate.toISOString()))}
-            id="datePicker" 
-            />
+                <DatePicker 
+                selected={myDate} 
+                onChange={(myDate) => dispatch(setDate(myDate.toISOString()))}
+                id="datePicker" 
+                />
             </div>
+            <Box mt="4">
+                <Badge borderRadius={"19px"} colorScheme="blue" mx="1" p="4" fontSize={"20px"}>Zoom: {viewProperties.zoom}</Badge>
+            </Box>
+            <Box mt="4">
+                <Badge borderRadius={"19px"} colorScheme="blue" mx="1" p="4" fontSize={"20px"}>Lat: {lat} Lon: {lon}</Badge>
+            </Box>
+
         </Flex>
     )
 }

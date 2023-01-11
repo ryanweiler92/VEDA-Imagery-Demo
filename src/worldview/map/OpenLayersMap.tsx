@@ -9,13 +9,14 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import AddLayer from '../layers/AddLayer';
 import MapContext from '../mapLayout/MapContext';
 import OpenLayersHLSLayers from '../layers/OpenLayersHLSLayers';
+import MapEvents from '../layers/OpenLayersMapEventListeners'
 
 const Map = () => {
   const mapRef = useRef();
   const dispatch = useAppDispatch();
   const availableLayers = useAppSelector((state) => state.worldview.availableLayers);
 
-  const { map, setMap, setLayerData} = useContext(MapContext);
+  const { map, setMap, setLayerData, viewProperties } = useContext(MapContext);
 
   const projection = config.projections.geographic;
 
@@ -60,7 +61,7 @@ const Map = () => {
 }, [map]);
 
   const testFunction = () => {
-    console.log(map.getLayers())
+    console.log(viewProperties)
   }
 
   return (
@@ -72,6 +73,7 @@ const Map = () => {
           <AddLayer layer={layer.data} key={layer.name} />
         )})}
         <OpenLayersHLSLayers />
+        <MapEvents />
     </div>
     </>
   );

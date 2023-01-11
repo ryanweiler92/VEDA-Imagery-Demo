@@ -13,7 +13,7 @@ export const urls = {
 
     ctTileEx: "https://d1nzvsko7rbono.cloudfront.net/mosaic/tiles/287c7ac3d034019c51ec96dff14e4c6a/WGS1984Quad/9/153/189@1x?assets=B07&assets=B05&assets=B04&post_process=swir",
     
-    test: "https://d1nzvsko7rbono.cloudfront.net/mosaic/tiles/287c7ac3d034019c51ec96dff14e4c6a/WorldCRS84Quad/{z}/{x}/{y}@1x?assets=B07&assets=B05&assets=B04&post_process=swir"
+    test: "https://kv9drwgv6l.execute-api.us-west-2.amazonaws.com/mosaic/tiles/287c7ac3d034019c51ec96dff14e4c6a/WGS1984Quad/{z}/{x}/{y}@1x?post_process=swir&assets=B07&assets=B05&assets=B04"
 }
 
 export const origins = {

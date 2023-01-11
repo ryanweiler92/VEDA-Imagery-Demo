@@ -14,12 +14,22 @@ const ApiTestingLayout = () => {
   // layer data is a non-serializable value so we cannot store in Redux. Creating local state and passing through context.
   const [layerData, setLayerData] = useState([])
 
+  const [viewProperties, setViewProperties] = useState({
+    centerCoords: [0, 0],
+    latlonCoords: "0, 0",
+    resolution: 38496,
+    rotation: 0,
+    zoom: 2,
+  })
+
   return (
     <MapContext.Provider value={{
       layerData,
       setLayerData,
       map,
-      setMap
+      setMap,      
+      setViewProperties,
+      viewProperties
     }}>
       <Flex justify="center">
         <Text fontSize="3xl">NASA GIBS Imagery Open Layers</Text>
