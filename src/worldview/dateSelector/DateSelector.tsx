@@ -17,6 +17,10 @@ const DateSelector = () => {
     const lat = centerCoords[1].toFixed(2)
     const lon = centerCoords[0].toFixed(2)
 
+    const testFunction = () => {
+        console.log(viewProperties)
+      }
+
     return (
         <Flex w="33%" flexDirection={"column"} align="center">
             <div>
@@ -27,10 +31,13 @@ const DateSelector = () => {
                 />
             </div>
             <Box mt="4">
-                <Badge borderRadius={"19px"} colorScheme="blue" mx="1" p="4" fontSize={"20px"}>Zoom: {viewProperties.zoom}</Badge>
+                <Badge borderRadius={"19px"} colorScheme="blue" mx="1" p="4" fontSize={"base"}>Zoom: {viewProperties.zoom}</Badge>
             </Box>
             <Box mt="4">
-                <Badge borderRadius={"19px"} colorScheme="blue" mx="1" p="4" fontSize={"20px"}>Lat: {lat} Lon: {lon}</Badge>
+                <Badge borderRadius={"19px"} colorScheme="blue" mx="1" p="4" fontSize={"base"}>Lat: {lat} Lon: {lon}</Badge>
+            </Box>
+            <Box mt="4">
+                <Button colorScheme="blue" onClick={testFunction}>Test Trigger</Button>
             </Box>
 
         </Flex>

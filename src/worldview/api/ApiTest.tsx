@@ -7,7 +7,7 @@
 //  4. Import your custom request function.
 //  5. Add a new case to the switch statement that refers to the customReference value you created in apiConfig.ts 
 import React, { useState, useEffect } from "react"
-import { Box, Button, Flex, IconButton, Heading, List, ListItem, Text, Icon, Spinner, Spacer, Select } from "@chakra-ui/react";
+import { Box, Button, Flex, IconButton, Heading, ListIcon, List, UnorderedList, ListItem, Text, Icon, Spinner, Spacer, Select } from "@chakra-ui/react";
 import axios from "axios"
 import { PhoneIcon, InfoIcon } from '@chakra-ui/icons';
 import { GiSave, GiMaterialsScience } from 'react-icons/gi'
@@ -37,7 +37,7 @@ import FirmsHLSS30CT from './customRequests/FIRMSHLSS30CT';
 import FirmsHLSL30OR from './customRequests/FIRMSHLSL30OR';
 import FirmsHLSL30US from './customRequests/FIRMSHLSL30US';
 import FirmsHLSL30FL from './customRequests/FIRMSHLSL30FL';
-import FirmsHLSL30FL2 from './customRequests/FIRMSHLSL30FL2'
+import HLSSnoBbox from './customRequests/HLSSnoBbox'
 
 const ApiTest = () => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -47,15 +47,15 @@ const ApiTest = () => {
     const [responseThree, setResponseThree] = useState();
     const [callUrlOne, setCallUrlOne] = useState();
     const [callTitleOne, setCallTitleOne] = useState();
-    const [callDescriptionOne, setCallDescriptionOne] = useState();
+    const [callDescriptionOne, setCallDescriptionOne] = useState([]);
     const [callOneApplyToMap, setCallOneApplyToMap] = useState(false);
     const [callUrlTwo, setCallUrlTwo] = useState();
     const [callTitleTwo, setCallTitleTwo] = useState();
-    const [callDescriptionTwo, setCallDescriptionTwo] = useState();
+    const [callDescriptionTwo, setCallDescriptionTwo] = useState([]);
     const [callTwoApplyToMap, setCallTwoApplyToMap] = useState(false);
     const [callUrlThree, setCallUrlThree] = useState();
     const [callTitleThree, setCallTitleThree] = useState();
-    const [callDescriptionThree, setCallDescriptionThree] = useState();
+    const [callDescriptionThree, setCallDescriptionThree] = useState([]);
     const [callThreeApplyToMap, setCallThreeApplyToMap] = useState(false);
     const [loadingOne, setLoadingOne] = useState(false);
     const [loadingTwo, setLoadingTwo] = useState(false);
@@ -110,7 +110,7 @@ const ApiTest = () => {
                 break;
             case '11': 
                 setLoading(true);
-                FirmsHLSL30FL2(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
+                HLSSnoBbox(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
                 break;
             case 'default':
                 console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');
@@ -194,19 +194,22 @@ const ApiTest = () => {
         setCustomReference(value.customReference)
         if(e.target.id == "select1"){
             setCallTitleOne(value.title)
-            setCallDescriptionOne(value.description)
             setCallUrlOne(value.url)
             setCallOneApplyToMap(value.applyToMap)
+            const descriptionValues = value.description.split(",").map(value => value)
+            setCallDescriptionOne(descriptionValues)
         } else if (e.target.id == "select2"){
             setCallTitleTwo(value.title)
-            setCallDescriptionTwo(value.description)
             setCallUrlTwo(value.url)
             setCallTwoApplyToMap(value.applyToMap)
+            const descriptionValues = value.description.split(",").map(value => value)
+            setCallDescriptionTwo(descriptionValues)
         } else if (e.target.id == "select3") {
             setCallTitleThree(value.title)
-            setCallDescriptionThree(value.description)
             setCallUrlThree(value.url)
             setCallThreeApplyToMap(value.applyToMap)
+            const descriptionValues = value.description.split(",").map(value => value)
+            setCallDescriptionThree(descriptionValues)
         }
       }
 
@@ -296,7 +299,7 @@ const ApiTest = () => {
                 <PhoneIcon mr="2" /> Fetch
             </Button>
         </Flex>
-        <Flex w="100%" bg="gray.100" h="300px"> 
+        <Flex w="100%" bg="gray.100" h="350px"> 
             <Flex align="center" direction="column" h="100%" w="33%" border="2px solid black" className="text-container">
                 <Select defaultValue="disabled" id="select1" bg="blue.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
                     <option value="disabled" disabled>Select an API Request</option>
@@ -307,8 +310,16 @@ const ApiTest = () => {
                     })}
                 </Select>
                 <Heading textAlign="center" size='md' my="2" maxWidth="320px">{callTitleOne}</Heading>
-                <Text align="center" fontSize="sm" my="2" maxWidth="320px">{callDescriptionOne}</Text>
-                <Text align="center" fontSize="sm" my="2" maxWidth="320px">{callUrlOne}</Text>
+                <List>
+                    {callDescriptionOne?.map((value) => {
+                        return (
+                            <ListItem key={value} fontSize="small">
+                                <ListIcon as={InfoIcon} color='green.500' />
+                                {value}
+                            </ListItem>
+                        )
+                    })}
+                </List>
             </Flex>
             <Flex align="center" direction="column" h="100%" w="33%" border="2px solid black">
                 <Select defaultValue="disabled" id="select2" bg="blue.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
@@ -320,8 +331,17 @@ const ApiTest = () => {
                     })}
                 </Select>
                 <Heading textAlign="center" size='md' my="2" maxWidth="320px">{callTitleTwo}</Heading>
-                <Text align="center" my="2" maxWidth="320px">{callDescriptionTwo}</Text>
-                <Text align="center" my="2" maxWidth="320px">{callUrlTwo}</Text>
+                <List>
+                    {callDescriptionTwo?.map((value) => {
+                        return (
+                            <ListItem key={value} fontSize="small">
+                                <ListIcon as={InfoIcon} color='green.500' />
+                                {value}
+                            </ListItem>
+                        )
+                    })}
+                </List>
+                
             </Flex>
             <Flex align="center" direction="column" h="100%" w="34%" border="2px solid black">
                 <Select defaultValue="disabled" id="select3" bg="blue.300" borderRadius="0" textAlign="center" fontWeight="bold" onChange={(e) => handleSelect(e)}>
@@ -333,8 +353,16 @@ const ApiTest = () => {
                     })}
                 </Select>
                 <Heading textAlign="center" size='md' my="2" maxWidth="320px">{callTitleThree}</Heading>
-                <Text align="center" my="2" maxWidth="320px">{callDescriptionThree}</Text>
-                <Text align="center" my="2" maxWidth="320px">{callUrlThree}</Text>
+                <List>
+                    {callDescriptionThree?.map((value) => {
+                        return (
+                            <ListItem key={value} fontSize="small">
+                                <ListIcon as={InfoIcon} color='green.500' />
+                                {value}
+                            </ListItem>
+                        )
+                    })}
+                </List>
             </Flex>
         </Flex>
         <Flex justify="space-around" align="center" my="2">

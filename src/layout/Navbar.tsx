@@ -299,7 +299,7 @@ const NAV_ITEMS: Array<NavItem> = [
   //   // ],
   // },
   {
-    label: 'API VEDA Testing',
+    label: 'API VEDA/FIRMS Testing',
     href: '/apitesting'
   },
   // {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useReducer } from 'react';
-import { MapContainer, TileLayer, useMap, Popup, Marker } from 'react-leaflet'
+import { MapContainer, TileLayer, useMap, Popup, Marker, useMapEvents} from 'react-leaflet'
 import * as L from 'leaflet';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 
-const LeafletLayers = ({ layerToAdd, addLayer, lat, lon, zoom, flyTrigger, setFlyTrigger, requestLeafletImagery }) => {
+const LeafletLayers = ({ layerToAdd, addLayer, lat, lon, setZoom, zoom, flyTrigger, setFlyTrigger, requestLeafletImagery }) => {
   // custom react-leaflet hook to access map object
   const map = useMap();
 
@@ -24,6 +24,12 @@ const LeafletLayers = ({ layerToAdd, addLayer, lat, lon, zoom, flyTrigger, setFl
     
     map.flyTo(newLocation, leafletZoom);
   }, [layerToAdd]);
+
+  const mapEvents = useMapEvents({
+    zoomend: () => {
+      setZoom(mapEvents.getZoom())
+    }
+  })
 
   // for testing bbox location coords
   // noreast bbox

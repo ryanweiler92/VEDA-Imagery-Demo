@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useReducer } from 'react';
 import { MapContainer, TileLayer, useMap, Popup, Marker } from 'react-leaflet'
 import { Icon, CRS } from "leaflet";
-import { Box, Button, Flex, IconButton, Heading, List, ListItem, Text, Spinner, Spacer, Select, Switch, FormControl, FormLabel } from "@chakra-ui/react";
+import { Box, Button, Badge, Flex, IconButton, Heading, List, ListItem, Text, Spinner, Spacer, Select, Switch, FormControl, FormLabel } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import "./Map.css";
 import OpenStreetLayers from './LeafletLayers';
@@ -109,15 +109,22 @@ const LeafletMap = () => {
   const [requestLeafletImagery, setRequestLeafletImagery] = useState(true)
   
   return (
-    <>
-    <Flex flexDirection="column" alignItems="center" width="20%">
-      <Button onClick={testFunction} colorScheme='green'>Fly Trigger</Button>
+    <Flex flexDirection={"column"}>
+    <Flex flexDirection="row" alignItems="center" justify={"center"}>
+      <Flex justify={"center"}>
+        <Button onClick={testFunction} colorScheme='green'>Test Trigger</Button>
+      </Flex>
+      <Flex justify={"center"} pb="3" ml="4">
       <FormControl display='flex' alignItems='center' mt={"4"}>
         <FormLabel htmlFor='email-alerts' mb='0' textAlign={"center"}>
           Request Imagery on Leaflet Map?
         </FormLabel>
-        <Switch id='leaflet-img-switch'  isChecked={requestLeafletImagery} onChange={() => setRequestLeafletImagery(!requestLeafletImagery)}/>
+        <Switch id='leaflet-img-switch' colorScheme={"green"}  isChecked={requestLeafletImagery} onChange={() => setRequestLeafletImagery(!requestLeafletImagery)}/>
       </FormControl>
+      </Flex>
+      <Flex ml={"3"}>
+        <Badge fontSize={"large"} colorScheme="green" p="2" borderRadius={"base"} variant='subtle'>Zoom: {zoom}</Badge>
+      </Flex>
     </Flex>
     <MapContainer ref={mapRef} center={[lat, lon]} zoom={zoom} scrollWheelZoom={true} crs={CRS.EPSG3857} id="leaflet-container">
       <TileLayer
@@ -131,10 +138,11 @@ const LeafletMap = () => {
       zoom={zoom}
       flyTrigger={flyTrigger}
       setFlyTrigger={setFlyTrigger}
+      setZoom={setZoom}
       requestLeafletImagery={requestLeafletImagery}
       />
     </MapContainer>
-    </>
+    </Flex>
   );
 };
 

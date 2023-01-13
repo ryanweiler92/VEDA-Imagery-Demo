@@ -60,21 +60,16 @@ const Map = () => {
     setLayerData(layersArray);
 }, [map]);
 
-  const testFunction = () => {
-    console.log(viewProperties)
-  }
-
   return (
     <>
-    <Button colorScheme="red" onClick={testFunction}>Console Map</Button>
-    <div ref={mapRef} className="ol-map">
-      {availableLayers && availableLayers.map((layer) => {
-        if (layer.active) return (
-          <AddLayer layer={layer.data} key={layer.name} />
-        )})}
-        <OpenLayersHLSLayers />
-        <MapEvents />
-    </div>
+      <div ref={mapRef} className="ol-map">
+        {availableLayers && availableLayers.map((layer) => {
+          if (layer.active) return (
+            <AddLayer layer={layer.data} key={layer.name} />
+          )})}
+          <OpenLayersHLSLayers />
+          <MapEvents />
+      </div>
     </>
   );
 }

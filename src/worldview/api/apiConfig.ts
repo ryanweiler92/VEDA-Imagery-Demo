@@ -2,7 +2,7 @@ export const apiCalls = [
     {
         title: "VEDA List All Collections",
         url: "https://staging-stac.delta-backend.com/",
-        description: "Returns a catalog. Get a list of all the available collections. This includes HLSL30.002. This is the STAC_API_URL in the HLS example in the VEDA Docs. links[19] == `HSL30.002 Environmental Justice Events`",
+        description: "Get a list of all the available collections for VEDA API`",
         applyToMap: false
     },
     // {
@@ -40,21 +40,21 @@ export const apiCalls = [
     {
         title: "VEDA Hurricane Ida SWIR (MAP)",
         url: "customRequest",
-        description: "VEDA. Imagery from 2021 Hurricane Ida using the built-in SWIR post processing algorithm. post_process=swir, assets=[B07, B05, B04]",
+        description: "Imagery from VEDA API for 2021 Hurricane Ida using the built-in SWIR post processing algorithm, post_process=swir, assets=[B07/B05/B04]",
         customReference: "3",
         applyToMap: true
     },
     {
         title: "VEDA Hurricane Ida Color Map (MAP)",
         url: "customRequest",
-        description: "VEDA. Imagery from 2021 Hurricane Ida using color map, rescaling & expression. assets=[B08, B04], expression=(B08-B04)/(B08+B04) rescale=0,1, colormap_name=rdylgn",
+        description: "Imagery from VEDA API for 2021 Hurricane Ida using color map & rescaling & expression, assets=B08/B04, expression=(B08-B04)/(B08+B04), rescale=0/1, colormap_name=rdylgn",
         customReference: "4",
         applyToMap: true
     },
     {
         title: "VEDA Hurricane Maria L30 (MAP)",
         url: "customRequest",
-        description: "VEDA. Imagery from 2017 Hurricane Maria using color map, rescaling & expression. assets=[B03, B05] expression=(B03-B05)/(B03+B05) rescale=0,1 colorMap=viridis",
+        description: "Imagery from the VEDA API for 2017 Hurricane Maria using color map & rescaling & expression, assets=B03/B05, expression=(B03-B05)/(B03+B05), rescale=0/1, colorMap=viridis",
         customReference: "5",
         applyToMap: true
     },
@@ -68,24 +68,24 @@ export const apiCalls = [
     {
         title: "FIRMS API HLSS30 Connecticut (MAP)",
         url: "customRequest",
-        description: "FIRMS. collection=HLSS30 bbox=Connecticut, temporalRange=7/1/18-10/28/21 bandCombo=B07,B05,B04 post_process=swir minzoom=9 maxzoom=14",
+        description: "collection=HLSS30, bbox=Connecticut, temporalRange=7/1/18-10/28/21, bandCombo=B07/B05/B04, post_process=swir, minzoom=9, maxzoom=14",
         customReference: "7",
         applyToMap: true
     },
     {
         title: "FIRMS API HLSL30 Oregon (MAP)",
         url: "customRequest",
-        description: "FIRMS. collection=HLSS30 bbox=Oregon, temporalRange=7/1/18-10/28/21 bandCombo=B07,B05,B04 post_process=swir minzoom=9 maxzoom=14",
+        description: "collection=HLSS30, bbox=Oregon, temporalRange=7/1/18-10/28/21, bandCombo=B07/B05/B04 post_process=swir, minzoom=9, maxzoom=14",
         customReference: "8",
         applyToMap: true
     },
-    {
-        title: "FIRMS API HLSL30 US (MAP)",
-        url: "customRequest",
-        description: "FIRMS. collection=HLSS30 bbox=UnitedStates, temporalRange=10/27/21-10/28/21 bandCombo=B07,B05,B04 post_process=swir minzoom=9 maxzoom=14",
-        customReference: "9",
-        applyToMap: true
-    },
+    // {
+    //     title: "FIRMS API HLSL30 US (MAP)",
+    //     url: "customRequest",
+    //     description: "FIRMS. collection=HLSS30 bbox=UnitedStates, temporalRange=10/27/21-10/28/21 bandCombo=B07,B05,B04 post_process=swir minzoom=9 maxzoom=14",
+    //     customReference: "9",
+    //     applyToMap: true
+    // },
     // {
     //     title: "FIRMS Asset List (Doesn't work yet)",
     //     // url: "https://d1nzvsko7rbono.cloudfront.net/mosaic/e327118c2abc8ae6389b91b804df6913/{z}/{x}/{y}/assets",
@@ -104,23 +104,23 @@ export const apiCalls = [
     {
         title: "FIRMS API HLSL30 FL (MAP)",
         url: "customRequest",
-        description: "FIRMS. collection=HLSS30 bbox=SouthFlorida, temporalRange=7/1/18-10/28/21 bandCombo=B07,B05,B04 post_process=swir minzoom=9 maxzoom=14",
+        description: "collection=HLSS30, bbox=SouthFlorida, temporalRange=7/1/18-10/28/21, bandCombo=B07/B05/B04, post_process=swir, minzoom=9, maxzoom=14",
         customReference: "10",
         applyToMap: true
     },
     {
-        title: "FIRMS API HLSL30 FL 2(MAP)",
+        title: "FIRMS HLSS No Bbox",
         url: "customRequest",
-        description: "FIRMS. collection=HLSS30 bbox=SouthFlorida, temporalRange=7/1/18-10/28/21 bandCombo=B07,B05,B04 post_process=swir minzoom=9 maxzoom=14",
+        description: "collection=HLSS30, bbox=n/a, temporalRange=7/1/18-10/28/21, bandCombo=B07/B05/B04, post_process=swir, minzoom=9, maxzoom=14, You should be able to pan anywhere on a Leaflet map and if zoomed enough should render tiles",
         customReference: "11",
         applyToMap: true
     },
-    {
-        title: "Get Capabilities",
-        url: "https://d1nzvsko7rbono.cloudfront.net/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
-        description: "Get Capabilities",
-        applyToMap: false
-    },
+    // {
+    //     title: "Get Capabilities",
+    //     url: "https://d1nzvsko7rbono.cloudfront.net/wmts?SERVICE=WMTS&REQUEST=GetCapabilities",
+    //     description: "Get Capabilities",
+    //     applyToMap: false
+    // },
 
   ];
 
