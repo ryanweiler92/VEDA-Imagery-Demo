@@ -61,6 +61,13 @@ export const apiCalls = [
         customReference: "12",
         applyToMap: true
     },
+    {
+        title: "FIRMS HLSL Min Date Only (MAP)",
+        url: "customRequest",
+        description: "collection=HLSL30, bbox=n/a, temporalRange=3/15/2022, bandCombo=B07/B05/B04, post_process=swir, minzoom=9, maxzoom=14, You should be able to pan anywhere on both maps and if zoomed enough should render tiles",
+        customReference: "13",
+        applyToMap: true
+    },
 
 
   ];

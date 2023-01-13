@@ -39,6 +39,7 @@ import FirmsHLSL30US from './customRequests/FIRMSHLSL30US';
 import FirmsHLSL30FL from './customRequests/FIRMSHLSL30FL';
 import HLSSnoBbox from './customRequests/HLSSnoBbox'
 import HLSSminDate from './customRequests/HLSSminDate'
+import HLSLminDate from './customRequests/HLSLminDate'
 
 const ApiTest = () => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -116,6 +117,10 @@ const ApiTest = () => {
             case '12': 
                 setLoading(true);
                 HLSSminDate(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
+                break;
+            case '13': 
+                setLoading(true);
+                HLSLminDate(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
                 break;
             case 'default':
                 console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');
