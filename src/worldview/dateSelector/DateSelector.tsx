@@ -36,9 +36,9 @@ const DateSelector = () => {
             <Box mt="4">
                 <Badge borderRadius={"19px"} colorScheme="blue" mx="1" p="4" fontSize={"base"}>Lat: {lat} Lon: {lon}</Badge>
             </Box>
-            <Box mt="4">
+            {/* <Box mt="4">
                 <Button colorScheme="blue" onClick={testFunction}>Test Trigger</Button>
-            </Box>
+            </Box> */}
 
         </Flex>
     )

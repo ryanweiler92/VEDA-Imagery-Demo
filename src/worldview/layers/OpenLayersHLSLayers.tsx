@@ -34,11 +34,10 @@ const OpenLayersHLSLayers = () => {
 
   useEffect(() => {
     if (!map) return;
-    const { tiles } = layerResponse;
-    const customResponse = tiles[0]
-    // custom response looks like 
-    // https://kv9drwgv6l.execute-api.us-west-2.amazonaws.com/mosaic/tiles/287c7ac3d034019c51ec96dff14e4c6a/WebMercatorQuad/{z}/{x}/{y}@1x?post_process=swir&assets=B07&assets=B05&assets=B04
 
+    const { name } = layerResponse;
+    const URL = `https://kv9drwgv6l.execute-api.us-west-2.amazonaws.com/mosaic/tiles/${name}/WGS1984Quad/{z}/{x}/{y}@1x?post_process=swir&assets=B07&assets=B05&assets=B04`
+    console.log("URL", URL)
     const { baseURL1, baseURL2, ctURL1, ctURL2, presetFIRMS, ctTileEx, test } = urls
     const { worldOrigin, ctOrigin } = origins
     const { worldExtent, ctExtent } = extents
@@ -54,7 +53,7 @@ const OpenLayersHLSLayers = () => {
     }
 
     const xyzSourceOptions = {
-      url: test,
+      url: URL,
       crossOrigin: 'anonymous',
       // tileGrid: new TileGrid(xyzTileGridOptions),
       projection: "EPSG:4326",

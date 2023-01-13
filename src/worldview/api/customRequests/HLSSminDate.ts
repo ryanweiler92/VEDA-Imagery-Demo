@@ -11,7 +11,7 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
   // bounding box coordinates for Connecticut
   const bboxCoords = [-73.7249, 41.0022, -71.7798, 42.0777];
   // arbitrary date range
-  const temporalRange = ["2018-07-01T00:00:00Z", "2021-10-28T00:00:00Z"];
+  const temporalRange = ["2022-03-15T00:00:00Z"];
   // filter by collection ID
   const collectionsFilter = {
     op: "=",
@@ -55,6 +55,7 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
   const tilesHref = mosaicResponse.links.find(
     (link) => link.rel === "tilejson"
   ).href;
+  console.log(mosaicResponse)
   // setting params for tile request
   const params = {
     minzoom: 9,

@@ -111,9 +111,9 @@ const LeafletMap = () => {
   return (
     <Flex flexDirection={"column"}>
     <Flex flexDirection="row" alignItems="center" justify={"center"}>
-      <Flex justify={"center"}>
+      {/* <Flex justify={"center"}>
         <Button onClick={testFunction} colorScheme='green'>Test Trigger</Button>
-      </Flex>
+      </Flex> */}
       <Flex justify={"center"} pb="3" ml="4">
       <FormControl display='flex' alignItems='center' mt={"4"}>
         <FormLabel htmlFor='email-alerts' mb='0' textAlign={"center"}>
