@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Container, Flex, FlexProps, Box, Button } from '@chakra-ui/react'
-import ApiTestingLayout from '../worldview/mapLayout/ApiTestingLayout';
+import ApiTestingLayout from '../veda/mapLayout/ApiTestingLayout';
 import Navbar from './Navbar';
 
 const ApiTestingPage = (props: FlexProps) => {

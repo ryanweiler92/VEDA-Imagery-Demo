@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import startingLayers from '../../worldview/config/availableLayers';
-import { startingDate } from '../../worldview/selectors/selectors';
+import startingLayers from '../../veda/config/availableLayers';
+import { startingDate } from '../../veda/selectors/selectors';
 
 interface HLSL30LayerResponse {
   bounds: Array<number>,

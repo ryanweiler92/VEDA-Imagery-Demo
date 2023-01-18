@@ -6,9 +6,10 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setDate } from "../../slices/worldview/worldviewSlice";
 import "./DateSelector.css"
 import MapContext from "../mapLayout/MapContext"
+import {get} from 'ol/proj';
 
 const DateSelector = () => {
-    const { viewProperties } = useContext(MapContext)
+    const { viewProperties, map } = useContext(MapContext)
     const dispatch = useAppDispatch();
     const date = useAppSelector((state) => state.worldview.date);
     const myDate = new Date(Date.parse(date));
@@ -18,7 +19,9 @@ const DateSelector = () => {
     const lon = centerCoords[0].toFixed(2)
 
     const testFunction = () => {
-        console.log(viewProperties)
+        const currentLayers = map.getLayers();
+        const layersArray = currentLayers.array_
+        console.log(layersArray)
       }
 
     return (
@@ -36,9 +39,9 @@ const DateSelector = () => {
             <Box mt="4">
                 <Badge borderRadius={"19px"} colorScheme="blue" mx="1" p="4" fontSize={"base"}>Lat: {lat} Lon: {lon}</Badge>
             </Box>
-            {/* <Box mt="4">
+            <Box mt="4">
                 <Button colorScheme="blue" onClick={testFunction}>Test Trigger</Button>
-            </Box> */}
+            </Box>
 
         </Flex>
     )

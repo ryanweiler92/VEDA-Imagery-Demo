@@ -28,9 +28,9 @@ const Map = () => {
         maxResolution: projection.resolutions[0],
         projection: geoProjection,
         // center: projection.startCenter,
-        center: [-72.7, 42.05],
+        center: [-72.71, 41.56],
         // zoom: projection.startZoom,
-        zoom: 7,
+        zoom: 8,
         maxZoom: projection.numZoomLevels,
         extent: projection.maxExtent,
         // extent: [-73.7, 41.6, -71.8, 42.05],
@@ -48,7 +48,6 @@ const Map = () => {
     mapObj.setTarget(mapRef.current);
     setMap(mapObj);
 
-    //componentWillUnmount
     return () => mapObj.setTarget(undefined);
 }, []);
 

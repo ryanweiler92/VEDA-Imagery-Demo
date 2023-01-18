@@ -22,7 +22,7 @@ export const origins = {
 }
 
 export const extents = {
-    worldExtent: [-73.7, 41.6, -71.8, 42.05],
+    worldExtent: [-180, -90, 180, 90],
     ctExtent: [-180, -90, 180, 90],
 }
 

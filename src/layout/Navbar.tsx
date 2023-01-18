@@ -23,14 +23,10 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
-import { useAppSelector } from '../store/hooks';
-import { logout } from '../localStorage/localStorage';
 import { FaGithub } from 'react-icons/fa';
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
-  const token = useAppSelector((state) => state.user.token);
-
   return (
     <Box>
       <Flex

@@ -55,11 +55,10 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
   const tilesHref = mosaicResponse.links.find(
     (link) => link.rel === "tilejson"
   ).href;
-  console.log(mosaicResponse)
   // setting params for tile request
   const params = {
-    minzoom: 9,
-    maxzoom: 14,
+    // minzoom: 9,
+    // maxzoom: 14,
     post_process: "swir",
     assets: bandCombo,
   };

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Container, Flex, FlexProps, Box, Button } from '@chakra-ui/react'
-import ImageryLayout from '../worldview/mapLayout/ImageryLayout';
+import ImageryLayout from '../veda/mapLayout/ImageryLayout';
 import Navbar from './Navbar';
 
 const ImageryPage = (props: FlexProps) => {

@@ -67,12 +67,20 @@ export default [
         visible: true,
         data: configLayers.AIRS_Precipitation_Day,
     },
-    // {
-    //     id: 7,
-    //     name: "MODIS_Aqua_Thermal_Anomalies_Day",
-    //     title: configLayers.MODIS_Aqua_Thermal_Anomalies_Day.title,
-    //     active: false,
-    //     visible: true,
-    //     data: configLayers.MODIS_Aqua_Thermal_Anomalies_Day,
-    // }
+    {
+        id: 8,
+        name: "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+        title: "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+        active: false,
+        visible: false,
+        data: configLayers.HLS_L30_Nadir_BRDF_Adjusted_Reflectance
+    },
+    {
+        id: 9,
+        name: "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+        title: "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+        active: false,
+        visible: false,
+        data: configLayers.HLS_S30_Nadir_BRDF_Adjusted_Reflectance
+    },
 ]
