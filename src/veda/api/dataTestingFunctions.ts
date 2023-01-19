@@ -2,13 +2,13 @@
 // Each function is mapped to a corresponding response box from the UI
 
 export const testResponseOneData = (data) => {
-    console.log(data)
-}
+  console.log(data);
+};
 
 export const testResponseTwoData = (data) => {
-    console.log(data)
-}
+  console.log(data);
+};
 
 export const testResponseThreeData = (data) => {
-    console.log(data)
-}
+  console.log(data);
+};

@@ -1,7 +1,12 @@
-import axios from 'axios';
-import qs from 'qs';
+import axios from "axios";
+import qs from "qs";
 
-export default async (setResponse, setLoading, responseId, setLocationRequest) => {
+export default async (
+  setResponse,
+  setLoading,
+  responseId,
+  setLocationRequest
+) => {
   // ======= REGION 1: Parameters =============
   // Stac API is for searching for specific dates available within timeframe of interest.
   const STAC_API_URL = "https://staging-stac.delta-backend.com";
@@ -10,7 +15,7 @@ export default async (setResponse, setLoading, responseId, setLocationRequest) =
   // Harmonized landsat collection id. Used in collectionsFilter.
   const l30CollectionId = "hls-l30-002-ej-reprocessed";
   // Custom band combination to match WV-2409.
-  const l30_swir_assets = ["B07","B05","B04"];
+  const l30_swir_assets = ["B07", "B05", "B04"];
   // The following bounding box coords & temporal range are criteria for events in HLS events collection.
   // We need a set of bounding box coordinates. Examples from VEDA were very small.
   // This is a bounding box of the entire northeast of the united states.
@@ -31,18 +36,12 @@ export default async (setResponse, setLoading, responseId, setLocationRequest) =
   // Filter the area
   const spatialFilter = {
     op: "s_intersects",
-    args: [
-      { property: "bbox" },
-      norEastBbox,
-    ],
+    args: [{ property: "bbox" }, norEastBbox],
   };
-  // 
+  //
   const temporalFilter = {
     op: "t_intersects",
-    args: [
-      { property: "datetime" },
-      { interval: temporalRange },
-    ],
+    args: [{ property: "datetime" }, { interval: temporalRange }],
   };
   // Specify cql2-json filter language in search body and add context for a summary of matched results
   // Include all of our filters
@@ -51,11 +50,7 @@ export default async (setResponse, setLoading, responseId, setLocationRequest) =
     context: "on",
     filter: {
       op: "and",
-      args: [
-        collectionsFilter,
-        spatialFilter,
-        temporalFilter,
-      ],
+      args: [collectionsFilter, spatialFilter, temporalFilter],
     },
   };
   // ======= END REGION 2 =============
@@ -76,10 +71,6 @@ export default async (setResponse, setLoading, responseId, setLocationRequest) =
   // This should return an array of dates
   await getSTACItems();
 
-
-
   setLoading(false);
   console.log(`${responseId} fetch complete. Use console to see results.`);
-
-  
-}
+};

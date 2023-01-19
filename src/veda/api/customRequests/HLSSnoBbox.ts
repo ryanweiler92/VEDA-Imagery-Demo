@@ -1,13 +1,19 @@
-import axios from 'axios';
-import qs from 'qs';
+import axios from "axios";
+import qs from "qs";
 
-export default async (setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom) => {
+export default async (
+  setResponse,
+  setLoading,
+  responseId,
+  setLocationRequest,
+  setLeafletZoom
+) => {
   // base URL for registering search and requesting tiles
   const BASE_URL = "https://d1nzvsko7rbono.cloudfront.net";
   // ID of the collection
   const collectionID = "HLSS30";
   // Custom band combination to match WV-2409.
-  const bandCombo = ["B07","B05","B04"];
+  const bandCombo = ["B07", "B05", "B04"];
   // bounding box coordinates for Connecticut
   const bboxCoords = [-73.7249, 41.0022, -71.7798, 42.0777];
   // arbitrary date range
@@ -17,7 +23,7 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
     op: "=",
     args: [{ property: "collection" }, collectionID],
   };
-  // filter search results by bounding box coordinates 
+  // filter search results by bounding box coordinates
   // const spatialFilter = {
   //   op: "s_intersects",
   //   args: [
@@ -28,10 +34,7 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
   // filter search by date range
   const temporalFilter = {
     op: "t_intersects",
-    args: [
-      { property: "datetime" },
-      { interval: temporalRange },
-    ],
+    args: [{ property: "datetime" }, { interval: temporalRange }],
   };
   // combine our filters into a search body to append to register search post request
   const searchBody = {
@@ -47,10 +50,9 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
     },
   };
   // registering search which will return a search ID, a metadata link and a tilejson link
-  const mosaicResponse = await axios.post(
-    `${BASE_URL}/mosaic/register`,
-    searchBody
-  ).then((res) => res.data);
+  const mosaicResponse = await axios
+    .post(`${BASE_URL}/mosaic/register`, searchBody)
+    .then((res) => res.data);
   // we select the tilejson link from the mosaicResponse
   const tilesHref = mosaicResponse.links.find(
     (link) => link.rel === "tilejson"
@@ -63,11 +65,13 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
     assets: bandCombo,
   };
   // formatting params for tile search request
-  const queryString = qs.stringify(params, { arrayFormat: 'repeat' });
+  const queryString = qs.stringify(params, { arrayFormat: "repeat" });
   // uses the tiles link from the mosaic response with our parameters to request tiles
-  const tilejsonResponse = await axios.get(tilesHref, {
-    params: new URLSearchParams(queryString),
-  }).then((res) => res.data);
+  const tilejsonResponse = await axios
+    .get(tilesHref, {
+      params: new URLSearchParams(queryString),
+    })
+    .then((res) => res.data);
   // set the location in state (& then redux) to fly to coordinates on leaflet map
   setLocationRequest(bboxCoords);
   // set new zoom level for leaflet map
@@ -76,5 +80,4 @@ export default async (setResponse, setLoading, responseId, setLocationRequest, s
   setResponse(tilejsonResponse);
   setLoading(false);
   console.log(`${responseId} fetch complete. Use console to see results.`);
-
-}
+};

@@ -1,17 +1,34 @@
-import React, { useState, useEffect, useRef, useReducer } from 'react';
-import { MapContainer, TileLayer, useMap, Popup, Marker, useMapEvents} from 'react-leaflet'
-import * as L from 'leaflet';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import React, { useState, useEffect, useRef, useReducer } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  useMap,
+  Popup,
+  Marker,
+  useMapEvents,
+} from "react-leaflet";
+import * as L from "leaflet";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 
-const LeafletLayers = ({ layerToAdd, addLayer, lat, lon, setZoom, zoom, flyTrigger, setFlyTrigger, requestLeafletImagery }) => {
+const LeafletLayers = ({
+  layerToAdd,
+  addLayer,
+  lat,
+  lon,
+  setZoom,
+  zoom,
+  flyTrigger,
+  setFlyTrigger,
+  requestLeafletImagery,
+}) => {
   // custom react-leaflet hook to access map object
   const map = useMap();
 
   const leafletZoom = useAppSelector((state) => state.worldview.leafletZoom);
 
-  // adds layer to map 
+  // adds layer to map
   useEffect(() => {
-    if(!layerToAdd || !requestLeafletImagery) return;
+    if (!layerToAdd || !requestLeafletImagery) return;
 
     const layer = new L.TileLayer(layerToAdd);
 
@@ -19,16 +36,16 @@ const LeafletLayers = ({ layerToAdd, addLayer, lat, lon, setZoom, zoom, flyTrigg
     // setting state in parent component
     addLayer("");
 
-    const newLocation = {lat: lat, lng: lon};
-    
+    const newLocation = { lat: lat, lng: lon };
+
     map.flyTo(newLocation, leafletZoom);
   }, [layerToAdd]);
 
   const mapEvents = useMapEvents({
     zoomend: () => {
-      setZoom(mapEvents.getZoom())
-    }
-  })
+      setZoom(mapEvents.getZoom());
+    },
+  });
 
   useEffect(() => {
     // if(flyTrigger){
@@ -37,13 +54,12 @@ const LeafletLayers = ({ layerToAdd, addLayer, lat, lon, setZoom, zoom, flyTrigg
     //   map.flyTo(newLocation, 6);
     //   setFlyTrigger(false);
     // }
-    if(flyTrigger){
-      
+    if (flyTrigger) {
       setFlyTrigger(false);
     }
-  }, [flyTrigger])
+  }, [flyTrigger]);
 
   return null;
-}
+};
 
-export default LeafletLayers
+export default LeafletLayers;
