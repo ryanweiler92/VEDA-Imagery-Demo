@@ -37,10 +37,11 @@ import FirmsHLSS30CT from './customRequests/FIRMSHLSS30CT';
 import FirmsHLSL30OR from './customRequests/FIRMSHLSL30OR';
 import FirmsHLSL30US from './customRequests/FIRMSHLSL30US';
 import FirmsHLSL30FL from './customRequests/FIRMSHLSL30FL';
-import HLSSnoBbox from './customRequests/HLSSnoBbox'
-import HLSSminDate from './customRequests/HLSSminDate'
-import HLSLminDate from './customRequests/HLSLminDate'
-import HLSS3DayRange from './customRequests/HLSS3DayRange'
+import HLSSnoBbox from './customRequests/HLSSnoBbox';
+import HLSSminDate from './customRequests/HLSSminDate';
+import HLSLminDate from './customRequests/HLSLminDate';
+import HLSS3DayRange from './customRequests/HLSS3DayRange';
+import HLSSmatchDate from './customRequests/HLSSmatchDate';
 
 const ApiTest = () => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -67,6 +68,7 @@ const ApiTest = () => {
     const [leafletZoom, setLeafletZoom] = useState(9);
 
     const dispatch = useAppDispatch();
+    const date = useAppSelector((state) => state.worldview.date);
 
     const customRequestHandler = (setResponse, setLoading, responseId) => {
         // Make a new case that refers to the customReference value you created in apiConfig.tsx and make sure to pass it setResponse as an argument.
@@ -126,6 +128,10 @@ const ApiTest = () => {
             case '14': 
                 setLoading(true);
                 HLSS3DayRange(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom);
+                break;
+            case '15':
+                setLoading(true);
+                HLSSmatchDate(setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom, date);
                 break;
             case 'default':
                 console.log('Invalid reference. Make sure to include a unique customReference in the apiConfig file and make a case in the switch statement.');

@@ -37,25 +37,9 @@ const OpenLayersHLSLayers = () => {
   useEffect(() => {
     if (!map) return;
 
-    const { name } = layerResponse;
-    const URL = `https://kv9drwgv6l.execute-api.us-west-2.amazonaws.com/mosaic/tiles/${name}/WGS1984Quad/{z}/{x}/{y}@1x?post_process=swir&assets=B07&assets=B05&assets=B04`
-
-    // const tileGridXYZ = createXYZ({
-    //   extent: projection.maxExtent,
-    //   maxResolution: projection.resolutions[0],
-    //   maxZoom: projection.numZoomLevels,
-    // })
-
-    
-
-    // const myTileGrid = new TileGrid({
-    //   origin: defaultXYZgrid.getOrigin(0),
-    //   resolutions: defaultXYZgrid.getResolutions(),
-    //   extent: [-73.66564427943617, 41.25891292060131, -71.87664355813403, 42.01089966447069]
-    // })
-
     const XYZgrid = createXYZ({
       extent: projection.maxExtent,
+      minZoom: 9
     })
 
     const tileUrlFunction = (tileCoord) => {
@@ -72,6 +56,7 @@ const OpenLayersHLSLayers = () => {
       // url: URL,
       crossOrigin: 'anonymous',
       // tileGrid: XYZgrid,
+      minZoom: 9,
       projection: get("EPSG:4326"),
       // maxResolution: projection.resolutions[0],
       tileUrlFunction: tileUrlFunction

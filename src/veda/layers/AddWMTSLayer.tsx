@@ -15,6 +15,7 @@ const AddWMTSLayer = ({ layer }) => {
   const { map } = useContext(MapContext);
 
   const date = useAppSelector((state) => state.worldview.date);
+  const availableLayers = useAppSelector((state) => state.worldview.availableLayers)
 
   useEffect(() => {
     if(!map) return;
@@ -27,6 +28,10 @@ const AddWMTSLayer = ({ layer }) => {
     matrixSetLimits, 
     style, 
   } = layer;
+
+  const findLayerViz = availableLayers.find(layer => layer.name == id)
+
+  const { visible } = findLayerViz
 
   const configSource = config.sources['GIBS:geographic'];
   const configMatrixSet = configSource.matrixSets[matrixSet];
@@ -68,6 +73,7 @@ const AddWMTSLayer = ({ layer }) => {
       preload: 0,
       source: tileSource,
       className: id,
+      visible
     });
 
     map.addLayer(layerTile);

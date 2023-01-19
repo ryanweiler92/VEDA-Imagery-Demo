@@ -71,8 +71,15 @@ export const apiCalls = [
     {
         title: "FIRMS HLSL 2 Week Range (MAP)",
         url: "customRequest",
-        description: "collection=HLSS30, bbox=n/a, temporalRange=01/01/2022, bandCombo=B07/B05/B04, post_process=swir, minzoom=9, maxzoom=14, You should be able to pan anywhere on both maps and if zoomed enough should render tiles",
+        description: "collection=HLSL30, bbox=n/a, temporalRange=01/01/2022, bandCombo=B07/B05/B04, post_process=swir, minzoom=9, maxzoom=14, You should be able to pan anywhere on both maps and if zoomed enough should render tiles",
         customReference: "14",
+        applyToMap: true
+    },
+    {
+        title: "FIRMS HLSS Date Match (MAP)",
+        url: "customRequest",
+        description: "collection=HLSS30, bbox=n/a, temporalRange=app date, bandCombo=B07/B05/B04, post_process=swir, minzoom=9, maxzoom=14, You should be able to pan anywhere on both maps and if zoomed enough should render tiles",
+        customReference: "15",
         applyToMap: true
     },
 

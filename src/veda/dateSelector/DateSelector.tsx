@@ -19,9 +19,9 @@ const DateSelector = () => {
     const lon = centerCoords[0].toFixed(2)
 
     const testFunction = () => {
-        const currentLayers = map.getLayers();
-        const layersArray = currentLayers.array_
-        console.log(layersArray)
+        // const currentLayers = map.getLayers();
+        // const layersArray = currentLayers.array_
+        console.log(date)
       }
 
     return (

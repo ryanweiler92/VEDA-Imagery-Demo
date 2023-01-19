@@ -1,17 +1,32 @@
 import axios from 'axios';
 import qs from 'qs';
 
-export default async (setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom) => {
+export default async (setResponse, setLoading, responseId, setLocationRequest, setLeafletZoom, date) => {
   // base URL for registering search and requesting tiles
   const BASE_URL = "https://d1nzvsko7rbono.cloudfront.net";
   // ID of the collection
-  const collectionID = "HLSL30";
+  const collectionID = "HLSS30";
   // Custom band combination to match WV-2409.
   const bandCombo = ["B07","B05","B04"];
   // bounding box coordinates for Connecticut
   const bboxCoords = [-73.7249, 41.0022, -71.7798, 42.0777];
-  // arbitrary date range
-  const temporalRange = ["2023-01-17T00:00:00Z"];
+  
+  // current date of app
+  const newDate = date.slice(0, 10)
+
+  const getNextDate = (newDate) => {
+    const a = newDate.split('');
+    const b = parseInt(a[9]) + 1
+    a.splice(9, 1, b)
+    return a.join('')
+  }
+
+  const nextDate = getNextDate(newDate)
+
+  const temporalRange = [`${newDate}T00:00:00Z`, `${newDate}T23:59:59Z`]
+
+  console.log(temporalRange)
+//   const temporalRange = ["2023-01-17T00:00:00Z"];
   // filter by collection ID
   const collectionsFilter = {
     op: "=",
