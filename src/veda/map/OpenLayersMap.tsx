@@ -1,17 +1,4 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
-import {
-  Box,
-  Badge,
-  Switch,
-  Button,
-  Flex,
-  Heading,
-  List,
-  ListItem,
-  Text,
-  Icon,
-  Spacer,
-} from "@chakra-ui/react";
+import { useRef, useEffect, useContext } from "react";
 import OlMap from "ol/Map";
 import OlView from "ol/View";
 import * as olProj from "ol/proj";
@@ -25,12 +12,11 @@ import MapEvents from "../layers/OpenLayersMapEventListeners";
 
 const Map = () => {
   const mapRef = useRef();
-  const dispatch = useAppDispatch();
   const availableLayers = useAppSelector(
     (state) => state.worldview.availableLayers
   );
 
-  const { map, setMap, setLayerData, viewProperties } = useContext(MapContext);
+  const { map, setMap, setLayerData } = useContext(MapContext);
 
   const projection = config.projections.geographic;
 

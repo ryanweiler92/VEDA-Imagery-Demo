@@ -1,25 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback} from "react";
 import {
-  Box,
-  Button,
   Flex,
   Heading,
   List,
-  ListItem,
-  Text,
-  Icon,
   Divider,
-  IconButton,
 } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { setOrderedLayers } from "../../../slices/worldview/worldviewSlice";
 import OrderedLayers from "./OrderedLayers";
 
-const DragDropDisplay = ({ toggleVisibility, removeLayer, activeCheck }) => {
+const DragDropDisplay = ({ toggleVisibility, removeLayer }) => {
   const orderedLayers = useAppSelector(
     (state) => state.worldview.orderedLayers
   );
+
   const dispatch = useAppDispatch();
+
+  let reversedLayers = [...orderedLayers].reverse()
+
   const moveLayerListItem = useCallback(
     (dragIndex, hoverIndex) => {
       const dragItem = orderedLayers[dragIndex];
@@ -52,7 +50,6 @@ const DragDropDisplay = ({ toggleVisibility, removeLayer, activeCheck }) => {
                 moveLayerListItem={moveLayerListItem}
                 toggleVisibility={toggleVisibility}
                 removeLayer={removeLayer}
-                activeCheck={activeCheck}
               />
             );
           })}

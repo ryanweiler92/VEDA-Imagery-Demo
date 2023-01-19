@@ -1,15 +1,6 @@
-import React, { useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import {
   Box,
-  Button,
-  Flex,
-  Heading,
-  List,
-  ListItem,
-  Text,
-  Icon,
-  Divider,
-  IconButton,
 } from "@chakra-ui/react";
 import MapContext from "../../mapLayout/MapContext";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
@@ -28,15 +19,6 @@ const ActiveLayerDisplay = () => {
   const orderedLayers = useAppSelector(
     (state) => state.worldview.orderedLayers
   );
-
-  // checking the state of visibility property for switches
-  const activeCheck = (layerID) => {
-    if (availableLayers[layerID].visible) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   // toggling visibility from switches
   const toggleVisibility = (layerName, layerID) => {
@@ -94,7 +76,7 @@ const ActiveLayerDisplay = () => {
           }
         });
       });
-      dispatch(setOrderedLayers(tempOrderedLayers));
+      dispatch(setOrderedLayers(tempOrderedLayers.reverse()));
     };
     createOrder();
   }, [map, availableLayers]);
@@ -126,7 +108,6 @@ const ActiveLayerDisplay = () => {
       <DragDropDisplay
         toggleVisibility={toggleVisibility}
         removeLayer={removeLayer}
-        activeCheck={activeCheck}
       />
     </Box>
   );

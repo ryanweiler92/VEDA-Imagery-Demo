@@ -78,16 +78,6 @@ const ApiTestingLayout = () => {
           </Box>
         </Flex>
       </Flex>
-      <Box hidden={leafletDisplay}>
-        <Flex justify="center">
-          <Text fontSize="3xl" fontWeight="bold">
-            Leaflet Map
-          </Text>
-        </Flex>
-        <Flex id="OSMAP-container" justify="center">
-          <LeafletMap />
-        </Flex>
-      </Box>
       <Box hidden={openLayersDisplay}>
         <Flex justify="center">
           <Text fontSize="3xl" fontWeight="bold">
@@ -103,6 +93,17 @@ const ApiTestingLayout = () => {
           </DndProvider>
         </Flex>
       </Box>
+      <Box hidden={leafletDisplay}>
+        <Flex justify="center">
+          <Text fontSize="3xl" fontWeight="bold">
+            Leaflet Map
+          </Text>
+        </Flex>
+        <Flex id="OSMAP-container" justify="center">
+          <LeafletMap />
+        </Flex>
+      </Box>
+
     </MapContext.Provider>
   );
 };

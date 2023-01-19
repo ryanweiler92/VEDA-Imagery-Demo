@@ -30,10 +30,20 @@ const DateSelector = () => {
   const lat = centerCoords[1].toFixed(2);
   const lon = centerCoords[0].toFixed(2);
 
+  const availableLayers = useAppSelector(
+    (state) => state.worldview.availableLayers
+  );
+
+  const orderedLayers = useAppSelector(
+    (state) => state.worldview.orderedLayers
+  );
+
   const testFunction = () => {
-    // const currentLayers = map.getLayers();
-    // const layersArray = currentLayers.array_
-    console.log(date);
+    const currentLayers = map.getLayers();
+    const layersArray = currentLayers.array_
+    console.log(orderedLayers);
+    console.log(layersArray)
+    // console.log(availableLayers);
   };
 
   return (

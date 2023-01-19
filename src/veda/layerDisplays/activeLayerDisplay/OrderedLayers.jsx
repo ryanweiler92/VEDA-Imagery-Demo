@@ -1,29 +1,23 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import {
-  Box,
-  Button,
   Flex,
   Switch,
-  Heading,
-  List,
   ListItem,
   Text,
-  Icon,
   Divider,
   IconButton,
 } from "@chakra-ui/react";
 import { useDrag, useDrop } from "react-dnd";
 import { DeleteIcon } from "@chakra-ui/icons";
+import { useAppSelector } from "../../../store/hooks";
 
 const OrderedLayers = (props) => {
-  const {
-    toggleVisibility,
-    removeLayer,
-    activeCheck,
-    layer,
-    index,
-    moveLayerListItem,
-  } = props;
+  const { toggleVisibility, removeLayer, layer, index, moveLayerListItem } =
+    props;
+
+  const availableLayers = useAppSelector(
+    (state) => state.worldview.availableLayers
+  );
 
   const [{ isDragging }, dragRef] = useDrag({
     type: "item",
@@ -51,6 +45,8 @@ const OrderedLayers = (props) => {
       item.index = hoverIndex;
     },
   });
+
+  const activeCheck = (layerID) => availableLayers[layerID].visible;
 
   const ref = useRef(null);
   const dragDropRef = dragRef(dropRef(ref));
