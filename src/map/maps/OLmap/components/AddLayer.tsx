@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react";
 import AddWMTSLayer from "./AddWMTSLayer";
-import AddHLSLayers from "./AddHLSLayers";
+import AddHLSLayer from "./AddHLSLayer";
 import MapContext from "../../../context/MapContext";
 
 const AddLayer = ({ layer }) => {
@@ -13,6 +13,7 @@ const AddLayer = ({ layer }) => {
   return (
     <>
       <AddWMTSLayer layer={layer} />
+      <AddHLSLayer layer={layer} />
     </>
   );
 };

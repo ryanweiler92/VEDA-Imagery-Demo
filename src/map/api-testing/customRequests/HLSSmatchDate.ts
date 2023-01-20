@@ -21,32 +21,14 @@ export default async (
   // current date of app
   const newDate = date.slice(0, 10);
 
-  const getNextDate = (newDate) => {
-    const a = newDate.split("");
-    const b = parseInt(a[9]) + 1;
-    a.splice(9, 1, b);
-    return a.join("");
-  };
-
-  const nextDate = getNextDate(newDate);
-
   const temporalRange = [`${newDate}T00:00:00Z`, `${newDate}T23:59:59Z`];
 
-  console.log(temporalRange);
-  //   const temporalRange = ["2023-01-17T00:00:00Z"];
   // filter by collection ID
   const collectionsFilter = {
     op: "=",
     args: [{ property: "collection" }, collectionID],
   };
-  // filter search results by bounding box coordinates
-  // const spatialFilter = {
-  //   op: "s_intersects",
-  //   args: [
-  //     { property: "bbox" },
-  //     bboxCoords,
-  //   ],
-  // };
+
   // filter search by date range
   const temporalFilter = {
     op: "t_intersects",
@@ -60,7 +42,6 @@ export default async (
       op: "and",
       args: [
         collectionsFilter,
-        // spatialFilter,
         temporalFilter,
       ],
     },

@@ -14,6 +14,7 @@ const ActiveLayerDisplay = () => {
   const availableLayers = useAppSelector(
     (state) => state.worldview.availableLayers
   );
+  const date = useAppSelector((state) => state.worldview.date)
 
   // toggling visibility from switches
   const toggleVisibility = (layerName: string, layerID: number) => {
@@ -89,7 +90,7 @@ const ActiveLayerDisplay = () => {
     const olMapLayers = map.getLayers().array_;
     if (!olMapLayers.length) return;
     updateMapLayersOnReorder();
-  }, [availableLayers]);
+  }, [availableLayers, date]);
 
   return (
     <Box

@@ -22,18 +22,18 @@ export default [
   {
     id: 2,
     name: "HLSS FIRMS",
-    title: "HLSS FIRMS",
+    title: "HLSS30",
     active: false,
     visible: false,
-    data: "FIRMS"
+    data: "HLSS30"
   },
   {
     id: 3,
     name: "HLSL FIRMS",
-    title: "HLSL FIRMS",
+    title: "HLSL30",
     active: false,
     visible: false,
-    data: "FIRMS"
+    data: "HLSL30"
   },
   {
     id: 4,

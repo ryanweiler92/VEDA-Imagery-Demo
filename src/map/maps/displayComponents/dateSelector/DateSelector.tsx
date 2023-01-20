@@ -21,7 +21,11 @@ const DateSelector = () => {
     (state) => state.worldview.availableLayers
   );
 
-  const testFunction = () => {};
+  const testFunction = () => {
+    const olMapLayers = map.getLayers().array_;
+    console.log(olMapLayers)
+    console.log(availableLayers)
+  };
 
   return (
     <Flex w="33%" flexDirection={"column"} align="center">

@@ -21,6 +21,7 @@ const AddWMTSLayer = ({ layer }) => {
 
   useEffect(() => {
     if (!map) return;
+    if (layer === "HLSS30" || layer === "HLSL30") return;
 
     const {
       id,

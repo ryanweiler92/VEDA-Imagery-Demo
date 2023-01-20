@@ -1,53 +1,23 @@
-import React, {
-  useState,
+import {
   useEffect,
-  useRef,
-  useReducer,
   useContext,
 } from "react";
-import OlTileGridWMTS from "ol/tilegrid/WMTS";
-import TileGrid from "ol/tilegrid/TileGrid.js";
 import XYZ from "ol/source/XYZ.js";
-import { createXYZ } from "ol/tilegrid";
 import OlLayerTile from "ol/layer/Tile";
-import config from "../../../config/gibsLayersConfig";
 import { get } from "ol/proj";
-import {
-  calcExtentsFromLimits,
-  toISOStringSeconds,
-  roundTimeOneMinute,
-} from "../../../selectors/selectors";
-import { useAppSelector, useAppDispatch } from "../../../../redux/store/hooks";
+import { useAppSelector } from "../../../../redux/store/hooks";
 import MapContext from "../../../context/MapContext";
-import {
-  configSources,
-  configMatrixSets,
-  extents,
-  matrixIds,
-  matrixSets,
-  origins,
-  resolutions,
-  style,
-  urls,
-} from "./TestParams";
 
 const OpenLayersHLSLayers = () => {
   const layerResponse = useAppSelector(
     (state) => state.worldview.HLSL30LayerResponse
   );
-  const location = useAppSelector((state) => state.worldview.requestLocation);
+
   const { map } = useContext(MapContext);
   const date = useAppSelector((state) => state.worldview.date);
 
-  const projection = config.projections.geographic;
-
   useEffect(() => {
     if (!map) return;
-
-    const XYZgrid = createXYZ({
-      extent: projection.maxExtent,
-      minZoom: 9,
-    });
 
     const tileUrlFunction = (tileCoord) => {
       const { name } = layerResponse;
@@ -60,12 +30,9 @@ const OpenLayersHLSLayers = () => {
     };
 
     const xyzSourceOptions = {
-      // url: URL,
       crossOrigin: "anonymous",
-      // tileGrid: XYZgrid,
       minZoom: 9,
       projection: get("EPSG:4326"),
-      // maxResolution: projection.resolutions[0],
       tileUrlFunction: tileUrlFunction,
     };
 
@@ -75,7 +42,6 @@ const OpenLayersHLSLayers = () => {
       source: xyzSource,
       className: "HLSL30.002",
     });
-    // ------ END XYZ method ------
 
     map.addLayer(xyzLayerTile);
   }, [layerResponse]);

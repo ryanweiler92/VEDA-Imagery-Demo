@@ -7,7 +7,7 @@ import config from "../../config/gibsLayersConfig";
 import { useAppSelector, useAppDispatch } from "../../../redux/store/hooks";
 import AddLayer from "./components/AddLayer";
 import MapContext from "../../context/MapContext";
-import OpenLayersHLSLayers from "./components/AddHLSLayers";
+import OpenLayersHLSLayers from "./components/APIHLSLayers";
 import MapEvents from "./components/EventListeners";
 import { setAvailableLayers } from "../../../redux/mapSlice/mapSlice";
 
