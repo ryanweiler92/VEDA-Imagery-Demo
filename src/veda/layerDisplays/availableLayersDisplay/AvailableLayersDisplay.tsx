@@ -20,21 +20,28 @@ const AvailableLayerDisplay = () => {
 
   const addLayer = (layerID: number) => {
     const newLayerOrder = [...availableLayers];
-    const findLayerIndex = (id: number) => availableLayers.findIndex(availLayer => availLayer.id === id)
-    const index = findLayerIndex(layerID)
-    let layerToMove = newLayerOrder.splice(index, 1)[0]
+    const findLayerIndex = (id: number) =>
+      availableLayers.findIndex((availLayer) => availLayer.id === id);
+    const index = findLayerIndex(layerID);
+    let layerToMove = newLayerOrder.splice(index, 1)[0];
     layerToMove = {
       ...layerToMove,
       visible: true,
       active: true,
-    }
-    newLayerOrder.unshift(layerToMove)
+    };
+    newLayerOrder.unshift(layerToMove);
 
     dispatch(setAvailableLayers(newLayerOrder));
   };
 
   return (
-    <Box bg="blue.400" borderRadius="md" w="33%" border="2px" borderColor={"black"}>
+    <Box
+      bg="blue.400"
+      borderRadius="md"
+      w="33%"
+      border="2px"
+      borderColor={"black"}
+    >
       <Flex align="center" justify="center">
         <Heading size="md" color="white" mb="2" fontWeight="extrabold">
           Available Layers

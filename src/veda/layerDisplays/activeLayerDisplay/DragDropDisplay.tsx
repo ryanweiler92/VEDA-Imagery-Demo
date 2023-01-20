@@ -1,16 +1,10 @@
-import { useCallback} from "react";
-import {
-  Flex,
-  Heading,
-  List,
-  Divider,
-} from "@chakra-ui/react";
+import { useCallback } from "react";
+import { Flex, Heading, List, Divider } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { setAvailableLayers } from "../../../slices/worldview/worldviewSlice";
 import OrderedLayers from "./OrderedLayers";
 
 const DragDropDisplay = ({ toggleVisibility, removeLayer }) => {
-
   const availableLayers = useAppSelector(
     (state) => state.worldview.availableLayers
   );
@@ -37,21 +31,21 @@ const DragDropDisplay = ({ toggleVisibility, removeLayer }) => {
           Active Layers
         </Heading>
       </Flex>
-      <Divider borderWidth="1px" mb="2" borderColor="black"/>
+      <Divider borderWidth="1px" mb="2" borderColor="black" />
       <List>
-      {availableLayers &&
+        {availableLayers &&
           availableLayers.map((layer, index) => {
             if (layer.active)
               return (
-              <OrderedLayers
-                key={layer.name}
-                layer={layer}
-                index={index}
-                moveLayerListItem={moveLayerListItem}
-                toggleVisibility={toggleVisibility}
-                removeLayer={removeLayer}
-              />
-              )
+                <OrderedLayers
+                  key={layer.name}
+                  layer={layer}
+                  index={index}
+                  moveLayerListItem={moveLayerListItem}
+                  toggleVisibility={toggleVisibility}
+                  removeLayer={removeLayer}
+                />
+              );
           })}
       </List>
     </>

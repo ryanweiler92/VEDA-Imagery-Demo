@@ -1,12 +1,8 @@
 import { useEffect, useContext } from "react";
-import {
-  Box,
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import MapContext from "../../mapLayout/MapContext";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
-import {
-  setAvailableLayers,
-} from "../../../slices/worldview/worldviewSlice";
+import { setAvailableLayers } from "../../../slices/worldview/worldviewSlice";
 import DragDropDisplay from "./DragDropDisplay";
 
 const ActiveLayerDisplay = () => {
@@ -26,16 +22,17 @@ const ActiveLayerDisplay = () => {
     });
 
     const newLayerProperties = [...availableLayers];
-    const findLayerIndex = (id: number) => availableLayers.findIndex(availLayer => availLayer.id === id)
-    const index = findLayerIndex(layerID)
-    const layerToUpdate = newLayerProperties[index]
+    const findLayerIndex = (id: number) =>
+      availableLayers.findIndex((availLayer) => availLayer.id === id);
+    const index = findLayerIndex(layerID);
+    const layerToUpdate = newLayerProperties[index];
     const isVisible = layerToUpdate.visible;
 
     newLayerProperties[index] = {
       ...layerToUpdate,
-      visible: !isVisible
-    }
-    
+      visible: !isVisible,
+    };
+
     dispatch(setAvailableLayers(newLayerProperties));
   };
 
@@ -49,32 +46,32 @@ const ActiveLayerDisplay = () => {
     });
 
     const newLayerOrder = [...availableLayers];
-    const findLayerIndex = (id: number) => availableLayers.findIndex(availLayer => availLayer.id === id)
-    const index = findLayerIndex(layerID)
-    const layerToUpdate = newLayerOrder[index]
+    const findLayerIndex = (id: number) =>
+      availableLayers.findIndex((availLayer) => availLayer.id === id);
+    const index = findLayerIndex(layerID);
+    const layerToUpdate = newLayerOrder[index];
 
     newLayerOrder[index] = {
-      ...layerToUpdate, 
+      ...layerToUpdate,
       visible: true,
-      active: false
-    }
-    
+      active: false,
+    };
+
     dispatch(setAvailableLayers(newLayerOrder));
   };
 
-
   // this gets called whenever a layer is added, removed or reordered
   const updateMapLayersOnReorder = () => {
-    console.log('updating map on reorder')
+    console.log("updating map on reorder");
     const olMapLayers = map.getLayers().array_;
-    let removedLayers = []
+    let removedLayers = [];
 
     olMapLayers.slice().forEach((layer) => {
-      removedLayers.push(layer)
+      removedLayers.push(layer);
       map.removeLayer(layer);
     });
 
-    const reversedLayers = [...availableLayers].reverse()
+    const reversedLayers = [...availableLayers].reverse();
 
     reversedLayers.map((layer) => {
       removedLayers.forEach((layerObj) => {
@@ -88,12 +85,18 @@ const ActiveLayerDisplay = () => {
   useEffect(() => {
     if (!map) return;
     const olMapLayers = map.getLayers().array_;
-    if(!olMapLayers.length) return;
+    if (!olMapLayers.length) return;
     updateMapLayersOnReorder();
   }, [availableLayers]);
 
   return (
-    <Box bg="blue.400" borderRadius="md" w="33%" border="2px" borderColor={"black"}>
+    <Box
+      bg="blue.400"
+      borderRadius="md"
+      w="33%"
+      border="2px"
+      borderColor={"black"}
+    >
       <DragDropDisplay
         toggleVisibility={toggleVisibility}
         removeLayer={removeLayer}

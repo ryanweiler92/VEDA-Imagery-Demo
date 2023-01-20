@@ -39,8 +39,7 @@ const DateSelector = () => {
   );
 
   const testFunction = () => {
-    console.log(layerData)
-
+    console.log(layerData);
   };
 
   return (

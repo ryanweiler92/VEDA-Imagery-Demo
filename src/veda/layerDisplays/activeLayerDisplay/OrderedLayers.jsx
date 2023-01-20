@@ -7,7 +7,7 @@ import {
   Divider,
   IconButton,
 } from "@chakra-ui/react";
-import { GrDrag } from "react-icons/gr"
+import { GrDrag } from "react-icons/gr";
 import { useDrag, useDrop } from "react-dnd";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useAppSelector } from "../../../store/hooks";
@@ -48,10 +48,11 @@ const OrderedLayers = (props) => {
   });
 
   const activeCheck = (layerID) => {
-    const findLayer = (id) => availableLayers.find(availLayer => availLayer.id === id)
-    const layer = findLayer(layerID)
-    return layer.visible
-  } 
+    const findLayer = (id) =>
+      availableLayers.find((availLayer) => availLayer.id === id);
+    const layer = findLayer(layerID);
+    return layer.visible;
+  };
 
   const ref = useRef(null);
   const dragDropRef = dragRef(dropRef(ref));

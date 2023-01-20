@@ -103,7 +103,6 @@ const ApiTestingLayout = () => {
           <LeafletMap />
         </Flex>
       </Box>
-
     </MapContext.Provider>
   );
 };

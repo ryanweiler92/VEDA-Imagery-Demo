@@ -9,7 +9,7 @@ import AddLayer from "../layers/AddLayer";
 import MapContext from "../mapLayout/MapContext";
 import OpenLayersHLSLayers from "../layers/OpenLayersHLSLayers";
 import MapEvents from "../layers/OpenLayersMapEventListeners";
-import { setAvailableLayers } from '../../slices/worldview/worldviewSlice'
+import { setAvailableLayers } from "../../slices/worldview/worldviewSlice";
 
 const Map = () => {
   const mapRef = useRef();
@@ -56,29 +56,30 @@ const Map = () => {
   // reordering layers to match the OL object
   const createOrder = () => {
     const olMapLayers = map.getLayers().array_;
-    let newLayers = [...availableLayers]
-    const findLayerIndex = (name: string) => availableLayers.findIndex(availLayer => availLayer.name === name)
-    let layerIndexArray = []
+    let newLayers = [...availableLayers];
+    const findLayerIndex = (name: string) =>
+      availableLayers.findIndex((availLayer) => availLayer.name === name);
+    let layerIndexArray = [];
 
-    for(let i = 0; i < olMapLayers.length; i++){
-      const layerName = olMapLayers[i].className_
-      const indexPos = findLayerIndex(layerName)
-      layerIndexArray.push(indexPos)
+    for (let i = 0; i < olMapLayers.length; i++) {
+      const layerName = olMapLayers[i].className_;
+      const indexPos = findLayerIndex(layerName);
+      layerIndexArray.push(indexPos);
     }
-   
-    for(let j = 0; j < layerIndexArray.length; j++){
-      const element = newLayers.splice(layerIndexArray[j], 1)[0]
-      newLayers.unshift(element)
+
+    for (let j = 0; j < layerIndexArray.length; j++) {
+      const element = newLayers.splice(layerIndexArray[j], 1)[0];
+      newLayers.unshift(element);
     }
-    dispatch(setAvailableLayers(newLayers))
-  }
+    dispatch(setAvailableLayers(newLayers));
+  };
 
   useEffect(() => {
     if (!map) return;
     const olMapLayers = map.getLayers().array_;
     if (!olMapLayers.length) return;
-    createOrder()
-  }, [map])
+    createOrder();
+  }, [map]);
 
   return (
     <>
