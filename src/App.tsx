@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import myTheme from "./theme";
-import ApiTestingPage from "../src/layout/ApiTestingPage";
-import ImageryPage from "./layout/ImageryPage";
+import ApiTestingPage from "./pages/ApiTestingPage";
+import ImageryPage from "./pages/ImageryPage";
 
 export const App = () => (
   <BrowserRouter>
