@@ -8,19 +8,12 @@
 //  5. Add a new case to the switch statement that refers to the customReference value you created in apiConfig.ts
 import React, { useState, useEffect } from "react";
 import {
-  Box,
   Button,
   Flex,
-  IconButton,
   Heading,
   ListIcon,
   List,
-  UnorderedList,
   ListItem,
-  Text,
-  Icon,
-  Spinner,
-  Spacer,
   Select,
 } from "@chakra-ui/react";
 import axios from "axios";

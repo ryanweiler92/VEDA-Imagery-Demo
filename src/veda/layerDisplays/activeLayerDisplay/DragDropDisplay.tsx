@@ -6,13 +6,10 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
-import { setOrderedLayers } from "../../../slices/worldview/worldviewSlice";
+import { setAvailableLayers } from "../../../slices/worldview/worldviewSlice";
 import OrderedLayers from "./OrderedLayers";
 
 const DragDropDisplay = ({ toggleVisibility, removeLayer }) => {
-  const orderedLayers = useAppSelector(
-    (state) => state.worldview.orderedLayers
-  );
 
   const availableLayers = useAppSelector(
     (state) => state.worldview.availableLayers
@@ -20,29 +17,27 @@ const DragDropDisplay = ({ toggleVisibility, removeLayer }) => {
 
   const dispatch = useAppDispatch();
 
-  let reversedLayers = [...orderedLayers].reverse()
-
   const moveLayerListItem = useCallback(
     (dragIndex, hoverIndex) => {
-      const dragItem = orderedLayers[dragIndex];
-      const hoverItem = orderedLayers[hoverIndex];
+      const dragItem = availableLayers[dragIndex];
+      const hoverItem = availableLayers[hoverIndex];
 
-      const updatedLayers = [...orderedLayers];
+      const updatedLayers = [...availableLayers];
       updatedLayers[dragIndex] = hoverItem;
       updatedLayers[hoverIndex] = dragItem;
-      dispatch(setOrderedLayers(updatedLayers));
+      dispatch(setAvailableLayers(updatedLayers));
     },
-    [orderedLayers]
+    [availableLayers]
   );
 
   return (
     <>
       <Flex align="center" justify="center">
-        <Heading size="md" color="white" mb="2" fontWeight="normal">
+        <Heading size="md" color="white" mb="2" fontWeight="extrabold">
           Active Layers
         </Heading>
       </Flex>
-      <Divider borderWidth="1px" mb="2" />
+      <Divider borderWidth="1px" mb="2" borderColor="black"/>
       <List>
       {availableLayers &&
           availableLayers.map((layer, index) => {

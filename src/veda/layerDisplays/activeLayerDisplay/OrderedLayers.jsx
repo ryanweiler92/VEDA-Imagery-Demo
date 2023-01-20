@@ -7,6 +7,7 @@ import {
   Divider,
   IconButton,
 } from "@chakra-ui/react";
+import { GrDrag } from "react-icons/gr"
 import { useDrag, useDrop } from "react-dnd";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useAppSelector } from "../../../store/hooks";
@@ -58,8 +59,8 @@ const OrderedLayers = (props) => {
   return (
     <ListItem ref={dragDropRef} py="2">
       <Flex justify="space-between" align="center" pl="2">
-        <Flex>
-          <Text color="white">{index + ":"}</Text>
+        <Flex alignItems={"center"}>
+          <GrDrag />
           <Text pl="2" color="white">
             {layer.title}
           </Text>
@@ -79,7 +80,7 @@ const OrderedLayers = (props) => {
           />
         </Flex>
       </Flex>
-      <Divider mt="1" />
+      <Divider mt="1" border="1px" borderColor={"black"} />
     </ListItem>
   );
 };

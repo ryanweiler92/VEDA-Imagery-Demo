@@ -93,7 +93,7 @@ const ActiveLayerDisplay = () => {
   }, [availableLayers]);
 
   return (
-    <Box bg="blue.400" borderRadius="md" w="33%">
+    <Box bg="blue.400" borderRadius="md" w="33%" border="2px" borderColor={"black"}>
       <DragDropDisplay
         toggleVisibility={toggleVisibility}
         removeLayer={removeLayer}

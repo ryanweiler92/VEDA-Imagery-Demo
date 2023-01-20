@@ -34,13 +34,13 @@ const AvailableLayerDisplay = () => {
   };
 
   return (
-    <Box bg="blue.400" borderRadius="md" w="33%">
+    <Box bg="blue.400" borderRadius="md" w="33%" border="2px" borderColor={"black"}>
       <Flex align="center" justify="center">
-        <Heading size="md" color="white" mb="2" fontWeight="normal">
+        <Heading size="md" color="white" mb="2" fontWeight="extrabold">
           Available Layers
         </Heading>
       </Flex>
-      <Divider borderWidth="1px" mb="2" />
+      <Divider borderWidth="1px" mb="2" borderColor="black" />
       <List>
         {availableLayers &&
           availableLayers.map((layer) => {
@@ -56,7 +56,7 @@ const AvailableLayerDisplay = () => {
                       onClick={(e) => addLayer(layer.id)}
                     />
                   </Flex>
-                  <Divider />
+                  <Divider borderWidth="1px" borderColor="black" />
                 </ListItem>
               );
           })}

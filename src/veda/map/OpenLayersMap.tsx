@@ -70,7 +70,6 @@ const Map = () => {
       const element = newLayers.splice(layerIndexArray[j], 1)[0]
       newLayers.unshift(element)
     }
-    console.log('creating initial order')
     dispatch(setAvailableLayers(newLayers))
   }
 
