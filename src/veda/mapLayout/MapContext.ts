@@ -11,8 +11,6 @@ type ViewProperties = {
 interface MapContextType {
   map: any;
   setMap: any;
-  layerData: any;
-  setLayerData: any;
   setViewProperties: any;
   viewProperties: ViewProperties;
 }

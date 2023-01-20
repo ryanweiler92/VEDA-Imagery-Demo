@@ -1,16 +1,10 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Box,
   Badge,
   Switch,
-  Button,
   Flex,
-  Heading,
-  List,
-  ListItem,
   Text,
-  Icon,
-  Spacer,
 } from "@chakra-ui/react";
 import OpenLayersMap from "../map/OpenLayersMap";
 import LeafletMap from "../map/LeafletMap";
@@ -23,10 +17,7 @@ import DateSelector from "../dateSelector/DateSelector";
 import ApiTest from "../api/ApiTest";
 
 const ApiTestingLayout = () => {
-  // openlayers map obj is a non-serializable value so we cannot store in Redux. Creating local state and passing through context.
   const [map, setMap] = useState(null);
-  // layer data is a non-serializable value so we cannot store in Redux. Creating local state and passing through context.
-  const [layerData, setLayerData] = useState([]);
 
   const [leafletDisplay, setLeafletDisplay] = useState(false);
   const [openLayersDisplay, setOpenLayersDisplay] = useState(false);
@@ -42,8 +33,6 @@ const ApiTestingLayout = () => {
   return (
     <MapContext.Provider
       value={{
-        layerData,
-        setLayerData,
         map,
         setMap,
         setViewProperties,

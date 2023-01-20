@@ -29,7 +29,6 @@ const HLSL30LayerResponse: HLSL30LayerResponse = {
 
 const initialState = {
   availableLayers: startingLayers,
-  orderedLayers: [],
   date: startingDate,
   HLSL30LayerResponse: HLSL30LayerResponse,
   requestLocation: [],
@@ -42,9 +41,6 @@ export const worldviewSlice = createSlice({
   reducers: {
     setAvailableLayers: (state, action: PayloadAction<any>) => {
       state.availableLayers = action.payload;
-    },
-    setOrderedLayers: (state, action: PayloadAction<any>) => {
-      state.orderedLayers = action.payload;
     },
     setDate: (state, action: PayloadAction<string>) => {
       state.date = action.payload;
@@ -63,7 +59,6 @@ export const worldviewSlice = createSlice({
 
 export const {
   setAvailableLayers,
-  setOrderedLayers,
   setDate,
   setHLSL30LayerResponse,
   setRequestLocation,

@@ -1,27 +1,19 @@
-import React, { useState, useContext } from "react";
+import { useContext } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   Box,
   Button,
   Flex,
-  Heading,
-  List,
-  ListItem,
-  Text,
-  Icon,
-  Divider,
-  IconButton,
   Badge,
 } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setDate } from "../../slices/worldview/worldviewSlice";
 import "./DateSelector.css";
 import MapContext from "../mapLayout/MapContext";
-import { get } from "ol/proj";
 
 const DateSelector = () => {
-  const { viewProperties, map, layerData } = useContext(MapContext);
+  const { viewProperties, map } = useContext(MapContext);
   const dispatch = useAppDispatch();
   const date = useAppSelector((state) => state.worldview.date);
   const myDate = new Date(Date.parse(date));
@@ -34,12 +26,8 @@ const DateSelector = () => {
     (state) => state.worldview.availableLayers
   );
 
-  const orderedLayers = useAppSelector(
-    (state) => state.worldview.orderedLayers
-  );
-
   const testFunction = () => {
-    console.log(layerData);
+
   };
 
   return (
