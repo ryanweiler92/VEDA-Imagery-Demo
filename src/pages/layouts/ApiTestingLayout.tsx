@@ -37,7 +37,7 @@ const ApiTestingLayout = () => {
     >
       <Flex justify="space-between" my="2" id="instructions-displays-container">
 
-      <Flex justify="start" align="center" my="4" id="instruction-container">
+      <Flex justify="start" align="center" id="instruction-container">
           <Button onClick={() => setModalOpen(true)} colorScheme="blue">
           Instructions
           </Button>
@@ -72,7 +72,7 @@ const ApiTestingLayout = () => {
         </Flex>
       </Flex>
 
-      <Flex id="ol-map-fetch-container" width="100%">
+      <Flex id="ol-map-fetch-container" mt="2" width="100%">
 
       <Box id="fetch-box-container" width="25%">
         <FetchBox index={1} />
