@@ -21,7 +21,7 @@ export default [
   },
   {
     id: 2,
-    name: "HLSS FIRMS",
+    name: "HLSS30",
     title: "HLSS30",
     active: false,
     visible: false,
@@ -29,7 +29,7 @@ export default [
   },
   {
     id: 3,
-    name: "HLSL FIRMS",
+    name: "HLSL30",
     title: "HLSL30",
     active: false,
     visible: false,
