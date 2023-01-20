@@ -13,19 +13,19 @@ export default [
   },
   {
     id: 1,
-    name: "VIIRS_SNPP_CorrectedReflectance_TrueColor",
-    title: configLayers.VIIRS_SNPP_CorrectedReflectance_TrueColor.title,
-    active: false,
-    visible: false,
-    data: configLayers.VIIRS_SNPP_CorrectedReflectance_TrueColor,
-  },
-  {
-    id: 2,
     name: "Reference_Features_15m",
     title: configLayers.Reference_Features_15m.title,
     active: true,
     visible: true,
     data: configLayers.Reference_Features_15m,
+  },
+  {
+    id: 2,
+    name: "VIIRS_SNPP_CorrectedReflectance_TrueColor",
+    title: configLayers.VIIRS_SNPP_CorrectedReflectance_TrueColor.title,
+    active: false,
+    visible: false,
+    data: configLayers.VIIRS_SNPP_CorrectedReflectance_TrueColor,
   },
   {
     id: 3,

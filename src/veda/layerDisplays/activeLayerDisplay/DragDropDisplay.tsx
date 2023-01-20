@@ -14,6 +14,10 @@ const DragDropDisplay = ({ toggleVisibility, removeLayer }) => {
     (state) => state.worldview.orderedLayers
   );
 
+  const availableLayers = useAppSelector(
+    (state) => state.worldview.availableLayers
+  );
+
   const dispatch = useAppDispatch();
 
   let reversedLayers = [...orderedLayers].reverse()
@@ -40,9 +44,10 @@ const DragDropDisplay = ({ toggleVisibility, removeLayer }) => {
       </Flex>
       <Divider borderWidth="1px" mb="2" />
       <List>
-        {orderedLayers &&
-          orderedLayers.map((layer, index) => {
-            return (
+      {availableLayers &&
+          availableLayers.map((layer, index) => {
+            if (layer.active)
+              return (
               <OrderedLayers
                 key={layer.name}
                 layer={layer}
@@ -51,7 +56,7 @@ const DragDropDisplay = ({ toggleVisibility, removeLayer }) => {
                 toggleVisibility={toggleVisibility}
                 removeLayer={removeLayer}
               />
-            );
+              )
           })}
       </List>
     </>

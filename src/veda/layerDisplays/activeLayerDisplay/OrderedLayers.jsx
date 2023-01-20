@@ -46,7 +46,11 @@ const OrderedLayers = (props) => {
     },
   });
 
-  const activeCheck = (layerID) => availableLayers[layerID].visible;
+  const activeCheck = (layerID) => {
+    const findLayer = (id) => availableLayers.find(availLayer => availLayer.id === id)
+    const layer = findLayer(layerID)
+    return layer.visible
+  } 
 
   const ref = useRef(null);
   const dragDropRef = dragRef(dropRef(ref));
@@ -55,7 +59,7 @@ const OrderedLayers = (props) => {
     <ListItem ref={dragDropRef} py="2">
       <Flex justify="space-between" align="center" pl="2">
         <Flex>
-          <Text color="white">{index + 1 + ":"}</Text>
+          <Text color="white">{index + ":"}</Text>
           <Text pl="2" color="white">
             {layer.title}
           </Text>

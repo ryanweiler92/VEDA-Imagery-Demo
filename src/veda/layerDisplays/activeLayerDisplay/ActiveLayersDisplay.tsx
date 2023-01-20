@@ -6,102 +6,91 @@ import MapContext from "../../mapLayout/MapContext";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import {
   setAvailableLayers,
-  setOrderedLayers,
 } from "../../../slices/worldview/worldviewSlice";
 import DragDropDisplay from "./DragDropDisplay";
 
 const ActiveLayerDisplay = () => {
-  const { map, layerData } = useContext(MapContext);
+  const { map } = useContext(MapContext);
   const dispatch = useAppDispatch();
   const availableLayers = useAppSelector(
     (state) => state.worldview.availableLayers
   );
-  const orderedLayers = useAppSelector(
-    (state) => state.worldview.orderedLayers
-  );
 
   // toggling visibility from switches
-  const toggleVisibility = (layerName, layerID) => {
-    map.getLayers().forEach((layer) => {
+  const toggleVisibility = (layerName: string, layerID: number) => {
+    map.getLayers().forEach((layer: any) => {
       if (layer.className_ === layerName) {
         const isVisible = layer.get("visible");
         layer.setVisible(!isVisible);
       }
     });
-    const isVisible = availableLayers[layerID].visible;
-    const availableLayersCopy = [...availableLayers];
-    const updatedLayer = {
-      ...availableLayersCopy[layerID],
-      visible: !isVisible,
-    };
-    availableLayersCopy[layerID] = updatedLayer;
-    dispatch(setAvailableLayers(availableLayersCopy));
+
+    const newLayerProperties = [...availableLayers];
+    const findLayerIndex = (id: number) => availableLayers.findIndex(availLayer => availLayer.id === id)
+    const index = findLayerIndex(layerID)
+    const layerToUpdate = newLayerProperties[index]
+    const isVisible = layerToUpdate.visible;
+
+    newLayerProperties[index] = {
+      ...layerToUpdate,
+      visible: !isVisible
+    }
+    
+    dispatch(setAvailableLayers(newLayerProperties));
   };
 
   const removeLayer = (layerName, layerID) => {
-    layerData.forEach((layer) => {
+    const olMapLayers = map.getLayers().array_;
+
+    olMapLayers.forEach((layer) => {
       if (layer.className_ === layerName) {
         map.removeLayer(layer);
       }
     });
-    const availableLayersCopy = [...availableLayers];
-    const updatedLayer = {
-      ...availableLayersCopy[layerID],
+
+    const newLayerOrder = [...availableLayers];
+    const findLayerIndex = (id: number) => availableLayers.findIndex(availLayer => availLayer.id === id)
+    const index = findLayerIndex(layerID)
+    const layerToUpdate = newLayerOrder[index]
+
+    newLayerOrder[index] = {
+      ...layerToUpdate, 
       visible: true,
-      active: false,
-    };
-    availableLayersCopy[layerID] = updatedLayer;
-    dispatch(setAvailableLayers(availableLayersCopy));
+      active: false
+    }
+    
+    dispatch(setAvailableLayers(newLayerOrder));
   };
 
-  // ordering the layers in the display
-  useEffect(() => {
-    if (!map) return;
-    const orderedLayersArr = map.getLayers().array_;
-    if (!orderedLayersArr.length) return;
-
-    const createOrder = () => {
-      let mapOrderedLayers = [];
-
-      orderedLayersArr.forEach((layer) => {
-        mapOrderedLayers.push(layer.className_);
-      });
-
-      let tempOrderedLayers = [];
-
-      mapOrderedLayers.map((layer) => {
-        availableLayers.forEach((layerObj) => {
-          if (layerObj.name === layer) {
-            tempOrderedLayers.push(layerObj);
-          }
-        });
-      });
-      dispatch(setOrderedLayers(tempOrderedLayers.reverse()));
-    };
-    createOrder();
-  }, [map, availableLayers]);
 
   // this gets called whenever a layer is added, removed or reordered
+  const updateMapLayersOnReorder = () => {
+    console.log('updating map on reorder')
+    const olMapLayers = map.getLayers().array_;
+    let removedLayers = []
+
+    olMapLayers.slice().forEach((layer) => {
+      removedLayers.push(layer)
+      map.removeLayer(layer);
+    });
+
+    const reversedLayers = [...availableLayers].reverse()
+
+    reversedLayers.map((layer) => {
+      removedLayers.forEach((layerObj) => {
+        if (layer.name === layerObj.className_) {
+          map.addLayer(layerObj);
+        }
+      });
+    });
+  };
+
   useEffect(() => {
     if (!map) return;
-
-    const updateMapLayersOnReorder = () => {
-      const layerCopy = [...layerData];
-
-      layerData.slice().forEach((layer) => {
-        map.removeLayer(layer);
-      });
-
-      orderedLayers.map((layer) => {
-        layerCopy.forEach((layerObj) => {
-          if (layer.name === layerObj.className_) {
-            map.addLayer(layerObj);
-          }
-        });
-      });
-    };
+    const olMapLayers = map.getLayers().array_;
+    if(!olMapLayers.length) return;
     updateMapLayersOnReorder();
-  }, [orderedLayers]);
+  }, [availableLayers]);
 
   return (
     <Box bg="blue.400" borderRadius="md" w="33%">

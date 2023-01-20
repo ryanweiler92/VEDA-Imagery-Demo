@@ -9,14 +9,16 @@ import AddLayer from "../layers/AddLayer";
 import MapContext from "../mapLayout/MapContext";
 import OpenLayersHLSLayers from "../layers/OpenLayersHLSLayers";
 import MapEvents from "../layers/OpenLayersMapEventListeners";
+import { setAvailableLayers } from '../../slices/worldview/worldviewSlice'
 
 const Map = () => {
   const mapRef = useRef();
+  const dispatch = useAppDispatch();
   const availableLayers = useAppSelector(
     (state) => state.worldview.availableLayers
   );
 
-  const { map, setMap, setLayerData } = useContext(MapContext);
+  const { map, setMap } = useContext(MapContext);
 
   const projection = config.projections.geographic;
 
@@ -51,13 +53,33 @@ const Map = () => {
     return () => mapObj.setTarget(undefined);
   }, []);
 
-  // get all of the current layers from the openlayers map object and set to state
+  // reordering layers to match the OL object
+  const createOrder = () => {
+    const olMapLayers = map.getLayers().array_;
+    let newLayers = [...availableLayers]
+    const findLayerIndex = (name: string) => availableLayers.findIndex(availLayer => availLayer.name === name)
+    let layerIndexArray = []
+
+    for(let i = 0; i < olMapLayers.length; i++){
+      const layerName = olMapLayers[i].className_
+      const indexPos = findLayerIndex(layerName)
+      layerIndexArray.push(indexPos)
+    }
+   
+    for(let j = 0; j < layerIndexArray.length; j++){
+      const element = newLayers.splice(layerIndexArray[j], 1)[0]
+      newLayers.unshift(element)
+    }
+    console.log('creating initial order')
+    dispatch(setAvailableLayers(newLayers))
+  }
+
   useEffect(() => {
     if (!map) return;
-    const currentLayers = map.getLayers();
-    const layersArray = currentLayers.array_;
-    setLayerData(layersArray);
-  }, [map]);
+    const olMapLayers = map.getLayers().array_;
+    if (!olMapLayers.length) return;
+    createOrder()
+  }, [map])
 
   return (
     <>

@@ -21,7 +21,7 @@ import MapContext from "../mapLayout/MapContext";
 import { get } from "ol/proj";
 
 const DateSelector = () => {
-  const { viewProperties, map } = useContext(MapContext);
+  const { viewProperties, map, layerData } = useContext(MapContext);
   const dispatch = useAppDispatch();
   const date = useAppSelector((state) => state.worldview.date);
   const myDate = new Date(Date.parse(date));
@@ -39,11 +39,8 @@ const DateSelector = () => {
   );
 
   const testFunction = () => {
-    const currentLayers = map.getLayers();
-    const layersArray = currentLayers.array_
-    console.log(orderedLayers);
-    console.log(layersArray)
-    // console.log(availableLayers);
+    console.log(layerData)
+
   };
 
   return (

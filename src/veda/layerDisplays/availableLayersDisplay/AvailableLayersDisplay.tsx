@@ -1,15 +1,12 @@
-import React from "react";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
 import { setAvailableLayers } from "../../../slices/worldview/worldviewSlice";
 import {
   Box,
-  Button,
   Flex,
   Heading,
   List,
   ListItem,
   Text,
-  Icon,
   Divider,
   IconButton,
 } from "@chakra-ui/react";
@@ -21,14 +18,19 @@ const AvailableLayerDisplay = () => {
     (state) => state.worldview.availableLayers
   );
 
-  const addLayer = (layerID) => {
-    const activeLayers = [...availableLayers];
-    activeLayers[layerID] = {
-      ...activeLayers[layerID],
+  const addLayer = (layerID: number) => {
+    const newLayerOrder = [...availableLayers];
+    const findLayerIndex = (id: number) => availableLayers.findIndex(availLayer => availLayer.id === id)
+    const index = findLayerIndex(layerID)
+    let layerToMove = newLayerOrder.splice(index, 1)[0]
+    layerToMove = {
+      ...layerToMove,
       visible: true,
       active: true,
-    };
-    dispatch(setAvailableLayers(activeLayers));
+    }
+    newLayerOrder.unshift(layerToMove)
+
+    dispatch(setAvailableLayers(newLayerOrder));
   };
 
   return (

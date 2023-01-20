@@ -36,7 +36,7 @@ const OpenLayersHLSLayers = () => {
     (state) => state.worldview.HLSL30LayerResponse
   );
   const location = useAppSelector((state) => state.worldview.requestLocation);
-  const { map, layerData, setLayerData } = useContext(MapContext);
+  const { map } = useContext(MapContext);
   const date = useAppSelector((state) => state.worldview.date);
 
   const projection = config.projections.geographic;
