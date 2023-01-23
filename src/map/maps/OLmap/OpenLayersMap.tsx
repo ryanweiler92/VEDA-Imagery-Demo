@@ -22,7 +22,6 @@ const Map = () => {
 
   const projection = config.projections.geographic;
 
-  // componentDidMount
   useEffect(() => {
     const geoProjection = olProj.get(projection.crs);
 
@@ -32,7 +31,7 @@ const Map = () => {
       // center: projection.startCenter,
       center: [-72.71, 41.56],
       // zoom: projection.startZoom,
-      zoom: 8,
+      zoom: 8.2,
       maxZoom: projection.numZoomLevels,
       extent: projection.maxExtent,
       // extent: [-73.7, 41.6, -71.8, 42.05],

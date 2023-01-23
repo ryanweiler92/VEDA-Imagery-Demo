@@ -5,7 +5,7 @@ import {
   } from "react";
   import XYZ from "ol/source/XYZ.js";
   import OlLayerTile from "ol/layer/Tile";
-  import { get } from "ol/proj";
+  import { get, getPointResolution  } from "ol/proj";
   import { useAppSelector } from "../../../../redux/store/hooks";
   import MapContext from "../../../context/MapContext";
   import registerSearch from './RegisterSearch'
@@ -46,7 +46,6 @@ import {
 
           const xyzSourceOptions = {
             crossOrigin: "anonymous",
-            minZoom: 9,
             projection: get("EPSG:4326"),
             tileUrlFunction: tileUrlFunction,
           };
@@ -56,7 +55,8 @@ import {
           const xyzLayerTile = new OlLayerTile({
             source: xyzSource,
             className: layer,
-            visible
+            visible,
+            minZoom: 8
           });
 
           map.addLayer(xyzLayerTile)
